@@ -1,0 +1,18 @@
+# Python cache & build dirs
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.so
+
+# Package metadata
+*.egg-info/
+*.egg
+dist/
+build/
+
+# Virtual envs
+venv/
+.env/
+
+.env

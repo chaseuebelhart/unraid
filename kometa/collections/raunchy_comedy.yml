@@ -1,0 +1,68 @@
+collections:
+  Raunchy Comedy:
+    summary: "Over-the-top, dumb, raunchy comedies from the Ferrell/Rogen/Sandler/McBride universe."
+    sort_title: "!05_Raunchy_Comedy"
+    visible_home: true
+    collection_mode: hide
+    collection_order: popularity.desc
+
+    #IMDb raunchy/stupid comedy keyword set
+    imdb_search:
+      genre: Comedy
+      keywords:
+        - 9716     # raunchy
+        - 9717     # adult humor
+        - 541      # vulgar
+        - 248      # stoner
+      sort_by: popularity.desc
+      max_results: 75
+
+    # Hard-coded essential raunchy comedies
+    tmdb_movie:
+      - 12133    # Step Brothers (2008)
+      - 8699     # Anchorman: The Legend of Ron Burgundy (2004)
+      - 9718     # Talladega Nights: The Ballad of Ricky Bobby (2006)
+      - 11635    # Old School (2003)
+      - 9955     # Blades of Glory (2007)
+      - 8363     # Superbad (2007)
+      - 10189    # Pineapple Express (2008)
+      - 109414   # This Is the End (2013)
+      - 6957     # The 40 Year Old Virgin (2005)
+      - 4964     # Knocked Up (2007)
+      - 10358    # Zack and Miri Make a Porno (2008)
+      - 20829    # Funny People (2009)
+      - 195589   # Neighbors (2014)
+      - 10074    # Hot Rod (2007)
+      - 38319    # Your Highness (2011)
+      - 13484    # The Foot Fist Way (2006)
+      - 18785    # The Hangover (2009)
+      - 9614     # Happy Gilmore (1996)
+      - 11017    # Billy Madison (1995)
+      - 9032     # Big Daddy (1999)
+      - 10663    # The Waterboy (1998)
+      - 9678     # Little Nicky (2000)
+      - 2022     # Mr. Deeds (2002)
+      - 9291     # The Longest Yard (2005)
+      - 87428    # That’s My Boy (2012)
+      - 9900     # Grandma’s Boy (2006)
+      - 10956    # Joe Dirt (2001)
+      - 9398     # Zoolander (2001)
+      - 37931    # MacGruber (2010)
+      - 9988     # Beerfest (2006)
+      - 9472     # DodgeBall: A True Underdog Story (2004)
+      - 138832   # We’re the Millers (2013)
+      - 7446     # Tropic Thunder (2008)
+      - 39939    # Super Troopers (2001)
+      - 2294     # Jay and Silent Bob Strike Back (2001)
+      - 15373    # Role Models (2008)
+      - 136795   # The Heat (2013)
+      - 41733    # Due Date (2010)
+      - 51540    # Horrible Bosses (2011)
+      - 49520    # The Change-Up (2011)
+      - 57214    # Project X (2012)
+      - 9352     # EuroTrip (2004)
+      - 76493    # The Dictator (2012)
+      - 290250   # The Nice Guys (2016)
+      - 496      # Borat (2006)
+      - 9522     # Wedding Crashers (2005)
+      - 9870     # Forgetting Sarah Marshall (2008)

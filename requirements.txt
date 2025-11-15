@@ -1,0 +1,7 @@
+# Add your project dependencies here, one per line.
+# Example:
+# requests
+requests
+python-dotenv
+-e .
+# numpy
