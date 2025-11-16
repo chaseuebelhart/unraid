@@ -2,7 +2,7 @@ collections:
   Christmas Movies:
     summary: "A curated collection of Christmas classics and holiday favorites. Visible each year from November through December."
     sort_title: "!02_Christmas_Movies"
-    collection_order: popularity.desc
+    collection_order: user_rating.desc
 
     # Only show on Plex Home Screen during November & December
     visible_home: schedule(11/01-12/31)

@@ -4,7 +4,7 @@ collections:
     sort_title: "!05_Raunchy_Comedy"
     visible_home: true
     collection_mode: hide
-    collection_order: popularity.desc
+    collection_order: user_rating.desc
 
     #IMDb raunchy/stupid comedy keyword set
     imdb_search:
