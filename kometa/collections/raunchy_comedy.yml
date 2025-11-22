@@ -4,18 +4,8 @@ collections:
     sort_title: "!05_Raunchy_Comedy"
     visible_home: true
     collection_mode: hide
-    collection_order: user_rating.desc
-
-    #IMDb raunchy/stupid comedy keyword set
-    imdb_search:
-      genre: Comedy
-      keywords:
-        - 9716     # raunchy
-        - 9717     # adult humor
-        - 541      # vulgar
-        - 248      # stoner
-      sort_by: popularity.desc
-      max_results: 75
+    collection_order: random
+    url_poster: https://raw.githubusercontent.com/chaseuebelhart/unraid/refs/heads/main/kometa/collections/posters/raunchy_comedy.png
 
     # Hard-coded essential raunchy comedies
     tmdb_movie:

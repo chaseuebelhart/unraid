@@ -1,0 +1,11 @@
+collections:
+  Trending Movies:
+    summary: "Movies that are currently trending."
+    sort_title: "!01_Trending_Movies"
+    collection_order: random
+    visible_home: true
+    visible_library: true
+    visible_shared: true
+    url_poster: https://raw.githubusercontent.com/chaseuebelhart/unraid/refs/heads/main/kometa/collections/posters/trending_movies.jpg
+    mdblist:
+      url: https://mdblist.com/lists/hawklet2025/test
