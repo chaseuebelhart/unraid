@@ -5,9 +5,9 @@ collections:
     collection_order: user_rating.desc
 
     # Only show on Plex Home Screen during November & December
-    visible_home: schedule(11/01-12/31)
-    visible_shared: schedule(11/01-12/31)
-    visible_library: schedule(11/01-12/31)
+    visible_home: range(11/01-12/31)
+    visible_shared: range(11/01-12/31)
+    visible_library: range(11/01-12/31)
 
     # Hard-coded list of your top 30 Christmas movies
     tmdb_movie:
