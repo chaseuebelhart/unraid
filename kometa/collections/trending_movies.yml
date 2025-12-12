@@ -8,10 +8,3 @@ collections:
     visible_shared: true
     url_poster: https://raw.githubusercontent.com/chaseuebelhart/unraid/refs/heads/main/kometa/collections/posters/trending_movies.jpg
     mdblist_list: https://mdblist.com/lists/hawklet2025/test
-
-  Test Movies:
-    summary: "Movies that are currently trending."
-    sort_title: "!Test"
-    collection_order: random
-    url_poster: https://raw.githubusercontent.com/chaseuebelhart/unraid/refs/heads/main/kometa/collections/posters/trending_movies.jpg
-    mdblist_list: https://mdblist.com/lists/hawklet2025/test
