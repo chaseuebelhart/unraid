@@ -1,0 +1,86 @@
+collections:
+  Latest On Streaming Shows:
+    sort_title: "!05_Latest_On_Streaming_Shows"
+    visible_home: true
+    visible_library: true
+    visible_shared: true
+    smart_filter:
+      sort_by: random
+      all:
+        rating.gte: 6.0
+        release: 730  # last 2 years in days
+        any:
+          network:
+            - Netflix
+            - Disney+
+            - Hulu
+            - Prime Video
+            - Apple TV
+            - HBO
+            - HBO Max
+            - Paramount+
+            - Peacock
+
+  Across Impossible Worlds Shows:
+    sort_title: "!06_Across_Impossible_Worlds"
+    visible_home: true
+    visible_library: true
+    visible_shared: true
+    smart_filter:
+      sort_by: random
+      all:
+        rating.gte: 6.5
+        genre.not:
+          - Animation
+          - Family
+        any:
+          genre:
+            - Action & Adventure
+            - Sci-Fi & Fantasy
+
+  Prestige Drama Shows:
+    sort_title: "!07_Prestige_Drama"
+    visible_home: true
+    visible_library: true
+    visible_shared: true
+    smart_filter:
+      sort_by: random
+      all:
+        rating.gte: 7
+        genre.not:
+          - Animation
+          - Family
+          - Comedy
+        genre:
+          - Drama
+
+  Crime Abiding Shows:
+    sort_title: "!08_Crime_Abiding_Shows"
+    visible_home: true
+    visible_library: true
+    visible_shared: true
+    smart_filter:
+      sort_by: random
+      all:
+        rating.gte: 6.0
+        genre.not:
+          - Animation
+          - Family
+        any:
+          genre:
+            - Crime
+
+  Comfort & Clever Comedy Shows:
+    sort_title: "!09_Comfort_Clever_Comedy"
+    visible_home: true
+    visible_library: true
+    visible_shared: true
+    smart_filter:
+      sort_by: random
+      all:
+        rating.gte: 6.0
+        genre:
+          - Comedy
+
+
+

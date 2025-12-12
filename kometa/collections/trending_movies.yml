@@ -7,5 +7,4 @@ collections:
     visible_library: true
     visible_shared: true
     url_poster: https://raw.githubusercontent.com/chaseuebelhart/unraid/refs/heads/main/kometa/collections/posters/trending_movies.jpg
-    mdblist:
-      url: https://mdblist.com/lists/hawklet2025/test
+    mdblist_list: https://mdblist.com/lists/hawklet2025/test

@@ -1,0 +1,177 @@
+collections:
+  Recent Drama Movies:
+    sort_title: "!06_Drama_Recent"
+    visible_home: true
+    visible_library: true
+    visible_shared: true
+    smart_filter:
+      sort_by: random
+      all:
+        rating.gte: 6.0
+        genre.not:
+          - Animation
+          - Horror
+          - Family
+        release: 1460  # last 4 years in days
+        all:
+          - any:
+              genre:
+                - Drama
+                - History
+
+  Focused Character Drama Movies:
+    sort_title: "!08_Focused_Character_Drama_Movies"
+    visible_home: true
+    visible_library: true
+    visible_shared: true
+    smart_filter:
+      sort_by: random      
+      all:
+        rating.gte: 7.0
+        genre.not:
+          - Animation
+          - Horror
+          - Family
+        all:
+          - any:
+              genre:
+                - Drama
+                - History
+          - any:
+              director:
+                - Ron Howard
+                - Steven Spielberg
+                - Richard Linklater
+                - Alexander Payne
+                - Greta Gerwig
+                - Marc Forster
+                - Clint Bentley
+                - Denis Villeneuve
+                - Alfonso Cuarón
+                - Martin Scorsese
+                - Paul Thomas Anderson
+                - Greta Gerwig
+                - Steven Spielberg
+                - Joel Coen
+                - Ethan Coen
+                - Damien Chazelle
+                - Ridley Scott
+                - Christopher Nolan
+                - Quentin Tarantino
+              actor:
+                - Matt Damon
+                - Emily Blunt
+                - Cate Blanchett
+                - Ryan Gosling
+                - Bradley Cooper
+                - Christian Bale
+                - Leonardo DiCaprio
+                - Matthew McConaughey
+                - Joaquin Phoenix
+                - Adam Driver
+                - Robert De Niro
+                - Tom Hanks
+                - Al Pacino
+                - Jack Nicholson
+                - Brad Pitt
+                - Denzel Washington
+
+
+  Sharp-Edged Action & Crime Movies:
+    sort_title: "!07_Action_and_Crime"
+    visible_home: true
+    visible_library: true
+    visible_shared: true
+    smart_filter:
+      sort_by: random      
+      all:
+        rating.gte: 6.0
+        release: 3652  # last 10 years in days
+        genre.not:
+          - Animation
+          - Horror
+          - Family
+        all:
+          - any:
+              genre:
+                - Action
+                - Thriller
+                - Crime
+          # - any:
+          #     director:
+          #       - Christopher McQuarrie
+          #       - Joseph Kosinski
+          #       - Paul Greengrass
+          #       - James Mangold
+          #       - Chad Stahelski
+          #       - David Ayer
+          #     actor:
+          #       - Tom Cruise
+          #       - Daniel Craig
+          #       - Keanu Reeves
+          #       - Jason Statham
+          #       - Chris Hemsworth
+          #       - Arnold Schwarzenegger
+          #       - Liam Neeson
+          #       - Dwayne Johnson
+          #       - Vin Diesel
+          #       - Robert Downey Jr.
+          #       - Bradley Cooper
+          #       - Hugh Jackman
+          #       - Ryan Reynolds
+          #       - Chris Pratt
+
+  Large-Scale Storytelling Movies:
+    sort_title: "!09_Large_Scale_Storytelling_Movies"
+    visible_home: true
+    visible_library: true
+    visible_shared: true
+    smart_filter:
+      sort_by: random
+      all:
+        genre.not:
+          - Animation
+          - Horror
+        any:
+          collection:
+            - Pirates of the Caribbean
+            - The Lord of the Rings
+            - The Hobbit
+            - The Dark Knight
+            - Marvel Cinematic Universe
+            - Star Wars Universe
+            - Wizarding World
+            - The Matrix
+            - Jurassic Park
+            - John Wick
+            - Men in Black
+            - 'Mission: Impossible'
+            - Avatar
+            - Gladiator
+            - DC Universe
+            - The Terminator
+            - Indiana Jones
+
+  Rom-Com Movies:
+    sort_title: "!10_Rom-Com_Movies"
+    visible_home: true
+    visible_library: true
+    visible_shared: true
+    smart_filter:
+      sort_by: random
+      all:
+        title.not:
+          - porn
+          - Joe Dirt
+        genre.not:
+          - Animation
+          - Horror
+        any:
+          all:
+            genre: 
+              - Romance
+              - Comedy
+          title.is:
+            - Silver Linings Playbook
+            - The Notebook
+          
