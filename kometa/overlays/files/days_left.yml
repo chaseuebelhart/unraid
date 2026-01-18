@@ -25,173 +25,11 @@ templates:
 
 overlays:
 
-  DaysLeft_1:
+  DaysLeft_30:
     template:
       - name: DaysLeft
-        label: DaysLeft_1
-        days: 1
-
-  DaysLeft_2:
-    template:
-      - name: DaysLeft
-        label: DaysLeft_2
-        days: 2
-
-  DaysLeft_3:
-    template:
-      - name: DaysLeft
-        label: DaysLeft_3
-        days: 3
-
-  DaysLeft_4:
-    template:
-      - name: DaysLeft
-        label: DaysLeft_4
-        days: 4
-
-  DaysLeft_5:
-    template:
-      - name: DaysLeft
-        label: DaysLeft_5
-        days: 5
-
-  DaysLeft_6:
-    template:
-      - name: DaysLeft
-        label: DaysLeft_6
-        days: 6
-
-  DaysLeft_7:
-    template:
-      - name: DaysLeft
-        label: DaysLeft_7
-        days: 7
-
-  DaysLeft_8:
-    template:
-      - name: DaysLeft
-        label: DaysLeft_8
-        days: 8
-
-  DaysLeft_9:
-    template:
-      - name: DaysLeft
-        label: DaysLeft_9
-        days: 9
-
-  DaysLeft_10:
-    template:
-      - name: DaysLeft
-        label: DaysLeft_10
-        days: 10
-
-  DaysLeft_11:
-    template:
-      - name: DaysLeft
-        label: DaysLeft_11
-        days: 11
-
-  DaysLeft_12:
-    template:
-      - name: DaysLeft
-        label: DaysLeft_12
-        days: 12
-
-  DaysLeft_13:
-    template:
-      - name: DaysLeft
-        label: DaysLeft_13
-        days: 13
-
-  DaysLeft_14:
-    template:
-      - name: DaysLeft
-        label: DaysLeft_14
-        days: 14
-
-  DaysLeft_15:
-    template:
-      - name: DaysLeft
-        label: DaysLeft_15
-        days: 15
-
-  DaysLeft_16:
-    template:
-      - name: DaysLeft
-        label: DaysLeft_16
-        days: 16
-
-  DaysLeft_17:
-    template:
-      - name: DaysLeft
-        label: DaysLeft_17
-        days: 17
-
-  DaysLeft_18:
-    template:
-      - name: DaysLeft
-        label: DaysLeft_18
-        days: 18
-
-  DaysLeft_19:
-    template:
-      - name: DaysLeft
-        label: DaysLeft_19
-        days: 19
-
-  DaysLeft_20:
-    template:
-      - name: DaysLeft
-        label: DaysLeft_20
-        days: 20
-
-  DaysLeft_21:
-    template:
-      - name: DaysLeft
-        label: DaysLeft_21
-        days: 21
-
-  DaysLeft_22:
-    template:
-      - name: DaysLeft
-        label: DaysLeft_22
-        days: 22
-
-  DaysLeft_23:
-    template:
-      - name: DaysLeft
-        label: DaysLeft_23
-        days: 23
-
-  DaysLeft_24:
-    template:
-      - name: DaysLeft
-        label: DaysLeft_24
-        days: 24
-
-  DaysLeft_25:
-    template:
-      - name: DaysLeft
-        label: DaysLeft_25
-        days: 25
-
-  DaysLeft_26:
-    template:
-      - name: DaysLeft
-        label: DaysLeft_26
-        days: 26
-
-  DaysLeft_27:
-    template:
-      - name: DaysLeft
-        label: DaysLeft_27
-        days: 27
-
-  DaysLeft_28:
-    template:
-      - name: DaysLeft
-        label: DaysLeft_28
-        days: 28
+        label: DaysLeft_30
+        days: 30
 
   DaysLeft_29:
     template:
@@ -199,8 +37,170 @@ overlays:
         label: DaysLeft_29
         days: 29
 
-  DaysLeft_30:
+  DaysLeft_28:
     template:
       - name: DaysLeft
-        label: DaysLeft_30
-        days: 30
+        label: DaysLeft_28
+        days: 28
+
+  DaysLeft_27:
+    template:
+      - name: DaysLeft
+        label: DaysLeft_27
+        days: 27
+
+  DaysLeft_26:
+    template:
+      - name: DaysLeft
+        label: DaysLeft_26
+        days: 26
+
+  DaysLeft_25:
+    template:
+      - name: DaysLeft
+        label: DaysLeft_25
+        days: 25
+
+  DaysLeft_24:
+    template:
+      - name: DaysLeft
+        label: DaysLeft_24
+        days: 24
+
+  DaysLeft_23:
+    template:
+      - name: DaysLeft
+        label: DaysLeft_23
+        days: 23
+
+  DaysLeft_22:
+    template:
+      - name: DaysLeft
+        label: DaysLeft_22
+        days: 22
+
+  DaysLeft_21:
+    template:
+      - name: DaysLeft
+        label: DaysLeft_21
+        days: 21
+
+  DaysLeft_20:
+    template:
+      - name: DaysLeft
+        label: DaysLeft_20
+        days: 20
+
+  DaysLeft_19:
+    template:
+      - name: DaysLeft
+        label: DaysLeft_19
+        days: 19
+
+  DaysLeft_18:
+    template:
+      - name: DaysLeft
+        label: DaysLeft_18
+        days: 18
+
+  DaysLeft_17:
+    template:
+      - name: DaysLeft
+        label: DaysLeft_17
+        days: 17
+
+  DaysLeft_16:
+    template:
+      - name: DaysLeft
+        label: DaysLeft_16
+        days: 16
+
+  DaysLeft_15:
+    template:
+      - name: DaysLeft
+        label: DaysLeft_15
+        days: 15
+
+  DaysLeft_14:
+    template:
+      - name: DaysLeft
+        label: DaysLeft_14
+        days: 14
+
+  DaysLeft_13:
+    template:
+      - name: DaysLeft
+        label: DaysLeft_13
+        days: 13
+
+  DaysLeft_12:
+    template:
+      - name: DaysLeft
+        label: DaysLeft_12
+        days: 12
+
+  DaysLeft_11:
+    template:
+      - name: DaysLeft
+        label: DaysLeft_11
+        days: 11
+
+  DaysLeft_10:
+    template:
+      - name: DaysLeft
+        label: DaysLeft_10
+        days: 10
+
+  DaysLeft_9:
+    template:
+      - name: DaysLeft
+        label: DaysLeft_9
+        days: 9
+
+  DaysLeft_8:
+    template:
+      - name: DaysLeft
+        label: DaysLeft_8
+        days: 8
+
+  DaysLeft_7:
+    template:
+      - name: DaysLeft
+        label: DaysLeft_7
+        days: 7
+
+  DaysLeft_6:
+    template:
+      - name: DaysLeft
+        label: DaysLeft_6
+        days: 6
+
+  DaysLeft_5:
+    template:
+      - name: DaysLeft
+        label: DaysLeft_5
+        days: 5
+
+  DaysLeft_4:
+    template:
+      - name: DaysLeft
+        label: DaysLeft_4
+        days: 4
+
+  DaysLeft_3:
+    template:
+      - name: DaysLeft
+        label: DaysLeft_3
+        days: 3
+
+  DaysLeft_2:
+    template:
+      - name: DaysLeft
+        label: DaysLeft_2
+        days: 2
+
+  DaysLeft_1:
+    template:
+      - name: DaysLeft
+        label: DaysLeft_1
+        days: 1
