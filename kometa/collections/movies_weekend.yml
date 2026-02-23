@@ -1,0 +1,43 @@
+collections:
+  Date Night:
+    sort_title: "!12_Date_Night"
+    url_poster: https://raw.githubusercontent.com/Kometa-Team/Default-Images/master/genre/Romance.jpg
+    collection_order: random
+    visible_home: weekly(friday|saturday)
+    visible_library: weekly(friday|saturday)
+    visible_shared: weekly(friday|saturday)
+    smart_filter:
+      sort_by: random
+      limit: 15
+      all:
+        rating.gte: 6.0
+        genre.not:
+          - Horror
+          - Animation
+          - Documentary
+        any:
+          genre:
+            - Romance
+            - Drama
+            - Comedy
+
+  Sunday Slow Burn:
+    sort_title: "!12_Sunday_Slow_Burn"
+    url_poster: https://raw.githubusercontent.com/Kometa-Team/Default-Images/master/genre/Period%20Drama.jpg
+    collection_order: random
+    visible_home: weekly(sunday)
+    visible_library: weekly(sunday)
+    visible_shared: weekly(sunday)
+    smart_filter:
+      sort_by: random
+      limit: 12
+      all:
+        rating.gte: 7.0
+        duration.gte: 90
+        genre.not:
+          - Action
+          - Horror
+          - Animation
+          - Family
+        genre:
+          - Drama

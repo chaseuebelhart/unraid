@@ -1,0 +1,18 @@
+collections:
+  Valentine's Picks:
+    sort_title: "!02_Valentines_Picks"
+    url_poster: https://raw.githubusercontent.com/Kometa-Team/Default-Images/master/seasonal/valentine.jpg
+    collection_order: random
+    visible_home: range(02/01-02/14)
+    visible_library: range(02/01-02/14)
+    visible_shared: range(02/01-02/14)
+    smart_filter:
+      sort_by: random
+      limit: 20
+      all:
+        rating.gte: 6.0
+        genre.not:
+          - Horror
+          - Animation
+        genre:
+          - Romance

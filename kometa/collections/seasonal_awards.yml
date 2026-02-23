@@ -1,0 +1,22 @@
+collections:
+  Awards Season:
+    sort_title: "!02_Awards_Season"
+    url_poster: https://raw.githubusercontent.com/Kometa-Team/Default-Images/master/genre/Award%20Shows.jpg
+    collection_order: random
+    visible_home: range(01/01-03/15)
+    visible_library: range(01/01-03/15)
+    visible_shared: range(01/01-03/15)
+    smart_filter:
+      sort_by: random
+      limit: 20
+      all:
+        rating.gte: 7.5
+        genre.not:
+          - Animation
+          - Family
+          - Horror
+        any:
+          genre:
+            - Drama
+            - History
+            - War

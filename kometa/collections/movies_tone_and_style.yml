@@ -1,9 +1,10 @@
 collections:
-  Recent Drama Movies:
-    sort_title: "!06_Drama_Recent"
-    visible_home: true
-    visible_library: true
-    visible_shared: true
+  Fresh Picks:
+    sort_title: "!06_Fresh_Picks"
+    url_poster: https://raw.githubusercontent.com/Kometa-Team/Default-Images/master/chart/Newly%20Released.jpg
+    visible_home: weekly(monday|wednesday|friday|sunday)
+    visible_library: weekly(monday|wednesday|friday|sunday)
+    visible_shared: weekly(monday|wednesday|friday|sunday)
     smart_filter:
       sort_by: random
       all:
@@ -12,20 +13,21 @@ collections:
           - Animation
           - Horror
           - Family
-        release: 1460  # last 4 years in days
+        release: 1460  # last 4 years
         all:
           - any:
               genre:
                 - Drama
                 - History
 
-  Focused Character Drama Movies:
-    sort_title: "!08_Focused_Character_Drama_Movies"
-    visible_home: true
-    visible_library: true
-    visible_shared: true
+  Director's Spotlight:
+    sort_title: "!07_Directors_Spotlight"
+    url_poster: https://raw.githubusercontent.com/Kometa-Team/Default-Images/master/genre/Arthouse.jpg
+    visible_home: weekly(monday|thursday|saturday|sunday)
+    visible_library: weekly(monday|thursday|saturday|sunday)
+    visible_shared: weekly(monday|thursday|saturday|sunday)
     smart_filter:
-      sort_by: random      
+      sort_by: random
       all:
         rating.gte: 7.0
         genre.not:
@@ -50,8 +52,6 @@ collections:
                 - Alfonso Cuarón
                 - Martin Scorsese
                 - Paul Thomas Anderson
-                - Greta Gerwig
-                - Steven Spielberg
                 - Joel Coen
                 - Ethan Coen
                 - Damien Chazelle
@@ -76,56 +76,49 @@ collections:
                 - Brad Pitt
                 - Denzel Washington
 
-
-  Sharp-Edged Action & Crime Movies:
-    sort_title: "!07_Action_and_Crime"
-    visible_home: true
-    visible_library: true
-    visible_shared: true
+  Adrenaline Rush:
+    sort_title: "!08_Adrenaline_Rush"
+    url_poster: https://raw.githubusercontent.com/Kometa-Team/Default-Images/master/genre/Action.jpg
+    visible_home: weekly(tuesday|wednesday|friday|saturday)
+    visible_library: weekly(tuesday|wednesday|friday|saturday)
+    visible_shared: weekly(tuesday|wednesday|friday|saturday)
     smart_filter:
-      sort_by: random      
+      sort_by: random
       all:
         rating.gte: 6.0
-        release: 3652  # last 10 years in days
+        release: 3652  # last 10 years
         genre.not:
           - Animation
           - Horror
           - Family
-        all:
-          - any:
-              genre:
-                - Action
-                - Thriller
-                - Crime
-          # - any:
-          #     director:
-          #       - Christopher McQuarrie
-          #       - Joseph Kosinski
-          #       - Paul Greengrass
-          #       - James Mangold
-          #       - Chad Stahelski
-          #       - David Ayer
-          #     actor:
-          #       - Tom Cruise
-          #       - Daniel Craig
-          #       - Keanu Reeves
-          #       - Jason Statham
-          #       - Chris Hemsworth
-          #       - Arnold Schwarzenegger
-          #       - Liam Neeson
-          #       - Dwayne Johnson
-          #       - Vin Diesel
-          #       - Robert Downey Jr.
-          #       - Bradley Cooper
-          #       - Hugh Jackman
-          #       - Ryan Reynolds
-          #       - Chris Pratt
+        any:
+          genre:
+            - Action
+            - Thriller
 
-  Large-Scale Storytelling Movies:
-    sort_title: "!09_Large_Scale_Storytelling_Movies"
-    visible_home: true
-    visible_library: true
-    visible_shared: true
+  Crime Files:
+    sort_title: "!08_Crime_Files"
+    url_poster: https://raw.githubusercontent.com/Kometa-Team/Default-Images/master/genre/Crime.jpg
+    visible_home: weekly(tuesday|thursday|sunday)
+    visible_library: weekly(tuesday|thursday|sunday)
+    visible_shared: weekly(tuesday|thursday|sunday)
+    smart_filter:
+      sort_by: random
+      all:
+        rating.gte: 6.0
+        genre.not:
+          - Animation
+          - Horror
+          - Family
+        genre:
+          - Crime
+
+  Franchise Vault:
+    sort_title: "!09_Franchise_Vault"
+    url_poster: https://raw.githubusercontent.com/Kometa-Team/Default-Images/master/genre/Epic.jpg
+    visible_home: weekly(tuesday|thursday|friday)
+    visible_library: weekly(tuesday|thursday|friday)
+    visible_shared: weekly(tuesday|thursday|friday)
     smart_filter:
       sort_by: random
       all:
@@ -151,12 +144,20 @@ collections:
             - DC Universe
             - The Terminator
             - Indiana Jones
+            - Fast & Furious
+            - Transformers
+            - X-Men
+            - Spider-Man
+            - Back to the Future
+            - Alien
+            - Top Gun
 
-  Rom-Com Movies:
-    sort_title: "!10_Rom-Com_Movies"
-    visible_home: true
-    visible_library: true
-    visible_shared: true
+  Love & Laughs:
+    sort_title: "!09_Love_and_Laughs"
+    url_poster: https://raw.githubusercontent.com/Kometa-Team/Default-Images/master/genre/Romantic%20Comedy.jpg
+    visible_home: weekly(wednesday|friday|saturday)
+    visible_library: weekly(wednesday|friday|saturday)
+    visible_shared: weekly(wednesday|friday|saturday)
     smart_filter:
       sort_by: random
       all:
@@ -168,10 +169,81 @@ collections:
           - Horror
         any:
           all:
-            genre: 
+            genre:
               - Romance
               - Comedy
           title.is:
             - Silver Linings Playbook
             - The Notebook
-          
+
+  Sci-Fi Odyssey:
+    sort_title: "!10_Sci_Fi_Odyssey"
+    url_poster: https://raw.githubusercontent.com/Kometa-Team/Default-Images/master/genre/Science%20Fiction.jpg
+    visible_home: weekly(monday|tuesday|friday|sunday)
+    visible_library: weekly(monday|tuesday|friday|sunday)
+    visible_shared: weekly(monday|tuesday|friday|sunday)
+    smart_filter:
+      sort_by: random
+      all:
+        rating.gte: 6.0
+        genre.not:
+          - Animation
+          - Family
+          - Horror
+        genre:
+          - Science Fiction
+
+  Mind Benders:
+    sort_title: "!10_Mind_Benders"
+    url_poster: https://raw.githubusercontent.com/Kometa-Team/Default-Images/master/genre/Mind-Bend.jpg
+    visible_home: weekly(monday|wednesday|thursday)
+    visible_library: weekly(monday|wednesday|thursday)
+    visible_shared: weekly(monday|wednesday|thursday)
+    smart_filter:
+      sort_by: random
+      all:
+        rating.gte: 7.0
+        genre.not:
+          - Animation
+          - Family
+          - Horror
+          - Action
+        any:
+          genre:
+            - Mystery
+            - Thriller
+
+  Hidden Gems:
+    sort_title: "!11_Hidden_Gems"
+    url_poster: https://raw.githubusercontent.com/Kometa-Team/Default-Images/master/genre/Cult%20Classics.jpg
+    visible_home: weekly(tuesday|thursday|saturday|sunday)
+    visible_library: weekly(tuesday|thursday|saturday|sunday)
+    visible_shared: weekly(tuesday|thursday|saturday|sunday)
+    smart_filter:
+      sort_by: random
+      all:
+        rating.gte: 7.5
+        genre.not:
+          - Animation
+          - Family
+          - Documentary
+          - Horror
+
+  Based on a True Story:
+    sort_title: "!11_Based_on_a_True_Story"
+    url_poster: https://raw.githubusercontent.com/Kometa-Team/Default-Images/master/genre/Biography.jpg
+    visible_home: weekly(monday|wednesday|saturday)
+    visible_library: weekly(monday|wednesday|saturday)
+    visible_shared: weekly(monday|wednesday|saturday)
+    smart_filter:
+      sort_by: random
+      all:
+        rating.gte: 6.5
+        genre.not:
+          - Animation
+          - Horror
+          - Family
+        any:
+          genre:
+            - History
+            - War

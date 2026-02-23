@@ -1,0 +1,17 @@
+collections:
+  Halloween:
+    sort_title: "!02_Halloween"
+    url_poster: https://raw.githubusercontent.com/Kometa-Team/Default-Images/master/seasonal/halloween.jpg
+    collection_order: random
+    visible_home: range(09/15-10/31)
+    visible_library: range(09/15-10/31)
+    visible_shared: range(09/15-10/31)
+    smart_filter:
+      sort_by: random
+      limit: 25
+      all:
+        rating.gte: 6.0
+        any:
+          genre:
+            - Horror
+            - Thriller

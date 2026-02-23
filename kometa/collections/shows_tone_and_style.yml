@@ -1,6 +1,7 @@
 collections:
-  Latest On Streaming Shows:
-    sort_title: "!05_Latest_On_Streaming_Shows"
+  Just Dropped:
+    sort_title: "!05_Just_Dropped"
+    url_poster: https://raw.githubusercontent.com/Kometa-Team/Default-Images/master/chart/Newly%20Released.jpg
     visible_home: true
     visible_library: true
     visible_shared: true
@@ -8,7 +9,7 @@ collections:
       sort_by: random
       all:
         rating.gte: 6.0
-        release: 730  # last 2 years in days
+        release: 730  # last 2 years
         any:
           network:
             - Netflix
@@ -21,11 +22,12 @@ collections:
             - Paramount+
             - Peacock
 
-  Across Impossible Worlds Shows:
-    sort_title: "!06_Across_Impossible_Worlds"
-    visible_home: true
-    visible_library: true
-    visible_shared: true
+  Worlds Beyond:
+    sort_title: "!06_Worlds_Beyond"
+    url_poster: https://raw.githubusercontent.com/Kometa-Team/Default-Images/master/genre/Sci-Fi%20%26%20Fantasy.jpg
+    visible_home: weekly(monday|tuesday|wednesday|friday|sunday)
+    visible_library: weekly(monday|tuesday|wednesday|friday|sunday)
+    visible_shared: weekly(monday|tuesday|wednesday|friday|sunday)
     smart_filter:
       sort_by: random
       all:
@@ -38,11 +40,12 @@ collections:
             - Action & Adventure
             - Sci-Fi & Fantasy
 
-  Prestige Drama Shows:
-    sort_title: "!07_Prestige_Drama"
-    visible_home: true
-    visible_library: true
-    visible_shared: true
+  Peak TV:
+    sort_title: "!06_Peak_TV"
+    url_poster: https://raw.githubusercontent.com/Kometa-Team/Default-Images/master/genre/Drama.jpg
+    visible_home: weekly(monday|thursday|saturday|sunday)
+    visible_library: weekly(monday|thursday|saturday|sunday)
+    visible_shared: weekly(monday|thursday|saturday|sunday)
     smart_filter:
       sort_by: random
       all:
@@ -54,11 +57,12 @@ collections:
         genre:
           - Drama
 
-  Crime Abiding Shows:
-    sort_title: "!08_Crime_Abiding_Shows"
-    visible_home: true
-    visible_library: true
-    visible_shared: true
+  Crime Beat:
+    sort_title: "!07_Crime_Beat"
+    url_poster: https://raw.githubusercontent.com/Kometa-Team/Default-Images/master/genre/True%20Crime.jpg
+    visible_home: weekly(tuesday|wednesday|friday|saturday|sunday)
+    visible_library: weekly(tuesday|wednesday|friday|saturday|sunday)
+    visible_shared: weekly(tuesday|wednesday|friday|saturday|sunday)
     smart_filter:
       sort_by: random
       all:
@@ -70,11 +74,12 @@ collections:
           genre:
             - Crime
 
-  Comfort & Clever Comedy Shows:
-    sort_title: "!09_Comfort_Clever_Comedy"
-    visible_home: true
-    visible_library: true
-    visible_shared: true
+  Comfort Binge:
+    sort_title: "!07_Comfort_Binge"
+    url_poster: https://raw.githubusercontent.com/Kometa-Team/Default-Images/master/genre/Comedy.jpg
+    visible_home: weekly(tuesday|wednesday|thursday|friday|sunday)
+    visible_library: weekly(tuesday|wednesday|thursday|friday|sunday)
+    visible_shared: weekly(tuesday|wednesday|thursday|friday|sunday)
     smart_filter:
       sort_by: random
       all:
@@ -82,5 +87,35 @@ collections:
         genre:
           - Comedy
 
+  Edge of Your Seat:
+    sort_title: "!08_Edge_of_Your_Seat"
+    url_poster: https://raw.githubusercontent.com/Kometa-Team/Default-Images/master/genre/Suspense.jpg
+    visible_home: weekly(monday|wednesday|thursday|saturday)
+    visible_library: weekly(monday|wednesday|thursday|saturday)
+    visible_shared: weekly(monday|wednesday|thursday|saturday)
+    smart_filter:
+      sort_by: random
+      all:
+        rating.gte: 6.5
+        genre.not:
+          - Animation
+          - Family
+          - Kids
+        genre:
+          - Mystery
 
-
+  Not Just Cartoons:
+    sort_title: "!08_Not_Just_Cartoons"
+    url_poster: https://raw.githubusercontent.com/Kometa-Team/Default-Images/master/genre/Adult%20Cartoon.jpg
+    visible_home: weekly(monday|tuesday|thursday|friday|saturday)
+    visible_library: weekly(monday|tuesday|thursday|friday|saturday)
+    visible_shared: weekly(monday|tuesday|thursday|friday|saturday)
+    smart_filter:
+      sort_by: random
+      all:
+        rating.gte: 7.0
+        genre.not:
+          - Family
+          - Kids
+        genre:
+          - Animation
