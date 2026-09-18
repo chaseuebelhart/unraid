@@ -16,6 +16,7 @@ libraries:
     reapply_overlays: false
     overlay_files:
       - file: config/winswatch/movies.yml
+      - file: config/winswatch/generated/chips_movies.yml
       - file: config/winswatch/generated/gauge.yml
       - file: config/winswatch/generated/topedge.yml
     operations:
@@ -28,8 +29,10 @@ libraries:
       - file: config/winswatch/shows.yml
       - file: config/winswatch/seasons.yml
       - file: config/winswatch/episodes.yml
+      - file: config/winswatch/generated/chips_episodes.yml
       - file: config/winswatch/generated/gauge.yml
       - file: config/winswatch/generated/topedge.yml
+      - file: config/winswatch/generated/status.yml
     operations:
       mass_critic_rating_update: mdb_metacritic
       mass_audience_rating_update: mdb_trakt

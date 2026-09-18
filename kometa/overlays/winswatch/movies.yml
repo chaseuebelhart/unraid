@@ -1,55 +1,5 @@
-# Wins Watch — movie posters. Bottom bar, codec chips (queue), NEW, reel. Gauge/top edge come from generated/.
-queues:
-  ww_chips:
-    - horizontal_align: left
-      horizontal_offset: 40
-      vertical_align: bottom
-      vertical_offset: 30
-    - horizontal_align: left
-      horizontal_offset: 165
-      vertical_align: bottom
-      vertical_offset: 30
-    - horizontal_align: left
-      horizontal_offset: 330
-      vertical_align: bottom
-      vertical_offset: 30
-
-templates:
-  ww_chip:
-    optional: [res, hdr, dv, regex, audio_regex]
-    ignore_blank_results: true
-    plex_all: true
-    plex_search:
-      all:
-        any:
-          resolution.regex: <<res>>
-        hdr: <<hdr>>
-    filters:
-      has_dolby_vision: <<dv>>
-      filepath.regex: <<regex>>
-    overlay:
-      name: text(<<label>>)
-      font: config/winswatch/fonts/Avenir_95_Black.ttf
-      font_size: 46
-      font_color: <<color>>
-      back_color: "#00000000"
-      queue: ww_chips
-      weight: <<weight>>
-  ww_audio:
-    ignore_blank_results: true
-    plex_all: true
-    filters:
-      - audio_track_title.regex: <<regex>>
-      - filepath.regex: <<regex>>
-    overlay:
-      name: text(<<label>>)
-      font: config/winswatch/fonts/Avenir_95_Black.ttf
-      font_size: 46
-      font_color: <<color>>
-      back_color: "#00000000"
-      queue: ww_chips
-      weight: <<weight>>
-
+# Wins Watch — movie posters: bottom bar, NEW, reel. Codec chips come from generated/chips_movies.yml,
+# the gauge from generated/gauge.yml and the LEAVING bookmark from generated/topedge.yml.
 overlays:
   ww_bar:
     plex_all: true
@@ -61,35 +11,12 @@ overlays:
       vertical_align: bottom
       vertical_offset: 0
 
-  # --- video (group: one wins) ---
-  ww_v_4k:    {template: {name: ww_chip, label: 4K,    color: "#ffffff", weight: 300, res: "(?i)2160|4k"},   overlay: {group: ww_video, weight: 40}}
-  ww_v_1080p: {template: {name: ww_chip, label: 1080p, color: "#ffffff", weight: 300, res: "(?i)1080|2k"},   overlay: {group: ww_video, weight: 30}}
-  ww_v_720p:  {template: {name: ww_chip, label: 720p,  color: "#ffffff", weight: 300, res: "(?i)720|hd"},    overlay: {group: ww_video, weight: 20}}
-  ww_v_sd:    {template: {name: ww_chip, label: SD,    color: "#ffffff", weight: 300, res: "(?i)576|480|sd"},overlay: {group: ww_video, weight: 10}}
-
-  # --- HDR flavor (group: one wins) ---
-  ww_h_dvhdr: {template: {name: ww_chip, label: "DV·HDR", color: "#c084fc", weight: 200, dv: true,  regex: '(?i)\bdv(.hdr10?\b)'}, overlay: {group: ww_hdr, weight: 40}}
-  ww_h_dv:    {template: {name: ww_chip, label: DV,       color: "#a78bfa", weight: 200, dv: true},                                   overlay: {group: ww_hdr, weight: 30}}
-  ww_h_hdrp:  {template: {name: ww_chip, label: HDR10+,   color: "#fbbf24", weight: 200, hdr: true, regex: '(?i)\bhdr10(\+|p(lus)?\b)'}, overlay: {group: ww_hdr, weight: 20}}
-  ww_h_hdr:   {template: {name: ww_chip, label: HDR,      color: "#e8b84a", weight: 200, hdr: true},                                  overlay: {group: ww_hdr, weight: 10}}
-
-  # --- audio (group: one wins) — regexes copied from Kometa's audio_codec default ---
-  ww_a_truehd_atmos: {template: {name: ww_audio, label: ATMOS,     color: "#60a5fa", weight: 100, regex: '(?i)^(?=.*\btrue[ ._-]?hd(\b|\d))(?=.*\batmos(\b|\d))'}, overlay: {group: ww_audio, weight: 160}}
-  ww_a_dtsx:         {template: {name: ww_audio, label: "DTS:X",   color: "#f87171", weight: 100, regex: '(?i)\b(dts[-_. ]?x7?)\b(?![-_. ]?(26[456]))'},          overlay: {group: ww_audio, weight: 150}}
-  ww_a_plus_atmos:   {template: {name: ww_audio, label: DD+ ATMOS, color: "#7dd3fc", weight: 100, regex: '(?i)^(?=.*\b((dd[p+])|(dolby[ ._-]digital[ ._-]plus)|(e[ ._-]?ac3)\b))(?=.*\batmos(\b|\d))'}, overlay: {group: ww_audio, weight: 140}}
-  ww_a_atmos:        {template: {name: ww_audio, label: ATMOS,     color: "#60a5fa", weight: 100, regex: '(?i)\batmos(\b|\d)'},                                    overlay: {group: ww_audio, weight: 130}}
-  ww_a_truehd:       {template: {name: ww_audio, label: TRUEHD,    color: "#2dd4bf", weight: 100, regex: '(?i)\btrue[ ._-]?hd(\b|\d)'},                            overlay: {group: ww_audio, weight: 120}}
-  ww_a_dtshd:        {template: {name: ww_audio, label: DTS-HD MA, color: "#fb923c", weight: 100, regex: '(?i)\bdts[ ._-]?(hd[ ._-])?(ma|xll|hd)(\b|\d)(?![ ._-]hra)'}, overlay: {group: ww_audio, weight: 110}}
-  ww_a_flac:         {template: {name: ww_audio, label: FLAC,      color: "#9ca3af", weight: 100, regex: '(?i)\bflac(\b|\d)'},                                    overlay: {group: ww_audio, weight: 100}}
-  ww_a_pcm:          {template: {name: ww_audio, label: PCM,       color: "#9ca3af", weight: 100, regex: '(?i)\bl?pcm(\b|\d)'},                                   overlay: {group: ww_audio, weight: 90}}
-  ww_a_ddp:          {template: {name: ww_audio, label: DD+,       color: "#4ade80", weight: 100, regex: '(?i)\b(dd[p+])|(dolby[ ._-]digital[ ._-]plus)|(e[ ._-]?ac3)\b'}, overlay: {group: ww_audio, weight: 70}}
-  ww_a_dts:          {template: {name: ww_audio, label: DTS,       color: "#ef4444", weight: 100, regex: '(?i)\bdts(\b|\d)'},                                     overlay: {group: ww_audio, weight: 50}}
-  ww_a_dd:           {template: {name: ww_audio, label: DD,        color: "#a3a3a3", weight: 100, regex: '(?i)\b(dd)|(ac3)|(dolby)(\b|\d)'},                      overlay: {group: ww_audio, weight: 40}}
-  ww_a_aac:          {template: {name: ww_audio, label: AAC,       color: "#9ca3af", weight: 100, regex: '(?i)\b(aac|stereo|2\.0)\b'},                            overlay: {group: ww_audio, weight: 30}}
-  ww_a_opus:         {template: {name: ww_audio, label: OPUS,      color: "#9ca3af", weight: 100, regex: '(?i)\b(?<!-)OPUS(\b|\d)'},                              overlay: {group: ww_audio, weight: 10}}
-
   ww_new:
+    # validate: false — DaysLeft_N labels that don't exist in the library are dropped from the search instead of
+    # failing it (Kometa validates plex_search label values against the library).
+    ignore_blank_results: true
     plex_search:
+      validate: false
       all:
         added: 14
         label.not: [DaysLeft_1, DaysLeft_2, DaysLeft_3, DaysLeft_4, DaysLeft_5, DaysLeft_6, DaysLeft_7, DaysLeft_8, DaysLeft_9, DaysLeft_10,

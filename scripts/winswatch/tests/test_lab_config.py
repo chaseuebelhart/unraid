@@ -17,4 +17,8 @@ def test_build_fills_blocks_and_libraries(tmp_path: Path):
     assert set(out["libraries"]) == {"Wins Watch Lab", "Wins Watch Lab TV"}
     assert "Movies" not in out["libraries"] and "TV Shows" not in out["libraries"]
     files = [f["file"] for f in out["libraries"]["Wins Watch Lab"]["overlay_files"]]
-    assert files == ["config/winswatch/movies.yml", "config/winswatch/generated/gauge.yml", "config/winswatch/generated/topedge.yml"]
+    assert files == ["config/winswatch/movies.yml", "config/winswatch/generated/chips_movies.yml",
+                     "config/winswatch/generated/gauge.yml", "config/winswatch/generated/topedge.yml"]
+    tv = [f["file"] for f in out["libraries"]["Wins Watch Lab TV"]["overlay_files"]]
+    assert "config/winswatch/generated/status.yml" in tv and "config/winswatch/generated/chips_episodes.yml" in tv
+    assert "config/winswatch/generated/status.yml" not in files   # tmdb_status filters are show-only

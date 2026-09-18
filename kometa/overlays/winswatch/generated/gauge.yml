@@ -9,7 +9,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 0.0
       user_rating.lt: 0.1
   ww_arc_01:
@@ -21,7 +22,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 0.1
       user_rating.lt: 0.2
   ww_arc_02:
@@ -33,7 +35,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 0.2
       user_rating.lt: 0.3
   ww_arc_03:
@@ -45,7 +48,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 0.3
       user_rating.lt: 0.4
   ww_arc_04:
@@ -57,7 +61,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 0.4
       user_rating.lt: 0.5
   ww_arc_05:
@@ -69,7 +74,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 0.5
       user_rating.lt: 0.6
   ww_arc_06:
@@ -81,7 +87,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 0.6
       user_rating.lt: 0.7
   ww_arc_07:
@@ -93,7 +100,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 0.7
       user_rating.lt: 0.8
   ww_arc_08:
@@ -105,7 +113,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 0.8
       user_rating.lt: 0.9
   ww_arc_09:
@@ -117,7 +126,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 0.9
       user_rating.lt: 1.0
   ww_arc_10:
@@ -129,7 +139,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 1.0
       user_rating.lt: 1.1
   ww_arc_11:
@@ -141,7 +152,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 1.1
       user_rating.lt: 1.2
   ww_arc_12:
@@ -153,7 +165,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 1.2
       user_rating.lt: 1.3
   ww_arc_13:
@@ -165,7 +178,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 1.3
       user_rating.lt: 1.4
   ww_arc_14:
@@ -177,7 +191,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 1.4
       user_rating.lt: 1.5
   ww_arc_15:
@@ -189,7 +204,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 1.5
       user_rating.lt: 1.6
   ww_arc_16:
@@ -201,7 +217,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 1.6
       user_rating.lt: 1.7
   ww_arc_17:
@@ -213,7 +230,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 1.7
       user_rating.lt: 1.8
   ww_arc_18:
@@ -225,7 +243,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 1.8
       user_rating.lt: 1.9
   ww_arc_19:
@@ -237,7 +256,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 1.9
       user_rating.lt: 2.0
   ww_arc_20:
@@ -249,7 +269,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 2.0
       user_rating.lt: 2.1
   ww_arc_21:
@@ -261,7 +282,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 2.1
       user_rating.lt: 2.2
   ww_arc_22:
@@ -273,7 +295,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 2.2
       user_rating.lt: 2.3
   ww_arc_23:
@@ -285,7 +308,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 2.3
       user_rating.lt: 2.4
   ww_arc_24:
@@ -297,7 +321,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 2.4
       user_rating.lt: 2.5
   ww_arc_25:
@@ -309,7 +334,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 2.5
       user_rating.lt: 2.6
   ww_arc_26:
@@ -321,7 +347,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 2.6
       user_rating.lt: 2.7
   ww_arc_27:
@@ -333,7 +360,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 2.7
       user_rating.lt: 2.8
   ww_arc_28:
@@ -345,7 +373,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 2.8
       user_rating.lt: 2.9
   ww_arc_29:
@@ -357,7 +386,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 2.9
       user_rating.lt: 3.0
   ww_arc_30:
@@ -369,7 +399,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 3.0
       user_rating.lt: 3.1
   ww_arc_31:
@@ -381,7 +412,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 3.1
       user_rating.lt: 3.2
   ww_arc_32:
@@ -393,7 +425,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 3.2
       user_rating.lt: 3.3
   ww_arc_33:
@@ -405,7 +438,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 3.3
       user_rating.lt: 3.4
   ww_arc_34:
@@ -417,7 +451,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 3.4
       user_rating.lt: 3.5
   ww_arc_35:
@@ -429,7 +464,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 3.5
       user_rating.lt: 3.6
   ww_arc_36:
@@ -441,7 +477,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 3.6
       user_rating.lt: 3.7
   ww_arc_37:
@@ -453,7 +490,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 3.7
       user_rating.lt: 3.8
   ww_arc_38:
@@ -465,7 +503,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 3.8
       user_rating.lt: 3.9
   ww_arc_39:
@@ -477,7 +516,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 3.9
       user_rating.lt: 4.0
   ww_arc_40:
@@ -489,7 +529,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 4.0
       user_rating.lt: 4.1
   ww_arc_41:
@@ -501,7 +542,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 4.1
       user_rating.lt: 4.2
   ww_arc_42:
@@ -513,7 +555,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 4.2
       user_rating.lt: 4.3
   ww_arc_43:
@@ -525,7 +568,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 4.3
       user_rating.lt: 4.4
   ww_arc_44:
@@ -537,7 +581,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 4.4
       user_rating.lt: 4.5
   ww_arc_45:
@@ -549,7 +594,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 4.5
       user_rating.lt: 4.6
   ww_arc_46:
@@ -561,7 +607,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 4.6
       user_rating.lt: 4.7
   ww_arc_47:
@@ -573,7 +620,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 4.7
       user_rating.lt: 4.8
   ww_arc_48:
@@ -585,7 +633,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 4.8
       user_rating.lt: 4.9
   ww_arc_49:
@@ -597,7 +646,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 4.9
       user_rating.lt: 5.0
   ww_arc_50:
@@ -609,7 +659,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 5.0
       user_rating.lt: 5.1
   ww_arc_51:
@@ -621,7 +672,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 5.1
       user_rating.lt: 5.2
   ww_arc_52:
@@ -633,7 +685,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 5.2
       user_rating.lt: 5.3
   ww_arc_53:
@@ -645,7 +698,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 5.3
       user_rating.lt: 5.4
   ww_arc_54:
@@ -657,7 +711,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 5.4
       user_rating.lt: 5.5
   ww_arc_55:
@@ -669,7 +724,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 5.5
       user_rating.lt: 5.6
   ww_arc_56:
@@ -681,7 +737,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 5.6
       user_rating.lt: 5.7
   ww_arc_57:
@@ -693,7 +750,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 5.7
       user_rating.lt: 5.8
   ww_arc_58:
@@ -705,7 +763,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 5.8
       user_rating.lt: 5.9
   ww_arc_59:
@@ -717,7 +776,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 5.9
       user_rating.lt: 6.0
   ww_arc_60:
@@ -729,7 +789,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 6.0
       user_rating.lt: 6.1
   ww_arc_61:
@@ -741,7 +802,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 6.1
       user_rating.lt: 6.2
   ww_arc_62:
@@ -753,7 +815,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 6.2
       user_rating.lt: 6.3
   ww_arc_63:
@@ -765,7 +828,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 6.3
       user_rating.lt: 6.4
   ww_arc_64:
@@ -777,7 +841,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 6.4
       user_rating.lt: 6.5
   ww_arc_65:
@@ -789,7 +854,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 6.5
       user_rating.lt: 6.6
   ww_arc_66:
@@ -801,7 +867,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 6.6
       user_rating.lt: 6.7
   ww_arc_67:
@@ -813,7 +880,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 6.7
       user_rating.lt: 6.8
   ww_arc_68:
@@ -825,7 +893,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 6.8
       user_rating.lt: 6.9
   ww_arc_69:
@@ -837,7 +906,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 6.9
       user_rating.lt: 7.0
   ww_arc_70:
@@ -849,7 +919,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 7.0
       user_rating.lt: 7.1
   ww_arc_71:
@@ -861,7 +932,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 7.1
       user_rating.lt: 7.2
   ww_arc_72:
@@ -873,7 +945,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 7.2
       user_rating.lt: 7.3
   ww_arc_73:
@@ -885,7 +958,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 7.3
       user_rating.lt: 7.4
   ww_arc_74:
@@ -897,7 +971,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 7.4
       user_rating.lt: 7.5
   ww_arc_75:
@@ -909,7 +984,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 7.5
       user_rating.lt: 7.6
   ww_arc_76:
@@ -921,7 +997,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 7.6
       user_rating.lt: 7.7
   ww_arc_77:
@@ -933,7 +1010,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 7.7
       user_rating.lt: 7.8
   ww_arc_78:
@@ -945,7 +1023,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 7.8
       user_rating.lt: 7.9
   ww_arc_79:
@@ -957,7 +1036,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 7.9
       user_rating.lt: 8.0
   ww_arc_80:
@@ -969,7 +1049,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.0
       user_rating.lt: 8.1
   ww_arc_81:
@@ -981,7 +1062,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.1
       user_rating.lt: 8.2
   ww_arc_82:
@@ -993,7 +1075,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.2
       user_rating.lt: 8.3
   ww_arc_83:
@@ -1005,7 +1088,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.3
       user_rating.lt: 8.4
   ww_arc_84:
@@ -1017,7 +1101,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.4
       user_rating.lt: 8.5
   ww_arc_85:
@@ -1029,7 +1114,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.5
       user_rating.lt: 8.6
   ww_arc_86:
@@ -1041,7 +1127,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.6
       user_rating.lt: 8.7
   ww_arc_87:
@@ -1053,7 +1140,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.7
       user_rating.lt: 8.8
   ww_arc_88:
@@ -1065,7 +1153,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.8
       user_rating.lt: 8.9
   ww_arc_89:
@@ -1077,7 +1166,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.9
       user_rating.lt: 9.0
   ww_arc_90:
@@ -1089,7 +1179,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 9.0
       user_rating.lt: 9.1
   ww_arc_91:
@@ -1101,7 +1192,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 9.1
       user_rating.lt: 9.2
   ww_arc_92:
@@ -1113,7 +1205,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 9.2
       user_rating.lt: 9.3
   ww_arc_93:
@@ -1125,7 +1218,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 9.3
       user_rating.lt: 9.4
   ww_arc_94:
@@ -1137,7 +1231,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 9.4
       user_rating.lt: 9.5
   ww_arc_95:
@@ -1149,7 +1244,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 9.5
       user_rating.lt: 9.6
   ww_arc_96:
@@ -1161,7 +1257,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 9.6
       user_rating.lt: 9.7
   ww_arc_97:
@@ -1173,7 +1270,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 9.7
       user_rating.lt: 9.8
   ww_arc_98:
@@ -1185,7 +1283,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 9.8
       user_rating.lt: 9.9
   ww_arc_99:
@@ -1197,7 +1296,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 9.9
       user_rating.lt: 10.0
   ww_arc_100:
@@ -1209,7 +1309,8 @@ overlays:
       vertical_align: bottom
       vertical_offset: 55
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 10.0
   ww_num_white:
     overlay:
@@ -1225,7 +1326,8 @@ overlays:
       back_width: 220
       back_height: 90
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 0.1
       user_rating.lt: 8.5
   ww_num_gold:
@@ -1242,7 +1344,8 @@ overlays:
       back_width: 220
       back_height: 90
     plex_all: true
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.5
   ww_votes_10K_white:
     overlay:
@@ -1258,9 +1361,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_10K
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.lt: 8.5
   ww_votes_10K_gold:
     overlay:
@@ -1276,9 +1381,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_10K
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.5
   ww_votes_20K_white:
     overlay:
@@ -1294,9 +1401,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_20K
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.lt: 8.5
   ww_votes_20K_gold:
     overlay:
@@ -1312,9 +1421,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_20K
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.5
   ww_votes_50K_white:
     overlay:
@@ -1330,9 +1441,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_50K
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.lt: 8.5
   ww_votes_50K_gold:
     overlay:
@@ -1348,9 +1461,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_50K
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.5
   ww_votes_100K_white:
     overlay:
@@ -1366,9 +1481,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_100K
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.lt: 8.5
   ww_votes_100K_gold:
     overlay:
@@ -1384,9 +1501,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_100K
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.5
   ww_votes_200K_white:
     overlay:
@@ -1402,9 +1521,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_200K
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.lt: 8.5
   ww_votes_200K_gold:
     overlay:
@@ -1420,9 +1541,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_200K
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.5
   ww_votes_300K_white:
     overlay:
@@ -1438,9 +1561,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_300K
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.lt: 8.5
   ww_votes_300K_gold:
     overlay:
@@ -1456,9 +1581,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_300K
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.5
   ww_votes_400K_white:
     overlay:
@@ -1474,9 +1601,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_400K
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.lt: 8.5
   ww_votes_400K_gold:
     overlay:
@@ -1492,9 +1621,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_400K
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.5
   ww_votes_500K_white:
     overlay:
@@ -1510,9 +1641,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_500K
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.lt: 8.5
   ww_votes_500K_gold:
     overlay:
@@ -1528,9 +1661,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_500K
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.5
   ww_votes_600K_white:
     overlay:
@@ -1546,9 +1681,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_600K
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.lt: 8.5
   ww_votes_600K_gold:
     overlay:
@@ -1564,9 +1701,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_600K
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.5
   ww_votes_700K_white:
     overlay:
@@ -1582,9 +1721,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_700K
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.lt: 8.5
   ww_votes_700K_gold:
     overlay:
@@ -1600,9 +1741,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_700K
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.5
   ww_votes_800K_white:
     overlay:
@@ -1618,9 +1761,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_800K
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.lt: 8.5
   ww_votes_800K_gold:
     overlay:
@@ -1636,9 +1781,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_800K
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.5
   ww_votes_900K_white:
     overlay:
@@ -1654,9 +1801,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_900K
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.lt: 8.5
   ww_votes_900K_gold:
     overlay:
@@ -1672,9 +1821,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_900K
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.5
   ww_votes_1.0M_white:
     overlay:
@@ -1690,9 +1841,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_1.0M
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.lt: 8.5
   ww_votes_1.0M_gold:
     overlay:
@@ -1708,9 +1861,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_1.0M
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.5
   ww_votes_1.5M_white:
     overlay:
@@ -1726,9 +1881,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_1.5M
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.lt: 8.5
   ww_votes_1.5M_gold:
     overlay:
@@ -1744,9 +1901,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_1.5M
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.5
   ww_votes_2.0M_white:
     overlay:
@@ -1762,9 +1921,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_2.0M
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.lt: 8.5
   ww_votes_2.0M_gold:
     overlay:
@@ -1780,9 +1941,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_2.0M
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.5
   ww_votes_2.5M_white:
     overlay:
@@ -1798,9 +1961,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_2.5M
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.lt: 8.5
   ww_votes_2.5M_gold:
     overlay:
@@ -1816,9 +1981,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_2.5M
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.5
   ww_votes_3.0M_white:
     overlay:
@@ -1834,9 +2001,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_3.0M
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.lt: 8.5
   ww_votes_3.0M_gold:
     overlay:
@@ -1852,9 +2021,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_3.0M
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.5
   ww_votes_3.5M_white:
     overlay:
@@ -1870,9 +2041,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_3.5M
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.lt: 8.5
   ww_votes_3.5M_gold:
     overlay:
@@ -1888,9 +2061,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_3.5M
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.5
   ww_votes_4.0M_white:
     overlay:
@@ -1906,9 +2081,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_4.0M
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.lt: 8.5
   ww_votes_4.0M_gold:
     overlay:
@@ -1924,9 +2101,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_4.0M
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.5
   ww_votes_4.5M_white:
     overlay:
@@ -1942,9 +2121,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_4.5M
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.lt: 8.5
   ww_votes_4.5M_gold:
     overlay:
@@ -1960,9 +2141,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_4.5M
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.5
   ww_votes_5.0M_white:
     overlay:
@@ -1978,9 +2161,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_5.0M
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.lt: 8.5
   ww_votes_5.0M_gold:
     overlay:
@@ -1996,9 +2181,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_5.0M
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.5
   ww_votes_5.5M_white:
     overlay:
@@ -2014,9 +2201,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_5.5M
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.lt: 8.5
   ww_votes_5.5M_gold:
     overlay:
@@ -2032,9 +2221,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_5.5M
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.5
   ww_votes_6.0M_white:
     overlay:
@@ -2050,9 +2241,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_6.0M
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.lt: 8.5
   ww_votes_6.0M_gold:
     overlay:
@@ -2068,9 +2261,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_6.0M
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.5
   ww_votes_6.5M_white:
     overlay:
@@ -2086,9 +2281,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_6.5M
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.lt: 8.5
   ww_votes_6.5M_gold:
     overlay:
@@ -2104,9 +2301,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_6.5M
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.5
   ww_votes_7.0M_white:
     overlay:
@@ -2122,9 +2321,11 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_7.0M
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.lt: 8.5
   ww_votes_7.0M_gold:
     overlay:
@@ -2140,7 +2341,9 @@ overlays:
       back_width: 220
       back_height: 40
     plex_search:
+      validate: false
       all:
         label: Votes_7.0M
-    value_filter:
+    ignore_blank_results: true
+    filters:
       user_rating.gte: 8.5

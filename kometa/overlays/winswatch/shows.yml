@@ -1,7 +1,10 @@
 # Wins Watch — show posters. Bottom bar, streaming service (no codecs), NEW (lower, under the tab zone), reel.
 templates:
   ww_service:
+    # validate: false — network values missing from the library are dropped, not fatal (see generated/ note)
+    ignore_blank_results: true
     plex_search:
+      validate: false
       any:
         network: <<networks>>
     overlay:
@@ -29,7 +32,7 @@ overlays:
       vertical_offset: 0
 
   ww_s_netflix:    {template: {name: ww_service, label: NETFLIX,        color: "#e50914", weight: 100, networks: [Netflix]}}
-  ww_s_prime:      {template: {name: ww_service, label: PRIME VIDEO,    color: "#00a8e1", weight: 99,  networks: [Prime Video, Amazon, Amazon Prime Video, Freevee]}}
+  ww_s_prime:      {template: {name: ww_service, label: PRIME VIDEO,    color: "#00a8e1", weight: 99,  networks: [Prime Video, Amazon, Amazon Prime Video, Freevee, Amazon Freevee]}}
   ww_s_apple:      {template: {name: ww_service, label: APPLE TV+,      color: "#f5f5f7", weight: 98,  networks: [Apple TV+, Apple TV]}}
   ww_s_hbo:        {template: {name: ww_service, label: HBO,            color: "#ffffff", weight: 97,  networks: [HBO]}}
   ww_s_max:        {template: {name: ww_service, label: MAX,            color: "#b535f6", weight: 96,  networks: [Max, HBO Max]}}
@@ -51,12 +54,14 @@ overlays:
   ww_s_syfy:       {template: {name: ww_service, label: SYFY,           color: "#a855f7", weight: 80,  networks: [Syfy]}}
   ww_s_cw:         {template: {name: ww_service, label: THE CW,         color: "#22c55e", weight: 79,  networks: [The CW]}}
   ww_s_mgm:        {template: {name: ww_service, label: MGM+,           color: "#f5c518", weight: 78,  networks: [MGM+]}}
-  ww_s_starz:      {template: {name: ww_service, label: STARZ,          color: "#ffffff", weight: 77,  networks: [Starz]}}
+  ww_s_starz:      {template: {name: ww_service, label: STARZ,          color: "#ffffff", weight: 77,  networks: [Starz, STARZ]}}
   ww_s_adultswim:  {template: {name: ww_service, label: ADULT SWIM,     color: "#ffffff", weight: 76,  networks: [Adult Swim]}}
   ww_s_usa:        {template: {name: ww_service, label: USA NETWORK,    color: "#3b82f6", weight: 75,  networks: [USA Network]}}
 
   ww_new:
+    ignore_blank_results: true
     plex_search:
+      validate: false
       all:
         episode_added: 14
         label.not: [DaysLeft_1, DaysLeft_2, DaysLeft_3, DaysLeft_4, DaysLeft_5, DaysLeft_6, DaysLeft_7, DaysLeft_8, DaysLeft_9, DaysLeft_10,

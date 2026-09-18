@@ -25,11 +25,15 @@ class PlexLib:
         stale = {l for l in current if l.startswith(remove_prefixes) and l not in add}
         missing = add - current
         if stale: item.removeLabel(list(stale))
+        if stale and missing: item.reload()   # plexapi rebuilds the tag list from item.labels; without a reload addLabel re-adds the stale ones
         if missing: item.addLabel(list(missing))
         return bool(stale or missing)
 
     def set_user_rating(self, item, value: float) -> bool:
         if item.userRating is not None and abs(item.userRating - value) < 0.05:
             return False
-        item.rate(value)
+        # Metadata edit (what Kometa's mass_user_rating_update does), not /:/rate: rating through /:/rate fires a
+        # media.rate webhook and a plex.tv ViewStateSync round-trip that echoes the value back rounded to a whole
+        # number (7.3 -> 7.0) a few seconds later. The edit path keeps the decimal.
+        item.editField("userRating", value, locked=True)
         return True
