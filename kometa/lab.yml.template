@@ -1,0 +1,35 @@
+# GENERATED from config.yml by scripts/winswatch/build_lab_config.py — lab libraries only. Never point this at Movies / TV Shows.
+plex: __PLEX__
+tmdb: __TMDB__
+mdblist: __MDBLIST__
+settings:
+  cache: true
+  cache_expiration: 60
+  run_order: [overlays, operations]
+  overlay_artwork_filetype: webp_lossy
+  overlay_artwork_quality: 90
+  show_missing: false
+  show_unmanaged: false
+libraries:
+  __MOVIE_LIB__:
+    remove_overlays: false
+    reapply_overlays: false
+    overlay_files:
+      - file: config/winswatch/movies.yml
+      - file: config/winswatch/generated/gauge.yml
+      - file: config/winswatch/generated/topedge.yml
+    operations:
+      mass_critic_rating_update: mdb_metacritic
+      mass_audience_rating_update: mdb_letterboxd
+  __SHOW_LIB__:
+    remove_overlays: false
+    reapply_overlays: false
+    overlay_files:
+      - file: config/winswatch/shows.yml
+      - file: config/winswatch/seasons.yml
+      - file: config/winswatch/episodes.yml
+      - file: config/winswatch/generated/gauge.yml
+      - file: config/winswatch/generated/topedge.yml
+    operations:
+      mass_critic_rating_update: mdb_metacritic
+      mass_audience_rating_update: mdb_trakt

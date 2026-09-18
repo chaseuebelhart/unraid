@@ -1,0 +1,19 @@
+# Wins Watch — season posters: NEW SEASON tag only.
+overlays:
+  ww_new_season:
+    builder_level: season
+    plex_search:
+      all:
+        episode_added: 14
+    overlay:
+      name: text(NEW SEASON)
+      font: config/winswatch/fonts/Avenir_95_Black.ttf
+      font_size: 58
+      font_color: "#06131c"
+      back_color: "#5ac8fa"
+      back_radius: 15
+      back_padding: 18
+      horizontal_align: left
+      horizontal_offset: 40
+      vertical_align: bottom
+      vertical_offset: 40

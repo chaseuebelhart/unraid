@@ -1,0 +1,88 @@
+# Wins Watch — show posters. Bottom bar, streaming service (no codecs), NEW (lower, under the tab zone), reel.
+templates:
+  ww_service:
+    plex_search:
+      any:
+        network: <<networks>>
+    overlay:
+      name: text(<<label>>)
+      font: config/winswatch/fonts/Avenir_95_Black.ttf
+      font_size: 46
+      font_color: <<color>>
+      back_color: "#00000000"
+      horizontal_align: left
+      horizontal_offset: 40
+      vertical_align: bottom
+      vertical_offset: 30
+      group: ww_service
+      weight: <<weight>>
+
+overlays:
+  ww_bar:
+    plex_all: true
+    overlay:
+      name: ww_bar
+      file: config/winswatch/assets/bar_bottom.png
+      horizontal_align: center
+      horizontal_offset: 0
+      vertical_align: bottom
+      vertical_offset: 0
+
+  ww_s_netflix:    {template: {name: ww_service, label: NETFLIX,        color: "#e50914", weight: 100, networks: [Netflix]}}
+  ww_s_prime:      {template: {name: ww_service, label: PRIME VIDEO,    color: "#00a8e1", weight: 99,  networks: [Prime Video, Amazon, Amazon Prime Video, Freevee]}}
+  ww_s_apple:      {template: {name: ww_service, label: APPLE TV+,      color: "#f5f5f7", weight: 98,  networks: [Apple TV+, Apple TV]}}
+  ww_s_hbo:        {template: {name: ww_service, label: HBO,            color: "#ffffff", weight: 97,  networks: [HBO]}}
+  ww_s_max:        {template: {name: ww_service, label: MAX,            color: "#b535f6", weight: 96,  networks: [Max, HBO Max]}}
+  ww_s_hulu:       {template: {name: ww_service, label: HULU,           color: "#1ce783", weight: 95,  networks: [Hulu]}}
+  ww_s_disney:     {template: {name: ww_service, label: DISNEY+,        color: "#5b9bff", weight: 94,  networks: [Disney+]}}
+  ww_s_paramount:  {template: {name: ww_service, label: PARAMOUNT+,     color: "#0064ff", weight: 93,  networks: [Paramount+, Paramount Network]}}
+  ww_s_peacock:    {template: {name: ww_service, label: PEACOCK,        color: "#ffcf00", weight: 92,  networks: [Peacock]}}
+  ww_s_fx:         {template: {name: ww_service, label: FX,             color: "#ffffff", weight: 91,  networks: [FX, FXX]}}
+  ww_s_showtime:   {template: {name: ww_service, label: SHOWTIME,       color: "#ff2a2a", weight: 90,  networks: [Showtime]}}
+  ww_s_amc:        {template: {name: ww_service, label: AMC,            color: "#ffcc00", weight: 89,  networks: [AMC, AMC+]}}
+  ww_s_cbs:        {template: {name: ww_service, label: CBS,            color: "#3b82f6", weight: 88,  networks: [CBS]}}
+  ww_s_nbc:        {template: {name: ww_service, label: NBC,            color: "#f37021", weight: 87,  networks: [NBC]}}
+  ww_s_abc:        {template: {name: ww_service, label: ABC,            color: "#ffffff", weight: 86,  networks: [ABC]}}
+  ww_s_fox:        {template: {name: ww_service, label: FOX,            color: "#3b82f6", weight: 85,  networks: [FOX]}}
+  ww_s_bbc:        {template: {name: ww_service, label: BBC,            color: "#ffffff", weight: 84,  networks: [BBC One, BBC Two, BBC Three, BBC]}}
+  ww_s_comedy:     {template: {name: ww_service, label: COMEDY CENTRAL, color: "#ffc800", weight: 83,  networks: [Comedy Central]}}
+  ww_s_crunchy:    {template: {name: ww_service, label: CRUNCHYROLL,    color: "#f47521", weight: 82,  networks: [Crunchyroll]}}
+  ww_s_bravo:      {template: {name: ww_service, label: BRAVO,          color: "#8b5cf6", weight: 81,  networks: [Bravo]}}
+  ww_s_syfy:       {template: {name: ww_service, label: SYFY,           color: "#a855f7", weight: 80,  networks: [Syfy]}}
+  ww_s_cw:         {template: {name: ww_service, label: THE CW,         color: "#22c55e", weight: 79,  networks: [The CW]}}
+  ww_s_mgm:        {template: {name: ww_service, label: MGM+,           color: "#f5c518", weight: 78,  networks: [MGM+]}}
+  ww_s_starz:      {template: {name: ww_service, label: STARZ,          color: "#ffffff", weight: 77,  networks: [Starz]}}
+  ww_s_adultswim:  {template: {name: ww_service, label: ADULT SWIM,     color: "#ffffff", weight: 76,  networks: [Adult Swim]}}
+  ww_s_usa:        {template: {name: ww_service, label: USA NETWORK,    color: "#3b82f6", weight: 75,  networks: [USA Network]}}
+
+  ww_new:
+    plex_search:
+      all:
+        episode_added: 14
+        label.not: [DaysLeft_1, DaysLeft_2, DaysLeft_3, DaysLeft_4, DaysLeft_5, DaysLeft_6, DaysLeft_7, DaysLeft_8, DaysLeft_9, DaysLeft_10,
+                    DaysLeft_11, DaysLeft_12, DaysLeft_13, DaysLeft_14, DaysLeft_15, DaysLeft_16, DaysLeft_17, DaysLeft_18, DaysLeft_19, DaysLeft_20,
+                    DaysLeft_21, DaysLeft_22, DaysLeft_23, DaysLeft_24, DaysLeft_25, DaysLeft_26, DaysLeft_27, DaysLeft_28, DaysLeft_29, DaysLeft_30]
+    overlay:
+      name: text(NEW)
+      font: config/winswatch/fonts/Avenir_95_Black.ttf
+      font_size: 58
+      font_color: "#06131c"
+      back_color: "#5ac8fa"
+      back_radius: 15
+      back_padding: 18
+      horizontal_align: left
+      horizontal_offset: 40
+      vertical_align: top
+      vertical_offset: 100
+
+  ww_reel:
+    plex_all: true
+    filters:
+      tmdb_keyword: aftercreditsstinger, duringcreditsstinger
+    overlay:
+      name: ww_reel
+      file: config/winswatch/assets/reel.png
+      horizontal_align: right
+      horizontal_offset: 40
+      vertical_align: top
+      vertical_offset: 40
