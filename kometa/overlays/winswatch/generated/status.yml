@@ -705,6 +705,36 @@ overlays:
       validate: false
       all:
         label: Returns_2030
+  ww_tab_returns_2031:
+    overlay:
+      name: ww_tab_returns_2031
+      file: config/winswatch/assets/tab_Returns_2031.png
+      group: topedge
+      weight: 204
+      horizontal_align: center
+      horizontal_offset: 0
+      vertical_align: top
+      vertical_offset: 0
+    ignore_blank_results: true
+    plex_search:
+      validate: false
+      all:
+        label: Returns_2031
+  ww_tab_returns_2032:
+    overlay:
+      name: ww_tab_returns_2032
+      file: config/winswatch/assets/tab_Returns_2032.png
+      group: topedge
+      weight: 204
+      horizontal_align: center
+      horizontal_offset: 0
+      vertical_align: top
+      vertical_offset: 0
+    ignore_blank_results: true
+    plex_search:
+      validate: false
+      all:
+        label: Returns_2032
   ww_tab_returns_TBA:
     overlay:
       name: ww_tab_returns_TBA

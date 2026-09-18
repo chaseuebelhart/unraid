@@ -1,6 +1,8 @@
+from datetime import date, timedelta
+from pathlib import Path
 import yaml
-import gen_overlays
-from ww.buckets import VOTE_BUCKETS
+import gen_assets, gen_overlays
+from ww.buckets import VOTE_BUCKETS, airdate_label, tab_years
 from ww.chips import chip_combos
 
 FONT = "config/winswatch/fonts/Avenir_95_Black.ttf"
@@ -43,7 +45,7 @@ def test_topedge_and_status_precedence():
     assert s["ww_tab_newep_Wed"]["plex_search"] == {"validate": False, "all": {"label": "NewEp_Wed"}}
     assert s["ww_tab_returnsin_13"]["overlay"]["file"].endswith("/tab_ReturnsIn_13.png") and s["ww_tab_returnsin_13"]["overlay"]["weight"] == 205
     assert s["ww_tab_returns_Nov"]["overlay"]["file"].endswith("/tab_Returns_Nov.png")
-    assert s["ww_tab_returns_2027"]["overlay"]["file"].endswith("/tab_Returns_2027.png")
+    assert s[f"ww_tab_returns_{date.today().year + 1}"]["overlay"]["file"].endswith(f"/tab_Returns_{date.today().year + 1}.png")
     assert s["ww_tab_returns_TBA"]["overlay"]["file"].endswith("/tab_Returns_TBA.png") and s["ww_tab_returns_TBA"]["overlay"]["weight"] == 204
     assert s["ww_edge_ended"]["filters"] == {"tmdb_status": "ended"} and s["ww_edge_ended"]["overlay"]["weight"] == 100
     assert s["ww_edge_canceled"]["filters"] == {"tmdb_status": "canceled"} and s["ww_edge_canceled"]["overlay"]["weight"] == 110
@@ -62,7 +64,8 @@ def test_chips_one_group_best_wins():
     assert top["overlay"]["weight"] > m["ww_c_k4_dv_dtsx"]["overlay"]["weight"] > m["ww_c_k4_x_dtsx"]["overlay"]["weight"]
     assert m["ww_c_k4_x_x"]["overlay"]["weight"] > m["ww_c_p1080_dvhdr_dtsx"]["overlay"]["weight"]   # video always leads
     assert m["ww_c_k4_dvhdr_atmos"]["overlay"]["weight"] > m["ww_c_k4_dvhdr_truehd"]["overlay"]["weight"]
-    assert m["ww_c_k4_x_x"]["overlay"]["vertical_align"] == "bottom" and m["ww_c_k4_x_x"]["overlay"]["vertical_offset"] == 30
+    _, descent, _ = gen_assets.chip_metrics()
+    assert m["ww_c_k4_x_x"]["overlay"]["vertical_align"] == "bottom" and m["ww_c_k4_x_x"]["overlay"]["vertical_offset"] == 30 + 5 - (descent + 2)   # baseline stays 35px up
     assert e["ww_c_k4_x_x"]["overlay"]["vertical_align"] == "top" and e["ww_c_k4_x_x"]["builder_level"] == "episode"
     assert e["ww_c_k4_x_x"]["overlay"]["file"].endswith("/chipl_k4_x_x.png") and e["ww_c_k4_x_x"]["overlay"]["horizontal_offset"] == 77
     assert m["ww_c_k4_dvhdr_truehdatmos"]["overlay"]["weight"] > m["ww_c_k4_dvhdr_dtsx"]["overlay"]["weight"]
@@ -80,3 +83,29 @@ def test_write_roundtrip(tmp_path):
     for f, n in (("gauge.yml", 150), ("topedge.yml", 29), ("status.yml", 49), ("chips_movies.yml", 150), ("chips_episodes.yml", 150)):
         data = yaml.safe_load((tmp_path / f).read_text())
         assert "overlays" in data and len(data["overlays"]) > n
+
+def test_every_airdate_label_has_an_overlay():
+    """airdate_label -> status.yml: every label the pipeline can write for a next-air date up to 6 years out is drawn."""
+    labels = {v["plex_search"]["all"]["label"] for v in gen_overlays.status_yaml()["overlays"].values() if "plex_search" in v}
+    today = date.today()
+    produced = {airdate_label(today + timedelta(days=d), "continuing", today) for d in range(0, 366 * 6)} | {airdate_label(None, "continuing", today)}
+    assert produced - {None} <= labels, sorted(produced - labels)
+    assert f"Returns_{today.year + 6}" in labels and f"Returns_{today.year + 7}" not in labels
+    assert tab_years(date(2030, 6, 1)) == list(range(2030, 2037))
+
+def test_every_referenced_asset_exists(tmp_path):
+    """Guard against asset/YAML drift: each file: in the generated AND hand-written YAML is produced by gen_assets.generate()."""
+    names = {p.name for p in gen_assets.generate(tmp_path)}
+    docs = [fn() for fn in gen_overlays.FILES.values()]
+    ww = Path(__file__).resolve().parents[3] / "kometa/overlays/winswatch"
+    docs += [yaml.safe_load((ww / f).read_text()) for f in ("movies.yml", "shows.yml", "seasons.yml", "episodes.yml")]
+    referenced = set()
+    for doc in docs:
+        for v in doc["overlays"].values():
+            f = (v.get("overlay") or {}).get("file")
+            if f:
+                assert f.startswith("config/winswatch/assets/"), f
+                referenced.add(f.rsplit("/", 1)[1])
+    missing = referenced - names
+    assert not missing, sorted(missing)
+    assert {"arc_86.png", "bar_bottom.png", "bar_top.png", "bookmark_1.png", "tab_Returns_TBA.png", "chip_k4_x_x.png", "chipl_k4_x_x.png"} <= referenced

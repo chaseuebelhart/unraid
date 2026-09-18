@@ -7,7 +7,7 @@ def test_generate_all(tmp_path: Path):
     names = {f.name for f in files}
     assert {"bar_bottom.png", "bar_top.png", "bookmark_1.png", "bookmark_30.png", "reel.png", "edge_gray.png", "edge_red.png",
             "tab_NewEp_Wed.png", "tab_ReturnsIn_13.png", "tab_Returns_Feb.png", "tab_Returns_2027.png", "tab_Returns_TBA.png"} <= names
-    assert sum(n.startswith("tab_") for n in names) == 7 + 23 + 12 + 5 + 1
+    assert sum(n.startswith("tab_") for n in names) == 7 + 23 + 12 + 7 + 1   # NewEp, ReturnsIn, month, 7 years, TBA
     assert sum(n.startswith("arc_") for n in names) == 101
     assert Image.open(tmp_path / "bar_bottom.png").size == (1000, 240)
     assert Image.open(tmp_path / "bar_top.png").size == (1920, 269)   # episode canvas is 1920x1080
@@ -29,6 +29,24 @@ def test_generate_all(tmp_path: Path):
     assert row.getpixel((0, 0))[3] == 0                        # transparent background
     big = Image.open(tmp_path / "chipl_k4_dvhdr_atmos.png").convert("RGBA")
     assert 1.8 < big.width / row.width < 2.0                   # episode renders are 1.92x, drawn natively
+
+def test_chip_descenders_not_clipped(tmp_path: Path):
+    gen_assets.generate(tmp_path)
+    for name in ("chip_p1080_x_ddp.png", "chipl_p1080_x_ddp.png", "chip_p720_x_x.png"):
+        im = Image.open(tmp_path / name).convert("RGBA")
+        bottom = [im.getpixel((x, y))[3] for y in (im.height - 2, im.height - 1) for x in range(im.width)]
+        assert max(bottom) == 0, f"{name}: descender runs into the canvas edge"
+        cap, descent, height = gen_assets.chip_metrics(1.0 if name.startswith("chip_") else gen_assets.EP_SCALE)
+        assert im.height == height == cap + 1 + descent + 2
+        # the 'p' really does descend below the baseline (row cap+1) into the reserved band
+        below = [im.getpixel((x, y))[3] for y in range(cap + 3, cap + 1 + descent) for x in range(im.width)]
+        assert max(below) > 0
+
+def test_tab_years_follow_today(tmp_path: Path):
+    gen_assets.generate(tmp_path)
+    from ww.buckets import tab_years
+    for y in tab_years():
+        assert (tmp_path / f"tab_Returns_{y}.png").exists()
 
 def test_arc_fill_and_band_color(tmp_path: Path):
     gen_assets.generate(tmp_path)

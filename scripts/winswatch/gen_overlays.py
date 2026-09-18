@@ -15,9 +15,10 @@ Kometa facts these files are shaped around (verified against Kometa 2.4.8):
 import sys
 from pathlib import Path
 import yaml
-from ww.buckets import VOTE_BUCKETS, DOW, MON
+from ww.buckets import VOTE_BUCKETS, DOW, MON, tab_years
 from ww.colors import GOLD, WHITE
 from ww.chips import chip_combos, conditions, weight
+from gen_assets import chip_metrics, EP_SCALE
 
 FONT = "config/winswatch/fonts/Avenir_95_Black.ttf"
 ASSETS = "config/winswatch/assets"
@@ -76,7 +77,7 @@ def status_yaml() -> dict:
         ov[f"ww_tab_returnsin_{i}"] = _top(f"ww_tab_returnsin_{i}", f"tab_ReturnsIn_{i}.png", 205, label=f"ReturnsIn_{i}")
     for m in MON:
         ov[f"ww_tab_returns_{m}"] = _top(f"ww_tab_returns_{m}", f"tab_Returns_{m}.png", 204, label=f"Returns_{m}")
-    for y in range(2026, 2031):
+    for y in tab_years():
         ov[f"ww_tab_returns_{y}"] = _top(f"ww_tab_returns_{y}", f"tab_Returns_{y}.png", 204, label=f"Returns_{y}")
     ov["ww_tab_returns_TBA"] = _top("ww_tab_returns_TBA", "tab_Returns_TBA.png", 204, label="Returns_TBA")
     ov["ww_edge_canceled"] = _top("ww_edge_canceled", "edge_red.png", 110, filters={"tmdb_status": "canceled"})
@@ -88,8 +89,12 @@ def chips_yaml(level: str | None = None) -> dict:
     level=None -> movie posters, bottom bar; level='episode' -> episode stills, top bar."""
     # Episode stills are composed on a 1920x1080 canvas (Kometa's landscape_dim), so they use the 1.92x chip renders
     # and 1.92x offsets; posters are 1000x1500.
+    # The row PNG carries the font's descent below the baseline. Episodes are top-aligned (top edge = cap top at 65,
+    # baseline unaffected); movies are bottom-aligned, so the spec's 30px bottom gap is measured from the baseline
+    # (which used to sit 5px above the PNG's bottom edge) and the descent + 2 is taken off the offset.
+    _, descent, _ = chip_metrics()
     pos = (dict(horizontal_offset=77, vertical_align="top", vertical_offset=65) if level == "episode"
-           else dict(horizontal_offset=40, vertical_align="bottom", vertical_offset=30))
+           else dict(horizontal_offset=40, vertical_align="bottom", vertical_offset=30 + 5 - (descent + 2)))
     prefix = "chipl" if level == "episode" else "chip"
     ov = {}
     for v, h, a in chip_combos():

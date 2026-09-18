@@ -4,7 +4,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 from ww.colors import band, BRAND, DEEP, GOLD, LEAVE_GOLD, LEAVE_INK, INK, WHITE, RED, GRAY, CODEC
 from ww.chips import chip_combos
-from ww.buckets import DOW, MON
+from ww.buckets import DOW, MON, tab_years
 
 W, H = 1000, 1500
 EP_W, EP_SCALE = 1920, 1.92   # Kometa draws episode stills on a 1920x1080 canvas: episode assets are 1.92x the poster ones
@@ -92,13 +92,22 @@ def _reel(out):
         rr = 3.2 * S; d.ellipse([cx - rr, cy - rr, cx + rr, cy + rr], fill=_hex(GOLD))
     im.resize((95, 95), Image.LANCZOS).save(out)
 
+def chip_metrics(scale: float = 1.0) -> tuple[int, int, int]:
+    """(cap height, descent, canvas height) of a chip row at this scale. gen_overlays uses the descent to keep the
+    chip baseline where the spec puts it after the canvas grew to hold descenders ('p' in 1080p/720p)."""
+    px = round(CHIP_PX * scale)
+    font = ImageFont.truetype(str(FONT), px)
+    cap = -font.getbbox("H", anchor="ls")[1]
+    descent = font.getbbox("pgyj", anchor="ls")[3]
+    return cap, descent, cap + 1 + descent + 2
+
 def _chip_row(keys, out, scale=1.0):
     """One PNG for a whole codec row, e.g. ('k4','dvhdr','atmos') -> '4K DV·HDR ATMOS' with per-chip color,
-    0.1em tracking and 30px gaps. Canvas is cap-height tight: top edge = cap top, baseline 4px above the bottom."""
+    0.1em tracking and 30px gaps. Canvas: top edge = cap top, baseline at cap+1, then the font's full descent + 2px."""
     px = round(CHIP_PX * scale); gap = round(CHIP_GAP * scale)
     font = ImageFont.truetype(str(FONT), px)
     track = px * CHIP_TRACK
-    cap = -font.getbbox("H", anchor="ls")[1]
+    cap, descent, height = chip_metrics(scale)
     base = cap + 1
     runs = []
     for k in keys:
@@ -106,7 +115,7 @@ def _chip_row(keys, out, scale=1.0):
         widths = [font.getlength(c) for c in label]
         runs.append((label, color, widths, sum(widths) + track * (len(label) - 1)))
     total = int(math.ceil(sum(r[3] for r in runs) + gap * (len(runs) - 1))) + 2
-    im = Image.new("RGBA", (total, base + 5), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
+    im = Image.new("RGBA", (total, height), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
     x = 0.0
     for label, color, widths, w in runs:
         for c, cw in zip(label, widths):
@@ -119,7 +128,7 @@ def tab_texts() -> dict:
     t = {f"NewEp_{d}": [(f"NEW EP {d.upper()}", 42)] for d in DOW}
     t.update({f"ReturnsIn_{i}": [(f"RETURNS IN {i} DAYS", 42)] for i in range(8, 31)})
     t.update({f"Returns_{m}": [(f"RETURNS {m.upper()}", 42)] for m in MON})
-    t.update({f"Returns_{y}": [(f"RETURNS {y}", 42)] for y in range(2026, 2031)})
+    t.update({f"Returns_{y}": [(f"RETURNS {y}", 42)] for y in tab_years()})
     t["Returns_TBA"] = [("RETURNS TBA", 42)]
     return t
 

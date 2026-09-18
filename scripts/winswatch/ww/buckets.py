@@ -20,6 +20,11 @@ def votes_bucket(n: int) -> str | None:
     return best
 
 DOW = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+
+def tab_years(today: date | None = None) -> list[int]:
+    """Years a Returns_<YYYY> tab/overlay is generated for: this year through +6 (airdate_label emits the air year)."""
+    y = (today or date.today()).year
+    return list(range(y, y + 7))
 MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
 def airdate_label(next_air: date | None, status: str, today: date) -> str | None:
