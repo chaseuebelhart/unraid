@@ -1,0 +1,6 @@
+pillow
+pyyaml
+plexapi
+requests
+python-dotenv
+pytest
