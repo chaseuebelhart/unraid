@@ -19,3 +19,4 @@ venv/
 .env
 
 **/config.yml .superpowers/
+kometa/config.yml
