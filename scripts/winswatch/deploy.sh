@@ -5,9 +5,9 @@ REPO=$(cd "$(dirname "$0")/../.." && pwd)
 APP=/mnt/nastower/appdata/scripts/winswatch
 KCFG=/mnt/nastower/appdata/Kometa/config
 mkdir -p "$APP/host/jobs" "$APP/cache" "$KCFG/winswatch"
-rsync -a --delete --exclude .venv --exclude tests --exclude __pycache__ --exclude cache --exclude .env --exclude host/last.log --exclude host/job.sh --exclude host/lab_sections \
+rsync -rlt --delete --exclude .venv --exclude tests --exclude __pycache__ --exclude cache --exclude .env --exclude host/last.log --exclude host/job.sh --exclude host/lab_sections \
   "$REPO/scripts/winswatch/" "$APP/"
-rsync -a --delete "$REPO/kometa/overlays/winswatch/" "$KCFG/winswatch/"
+rsync -rlt --delete "$REPO/kometa/overlays/winswatch/" "$KCFG/winswatch/"
 chmod +x "$APP"/host/*.sh "$APP"/host/jobs/*.sh
 if [ ! -f "$APP/.env" ]; then
   KE="$KCFG/.env"
