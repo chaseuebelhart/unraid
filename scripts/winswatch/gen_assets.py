@@ -6,7 +6,7 @@ from ww.colors import band, BRAND, DEEP, GOLD, LEAVE_GOLD, LEAVE_INK, INK, WHITE
 from ww.chips import chip_combos
 from ww.buckets import DOW, MON, tab_years
 
-W, H = 1000, 1500
+W = 1000
 EP_W, EP_SCALE = 1920, 1.92   # Kometa draws episode stills on a 1920x1080 canvas: episode assets are 1.92x the poster ones
 FONT = Path(__file__).resolve().parents[2] / "kometa/overlays/winswatch/fonts/Avenir_95_Black.ttf"
 CHIP_PX, CHIP_TRACK, CHIP_GAP = 46, 0.1, 30   # font px, letter-spacing (em), gap between chips (px)

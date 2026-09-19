@@ -63,7 +63,7 @@ overlays:
     plex_search:
       validate: false
       all:
-        episode_added: 14
+        added: 14
         label.not: [DaysLeft_1, DaysLeft_2, DaysLeft_3, DaysLeft_4, DaysLeft_5, DaysLeft_6, DaysLeft_7, DaysLeft_8, DaysLeft_9, DaysLeft_10,
                     DaysLeft_11, DaysLeft_12, DaysLeft_13, DaysLeft_14, DaysLeft_15, DaysLeft_16, DaysLeft_17, DaysLeft_18, DaysLeft_19, DaysLeft_20,
                     DaysLeft_21, DaysLeft_22, DaysLeft_23, DaysLeft_24, DaysLeft_25, DaysLeft_26, DaysLeft_27, DaysLeft_28, DaysLeft_29, DaysLeft_30]

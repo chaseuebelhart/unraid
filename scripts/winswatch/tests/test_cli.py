@@ -2,6 +2,7 @@ import sys
 from datetime import date
 from types import SimpleNamespace as NS
 import pytest
+import requests
 import scores, airdates
 
 def test_scores_plan():
@@ -12,6 +13,19 @@ def test_scores_plan():
     assert plan[0] == (items[0], 8.6, "Votes_3.5M")
     assert plan[1] == (items[1], 7.1, "Votes_20K")
     assert plan[2] == (items[2], None, None)
+
+def test_scores_plan_skips_fetch_errors():
+    items = [NS(title="Dune"), NS(title="Broken"), NS(title="Nimrods")]
+    ids = {"Dune": "1", "Broken": "666", "Nimrods": "2"}
+    data = {"1": {"score": 86, "votes": 3645831}, "2": {"score": 71, "votes": 19613}}
+    def fetch(kind, tid):
+        if tid == "666":
+            raise requests.RequestException("boom")
+        return data[tid]
+    plan = scores.plan(items, fetch, lambda it: ids[it.title], "movie")
+    assert plan[0] == (items[0], 8.6, "Votes_3.5M")
+    assert plan[1] == (items[1], None, scores.SKIP)
+    assert plan[2] == (items[2], 7.1, "Votes_20K")
 
 def test_airdates_plan():
     items = [NS(title="Reacher"), NS(title="Bear"), NS(title="NoTvdb")]

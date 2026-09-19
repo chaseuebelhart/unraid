@@ -18,7 +18,7 @@ import yaml
 from ww.buckets import VOTE_BUCKETS, DOW, MON, tab_years
 from ww.colors import GOLD, WHITE
 from ww.chips import chip_combos, conditions, weight
-from gen_assets import chip_metrics, EP_SCALE
+from gen_assets import chip_metrics
 
 FONT = "config/winswatch/fonts/Avenir_95_Black.ttf"
 ASSETS = "config/winswatch/assets"

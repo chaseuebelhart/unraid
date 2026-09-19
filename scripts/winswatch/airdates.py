@@ -1,6 +1,7 @@
 """Sonarr next-air -> one status label per show (NewEp_/ReturnsIn_/Returns_*). Ended/canceled get no label (Kometa uses tmdb_status)."""
 import argparse, os
-from datetime import date
+from datetime import datetime
+from zoneinfo import ZoneInfo
 from dotenv import load_dotenv
 from ww.plexlib import PlexLib
 from ww import sonarr
@@ -20,10 +21,11 @@ def main():
     a = ap.parse_args(); load_dotenv(a.env)
     plex = PlexLib(os.environ["PLEX_URL"], os.environ["PLEX_TOKEN"])
     index = sonarr.series_index(os.environ["SONARR_URL"], os.environ["SONARR_API_KEY"])
+    today = datetime.now(ZoneInfo(os.environ.get("TZ", "America/Chicago"))).date()
     for sec in a.sections.split(","):
         section = plex.section(int(sec))
         if section.type != "show": continue
-        for it, label in plan(section.all(), index, plex.tvdb_id, date.today()):
+        for it, label in plan(section.all(), index, plex.tvdb_id, today):
             changed = (not a.dry_run) and plex.set_labels(it, {label} if label else set(), PREFIXES)
             print(f"{'DRY ' if a.dry_run else ''}{section.title:>18} | {it.title[:44]:<44} | {label} | {'changed' if changed else 'ok'}")
 

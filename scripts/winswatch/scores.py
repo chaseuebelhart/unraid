@@ -1,10 +1,13 @@
 """MDBList score -> Plex user rating (0-10) + Votes_<bucket> label. Idempotent. Never touches sections you don't pass."""
 import argparse, os
 from pathlib import Path
+import requests
 from dotenv import load_dotenv
 from ww.plexlib import PlexLib
 from ww import mdblist
 from ww.buckets import votes_bucket
+
+SKIP = object()   # per-item MDBList fetch error: leave this item's rating and labels untouched
 
 def plan(items, fetch, tmdb_id, kind):
     out = []
@@ -12,7 +15,11 @@ def plan(items, fetch, tmdb_id, kind):
         tid = tmdb_id(it)
         if not tid:
             out.append((it, None, None)); continue
-        d = fetch(kind, tid)
+        try:
+            d = fetch(kind, tid)
+        except requests.RequestException as e:
+            print(f"!! mdblist {kind}/{tid}: {e}")
+            out.append((it, None, SKIP)); continue
         rating = round(d["score"] / 10, 1) if d.get("score") is not None else None
         b = votes_bucket(d.get("votes") or 0)
         out.append((it, rating, f"Votes_{b}" if b else None))
@@ -28,6 +35,9 @@ def main():
         for sec in a.sections.split(","):
             section = plex.section(int(sec)); kind = "movie" if section.type == "movie" else "show"
             for it, rating, label in plan(section.all(), lambda k, t: mdblist.fetch(key, k, t, cache), plex.tmdb_id, kind):
+                if label is SKIP:
+                    print(f"{'DRY ' if a.dry_run else ''}{section.title:>18} | {it.title[:44]:<44} | skipped (mdblist error)")
+                    continue
                 changed = []
                 if not a.dry_run:
                     if rating is not None and plex.set_user_rating(it, rating): changed.append(f"rating={rating}")

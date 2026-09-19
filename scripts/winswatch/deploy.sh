@@ -19,6 +19,7 @@ MDBLIST_API_KEY=$(v KOMETA_MDBListApiKey)
 SONARR_URL=http://192.168.0.30:8989
 SONARR_API_KEY=$(v KOMETA_SonarrApiKey)
 CACHE_DIR=/app/cache
+TZ=America/Chicago
 EOF
   chmod 600 "$APP/.env"; echo "created $APP/.env"
 fi
