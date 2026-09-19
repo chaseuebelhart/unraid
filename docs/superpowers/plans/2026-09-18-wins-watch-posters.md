@@ -34,14 +34,17 @@ scripts/winswatch/
   ww/mdblist.py               # fetch_scores(api_key, kind, tmdb_id) with on-disk cache
   ww/sonarr.py                # next_air_dates(base_url, api_key) -> {tvdb_id: date|None, status}
   ww/plexlib.py               # PlexLib: items(section) with tmdb/tvdb ids, set_labels(), set_user_rating()
+  ww/chips.py                 # codec chip combinations, detection conditions, and ranking weight
   gen_assets.py               # -> kometa/overlays/winswatch/assets/*.png
-  gen_overlays.py             # -> kometa/overlays/winswatch/generated/{gauge,topedge}.yml
+  gen_overlays.py             # -> kometa/overlays/winswatch/generated/{gauge,topedge,status,chips_movies,chips_episodes}.yml
   scores.py                   # CLI: MDBList -> user rating + Votes_* labels
   airdates.py                 # CLI: Sonarr -> NewEp_/ReturnsIn_/Returns_* labels
   build_lab_config.py         # production config.yml -> lab.yml (lab libraries only)
   lab_media.py                # Plex prod file paths -> host/jobs/lab-media.sh (symlinks)
   create_lab_libraries.py     # Plex API: create the two lab sections, hide from Home, check shares
+  review_sheet.py             # CLI: tile lab posters/stills into one review PNG
   deploy.sh                   # rsync scripts + overlay files + assets to the server over NFS
+  conftest.py                 # test path setup
   host/run.sh                 # what the Unraid user script calls; runs host/job.sh, logs to host/last.log
   host/jobs/labels.sh         # docker run python:3.12-slim … scores.py + airdates.py
   host/jobs/kometa-lab.sh     # docker run kometateam/kometa --config /config/lab.yml --run --overlays-only
@@ -51,7 +54,7 @@ kometa/overlays/winswatch/
   fonts/Avenir_95_Black.ttf   # copy of kometa/overlays/fonts/Avenir_95_Black.ttf
   assets/                     # generated PNGs (committed)
   movies.yml shows.yml seasons.yml episodes.yml    # hand-written
-  generated/gauge.yml generated/topedge.yml         # generated (committed)
+  generated/gauge.yml generated/topedge.yml generated/status.yml generated/chips_movies.yml generated/chips_episodes.yml   # generated (committed)
 kometa/lab.yml.template       # libraries + overlay_files; plex/tmdb/mdblist blocks filled by build_lab_config.py
 ```
 
@@ -733,7 +736,7 @@ overlays:
       vertical_offset: 40
 ```
 
-Note on template + group: Kometa merges the `overlay:` block declared next to `template:` over the template's `overlay:` (documented behavior: definition attributes override template attributes). The `weight` inside `template:` is the queue weight for chip ordering (video 300 > HDR 200 > audio 100 so chips flow left→right); the `group`/`weight` in the definition's `overlay:` is the mutual-exclusion group. If the lab run shows both video chips or misordered chips, split `queue`/`weight` and `group`/`weight` into two explicit blocks per overlay instead of relying on the merge — that is the first thing to check in Task 9.
+Disproven in Task 9: Kometa raises `'group' and 'queue' cannot be used together`; chips became PNG rows.
 
 `kometa/overlays/winswatch/shows.yml`:
 ```yaml
@@ -1560,4 +1563,6 @@ Using Plex web on the lab libraries only (Edit → Tags → Labels): add `DaysLe
 
 ### Task 10 (later, on Chase's go): promote to production — NOT part of this plan's execution
 
-Documented so nobody improvises it: in production `config.yml`, delete every existing `overlay_files` entry for Movies and TV Shows, add the same five/three files as `lab.yml.template`, set `mass_user_rating_update: mdb`, `mass_critic_rating_update: mdb_metacritic`, `mass_audience_rating_update: mdb_letterboxd` (Movies) / `mdb_trakt` (TV), run **once** with `remove_overlays: true`, then set it back and let the 05:00 schedule take over. Point `host/lab_sections` → a new `host/prod_sections` = `1,2` and schedule the `winswatch` user script for 04:00 daily running `labels.sh`. Then delete the lab libraries in Plex and `rm -rf /mnt/user/data/media/_winswatch-lab`.
+Documented so nobody improvises it: in production `config.yml`, delete every existing `overlay_files` entry for Movies and TV Shows, add the same five/three files as `lab.yml.template`, run **once** with `mass_user_rating_update: remove` before switching the slot to `mdb`, set `mass_critic_rating_update: mdb_metacritic`, `mass_audience_rating_update: mdb_letterboxd` (Movies) / `mdb_trakt` (TV), run **once** with `remove_overlays: true`, then set it back and let the 05:00 schedule take over. Point `host/lab_sections` → a new `host/prod_sections` = `1,2` and schedule the `winswatch` user script for 04:00 daily running `labels.sh`. Then delete the lab libraries in Plex and `rm -rf /mnt/user/data/media/_winswatch-lab`.
+
+Also: confirm `TZ` is set in `.env`; pin the label container's requirements (drop pytest/pillow from runtime); point the scheduled user script at a fixed `labels.sh`, not the swappable `job.sh`; gate promotion on a full-library `--overlays-only` timing run; add a `RETURNS TBA` fallback overlay (`tmdb_status: returning`, weight 203) if Chase wants it.
