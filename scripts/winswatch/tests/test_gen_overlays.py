@@ -51,7 +51,8 @@ def test_chips_one_group_best_wins():
     _, descent, _ = gen_assets.chip_metrics()
     assert gen_assets.CHIP_PX == 60 and gen_assets.CHIP_GAP == 39 and descent == 14
     mo = m["ww_c_k4_x_x"]["overlay"]
-    assert mo["vertical_align"] == "bottom" and mo["vertical_offset"] == 30 + 5 - (descent + 2) == 19 and mo["horizontal_offset"] == 39   # baseline stays 35px up
+    assert mo["vertical_align"] == "bottom" and mo["vertical_offset"] == 30 + 5 - (descent + 2) == 19   # baseline stays 35px up
+    assert mo["horizontal_align"] == "center" and mo["horizontal_offset"] == 0 and e["ww_c_k4_x_x"]["overlay"]["horizontal_align"] == "left"   # movie chips centred (2026-09-20); stills stay left
     eo = e["ww_c_k4_x_x"]["overlay"]
     assert eo["vertical_align"] == "bottom" and eo["vertical_offset"] == round(19 * 1.92) == 36 and e["ww_c_k4_x_x"]["builder_level"] == "episode"
     assert eo["file"].endswith("/chipl_k4_x_x.png") and eo["horizontal_offset"] == 77
@@ -114,5 +115,5 @@ def test_hand_written_yaml_matches_locked_look():
     assert se["vertical_align"] == "top" and se["vertical_offset"] == 40 and se["horizontal_offset"] == 40
     sh = yaml.safe_load((ww / "shows.yml").read_text())
     svc = sh["templates"]["ww_service"]["overlay"]
-    assert svc["font_size"] == 60 and svc["horizontal_offset"] == 39 and svc["vertical_align"] == "bottom"
+    assert svc["font_size"] == 60 and svc["horizontal_align"] == "center" and svc["horizontal_offset"] == 0 and svc["vertical_align"] == "bottom"
     assert "ww_new" not in sh["overlays"]                              # shows never get NEW: the top-edge tab is the only signal

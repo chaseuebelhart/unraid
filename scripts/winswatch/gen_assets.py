@@ -96,14 +96,20 @@ def _tracked(d, x, baseline, text, font, fill, track):
 def _tracked_width(text, font, track):
     return sum(font.getlength(c) for c in text) + track * (len(text) - 1)
 
+TAB_FONT = FONT.parent / "Manrope[wght].ttf"   # variable weight: the tab prefix is SemiBold, the variable part ExtraBold (artifact: 600 / 800)
+
+def _tab_font(px: int, weight: str):
+    f = ImageFont.truetype(str(TAB_FONT), px); f.set_variation_by_name(weight); return f
+
 def _line_and_tab(color, ink, parts, out, bookmark=False):
     """Status edge line (26px, full width) + a tab hanging from its bottom edge at x=40 with the text baked in.
-    parts: [(text, font_px), ...] drawn on one baseline, 0.1em tracking (prefix 42px, variable part 46px, count 57px).
+    parts: [(text, font_px, weight), ...] drawn on one baseline, 0.1em tracking. Every tab uses the same 46px size; only the
+    weight changes (prefix SemiBold, variable part ExtraBold), the LEAVING count is 57px ExtraBold.
     Padding 18/29/15 (top/sides/bottom); bookmark=True is the LEAVING plate: 20/29/46, same plain rounded shape."""
-    fonts = {px: ImageFont.truetype(str(FONT), px) for _, px in parts}
-    track = 4.2
-    gap = fonts[parts[0][1]].getlength(" ") + track     # word gap between parts (the count sits between two words)
-    text_w = sum(_tracked_width(t, fonts[px], track) for t, px in parts) + gap * (len(parts) - 1)
+    fonts = {(px, wt): _tab_font(px, wt) for _, px, wt in parts}
+    track = 4.6
+    gap = fonts[(parts[0][1], parts[0][2])].getlength(" ") + track     # word gap between parts
+    text_w = sum(_tracked_width(t, fonts[(px, wt)], track) for t, px, wt in parts) + gap * (len(parts) - 1)
     plate_w = int(round(text_w)) + 58
     x0, x1 = 40, 40 + plate_w
     top_pad = 20 if bookmark else 18
@@ -116,8 +122,8 @@ def _line_and_tab(color, ink, parts, out, bookmark=False):
     d.rounded_rectangle([x0, plate_top, x1, y1], radius=15, fill=_hex(color))
     d.rectangle([x0, plate_top, x1, plate_top + 20], fill=_hex(color))  # square the top corners
     x = x0 + 29
-    for t, px in parts:
-        x = _tracked(d, x, baseline, t, fonts[px], _hex(ink), track) + gap
+    for t, px, wt in parts:
+        x = _tracked(d, x, baseline, t, fonts[(px, wt)], _hex(ink), track) + gap
     im.save(out)
 
 def _edge(color, out):
@@ -166,13 +172,14 @@ def _chip_row(keys, out, scale=1.0):
     im.save(out)
 
 def tab_texts() -> dict:
-    """label -> text parts for every status tab: [(prefix, 42), (variable part, 46)] — the variable part reads as the
-    'bold' word (we only ship one weight). Keys are the Plex labels airdates.py writes."""
-    t = {f"NewEp_{d}": [("NEW EP", 42), (d.upper(), 46)] for d in DOW}
-    t.update({f"ReturnsIn_{i}": [("RETURNS IN", 42), (f"{i} DAYS", 46)] for i in range(8, 31)})
-    t.update({f"Returns_{m}": [("RETURNS", 42), (m.upper(), 46)] for m in MON})
-    t.update({f"Returns_{y}": [("RETURNS", 42), (str(y), 46)] for y in tab_years()})
-    t["Returns_TBA"] = [("RETURNS", 42), ("TBA", 46)]
+    """label -> text parts for every status tab: [(prefix, 46, SemiBold), (variable part, 46, ExtraBold)] — same size, the
+    variable part is the bold word. Keys are the Plex labels airdates.py writes."""
+    P, B = "SemiBold", "ExtraBold"
+    t = {f"NewEp_{d}": [("NEW EP", 46, P), (d.upper(), 46, B)] for d in DOW}
+    t.update({f"ReturnsIn_{i}": [("RETURNS IN", 46, P), (f"{i} DAYS", 46, B)] for i in range(8, 31)})
+    t.update({f"Returns_{m}": [("RETURNS", 46, P), (m.upper(), 46, B)] for m in MON})
+    t.update({f"Returns_{y}": [("RETURNS", 46, P), (str(y), 46, B)] for y in tab_years()})
+    t["Returns_TBA"] = [("RETURNS", 46, P), ("TBA", 46, B)]
     return t
 
 def generate(out_dir: Path) -> list[Path]:
@@ -188,7 +195,7 @@ def generate(out_dir: Path) -> list[Path]:
         color, ink = (BRAND, INK) if label.startswith("NewEp_") else (DEEP, WHITE)
         _line_and_tab(color, ink, parts, out_dir / f"tab_{label}.png")
     for i in range(1, 31):
-        _line_and_tab(LEAVE_GOLD, LEAVE_INK, [("LEAVING", 42), (str(i), 57), ("DAY" if i == 1 else "DAYS", 46)],
+        _line_and_tab(LEAVE_GOLD, LEAVE_INK, [("LEAVING", 46, "SemiBold"), (str(i), 57, "ExtraBold"), ("DAY" if i == 1 else "DAYS", 46, "SemiBold")],
                       out_dir / f"bookmark_{i}.png", bookmark=True)
     _reel(out_dir / "reel.png")
     for combo in chip_combos():

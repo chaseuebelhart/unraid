@@ -13,8 +13,8 @@ templates:
       font_size: 60
       font_color: <<color>>
       back_color: "#00000000"
-      horizontal_align: left
-      horizontal_offset: 39
+      horizontal_align: center
+      horizontal_offset: 0
       vertical_align: bottom
       vertical_offset: 30
       group: ww_service

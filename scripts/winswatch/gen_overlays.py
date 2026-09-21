@@ -86,13 +86,13 @@ def chips_yaml(level: str | None = None) -> dict:
     # Episode stills are composed on a 1920x1080 canvas (Kometa's landscape_dim), so they use the 1.92x chip renders
     # and 1.92x offsets; posters are 1000x1500.
     pos = (dict(horizontal_offset=77, vertical_align="bottom", vertical_offset=chip_bottom_offset("episode")) if level == "episode"
-           else dict(horizontal_offset=39, vertical_align="bottom", vertical_offset=chip_bottom_offset()))
+           else dict(horizontal_offset=0, vertical_align="bottom", vertical_offset=chip_bottom_offset()))   # movies: chips centred in the bar (Chase, 2026-09-20)
     prefix = "chipl" if level == "episode" else "chip"
     ov = {}
     for v, h, a in chip_combos():
         key = "_".join(k or "x" for k in (v, h, a))
         o = {"overlay": {"name": f"ww_c_{key}", "file": f"{ASSETS}/{prefix}_{key}.png", "group": "ww_chips", "weight": weight(v, h, a),
-                         "horizontal_align": "left", **pos},
+                         "horizontal_align": "left" if level == "episode" else "center", **pos},
              "ignore_blank_results": True, **conditions(v, h, a)}
         if level:
             o["builder_level"] = level
