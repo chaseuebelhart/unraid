@@ -18,7 +18,7 @@
 - Score bands: gray `#8a94a6` < 65 · white `#ffffff` 65–72 · light blue `#5ac8fa` 73–84 · gold `#f5c518` ≥ 85.
 - A title with a `DaysLeft_N` label never shows NEW and never shows a status tab.
 - Secrets live only in `/mnt/user/appdata/scripts/winswatch/.env` on the server (copied from Kometa's `.env`); never in the repo.
-- Paths: repo `~/repos/unraid`; NFS mounts `/mnt/nastower/appdata` = `/mnt/user/appdata`, `/mnt/nastower/data` is **not** mounted (host jobs handle media paths). Plex sees `/mnt/user/data/media` as `/data/media`.
+- Paths: repo `~/projects/homelab/unraid`; NFS mounts `/mnt/nastower/appdata` = `/mnt/user/appdata`, `/mnt/nastower/data` is **not** mounted (host jobs handle media paths). Plex sees `/mnt/user/data/media` as `/data/media`.
 - Agent token: `$(cat ~/.config/nastower/api_token)`; base `http://192.168.0.15:8043/api/v1`.
 - Plex `http://192.168.0.20:32400`, token in `/mnt/nastower/appdata/Kometa/config/.env` (`KOMETA_PlexToken`); MDBList key `KOMETA_MDBListApiKey`; Sonarr `http://192.168.0.30:8989` key `KOMETA_SonarrApiKey`; TMDB `KOMETA_TMDBApiKey`.
 - Commit after every task with a `feat(winswatch): …` message.
@@ -154,7 +154,7 @@ def test_codec_and_service_tables():
 
 - [ ] **Step 2: Run to verify it fails**
 
-Run: `cd ~/repos/unraid/scripts/winswatch && python -m venv .venv && . .venv/bin/activate && pip install -q pillow pyyaml plexapi requests python-dotenv pytest && pytest -q`
+Run: `cd ~/projects/homelab/unraid/scripts/winswatch && python -m venv .venv && . .venv/bin/activate && pip install -q pillow pyyaml plexapi requests python-dotenv pytest && pytest -q`
 Expected: FAIL — `ModuleNotFoundError: ww`
 
 - [ ] **Step 3: Implement**
@@ -261,7 +261,7 @@ Run: `pytest -q`  Expected: 4 passed
 - [ ] **Step 5: Commit**
 
 ```bash
-cd ~/repos/unraid && git add scripts/winswatch && git commit -m "feat(winswatch): scaffold, color tables, vote/airdate buckets"
+cd ~/projects/homelab/unraid && git add scripts/winswatch && git commit -m "feat(winswatch): scaffold, color tables, vote/airdate buckets"
 ```
 
 ---
@@ -326,7 +326,7 @@ Run: `pytest -q tests/test_gen_assets.py`  Expected: FAIL `No module named gen_a
 
 - [ ] **Step 3: Implement**
 
-`cp ~/repos/unraid/kometa/overlays/fonts/Avenir_95_Black.ttf ~/repos/unraid/kometa/overlays/winswatch/fonts/`
+`cp ~/projects/homelab/unraid/kometa/overlays/fonts/Avenir_95_Black.ttf ~/projects/homelab/unraid/kometa/overlays/winswatch/fonts/`
 
 `scripts/winswatch/gen_assets.py`:
 ```python

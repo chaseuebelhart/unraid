@@ -28,7 +28,7 @@ Rules:
 - Row 5 disappears when Maintainerr has nothing expiring in that library (today true for TV). Rows 1/8 disappear for a user with no
   history (Shortlist's cold-start rule).
 - Gone from Home: Plex's own Recently Added, Kometa stock charts (IMDb/TMDb Popular/Top Rated/Trending, genre, network, streaming,
-  universe, franchise …), `Raunchy Comedy`, `Just Dropped`, the always-on tone rows, Agregarr's `{name}'s requests` and `My Requests`
+  universe, franchise …), `Just Dropped` and `Raunchy Comedy` as always-on rows (both join the rotation pool), the other always-on tone rows, Agregarr's `{name}'s requests` and `My Requests`
   (folded into row 3). They stay as library collections where they already exist; only `visible_home` / `visible_shared` change.
 
 ## 2. Rotating shelves
@@ -36,7 +36,8 @@ Rules:
 Pool (existing Kometa tone rows, renamed only by adding the emoji; filters unchanged unless noted):
 
 - Movies: 💥 Adrenaline Rush · 🕵️ Crime Files · 🚀 Sci-Fi Odyssey · 💎 Hidden Gems · 💘 Love & Laughs · 🌀 Mind Benders ·
-  📰 Based on a True Story · 🎬 Director's Spotlight · 🍿 Fresh Picks (9)
+  📰 Based on a True Story · 🎬 Director's Spotlight · 🍿 Fresh Picks · 🍺 Raunchy Comedy (10; Raunchy Comedy moves from owner-only
+  Home into the pool)
 - TV: 🪐 Worlds Beyond · 🏔️ Peak TV · 🚔 Crime Beat · 🛋️ Comfort Binge · 📺 Just Dropped (5, promoted from always-on to the pool),
   plus 🎢 Edge of Your Seat and 🎨 Not Just Cartoons **retuned** — today their `smart_filter` matches zero shows (Plex genre names
   differ from the file); the implementer inspects the library's actual genre list and rewrites the filters so each returns ≥ 15 shows.
@@ -74,9 +75,10 @@ One Plex collection per user per library, rebuilt nightly by `scripts/winswatch/
 
 Server-wide (a poster is one image for everyone). Top-level items only (movies, shows — never seasons/episodes). Same plate as NEW
 (58 px Avenir Black, radius 15, padding 18, top-left 40/40), fill `#a78bfa` (the DV chip purple), ink `#120a2a`, text `REQUESTED`.
-Precedence in the top-left corner: LEAVING tab › REQUESTED › NEW — implemented as one Kometa `group: topleft` with weights
-(bookmark rows already own the top edge separately; NEW and REQUESTED share group `ww_tl`, REQUESTED weight 20, NEW weight 10, and
-the existing `label.not: DaysLeft_*` exclusion applies to both). Source: label `Requested` written by `home.py` for any title that
+Precedence: **any top-edge tab suppresses every badge** — a title showing LEAVING, NEW EP …, RETURNS … never also shows REQUESTED or
+NEW (the bare ended/canceled edge lines carry no text and do not count as tabs). Below that, REQUESTED › NEW. Implementation:
+NEW and REQUESTED share Kometa group `ww_tl` (REQUESTED weight 20, NEW weight 10); both carry the exclusion
+`label.not: [DaysLeft_1..30, NewEp_*, ReturnsIn_*, Returns_*]` (`validate: false`) so a tab wins outright. Source: label `Requested` written by `home.py` for any title that
 has an Overseerr request (any user) whose media became available within the last **30 days**; removed after that so posters
 don't carry it forever. Kometa `movies.yml` / `shows.yml` gain `ww_requested` (`plex_search: {all: {label: Requested}}`,
 `validate: false`); NEW on shows stays off (a show with a request shows REQUESTED, nothing else changes).
