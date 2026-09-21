@@ -5,7 +5,7 @@ CAL = Path(__file__).resolve().parents[1] / "home_calendar.yml"
 
 def test_calendar_shape_and_rules():
     cal = gen_home.load_calendar(CAL)
-    for lib, n in (("movies", 10), ("shows", 7)):
+    for lib, n in (("movies", 10), ("shows", 6)):
         days = cal[lib]; assert len(days) == 14 and all(len(d) == 2 for d in days)
         names = {t for d in days for t in d}; assert names == set(gen_home.THEMES_BY_LIB[lib])
         for d in days: assert d[0] != d[1]

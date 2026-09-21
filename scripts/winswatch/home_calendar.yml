@@ -19,18 +19,21 @@ movies:
   - [Crime Files, Hidden Gems]             # B Fri  (+ Date Night)
   - [Sci-Fi Odyssey, Raunchy Comedy]       # B Sat  (+ Date Night)
   - [Mind Benders, Fresh Picks]            # B Sun  (+ Sunday Slow Burn)
+# Not Just Cartoons was dropped from the rotation (this library only has 6 titles tagged genre Animation —
+# not enough for a shelf; see task-1-report.md "Fix round 1"). 6 themes x 28 slots -> 4 themes appear 5x,
+# 2 appear 4x per fortnight.
 shows:
   - [Worlds Beyond, Comfort Binge]         # A Mon
   - [Peak TV, Crime Beat]                  # A Tue
   - [Just Dropped, Edge of Your Seat]      # A Wed
-  - [Not Just Cartoons, Worlds Beyond]     # A Thu
+  - [Crime Beat, Worlds Beyond]            # A Thu
   - [Comfort Binge, Peak TV]               # A Fri
   - [Crime Beat, Just Dropped]             # A Sat
-  - [Edge of Your Seat, Not Just Cartoons] # A Sun
+  - [Edge of Your Seat, Comfort Binge]     # A Sun
   - [Worlds Beyond, Peak TV]               # B Mon
   - [Comfort Binge, Crime Beat]            # B Tue
-  - [Just Dropped, Not Just Cartoons]      # B Wed
+  - [Just Dropped, Peak TV]                # B Wed
   - [Edge of Your Seat, Worlds Beyond]     # B Thu
   - [Peak TV, Comfort Binge]               # B Fri
   - [Crime Beat, Edge of Your Seat]        # B Sat
-  - [Just Dropped, Not Just Cartoons]      # B Sun
+  - [Just Dropped, Worlds Beyond]          # B Sun

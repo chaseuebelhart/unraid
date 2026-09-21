@@ -3,8 +3,8 @@ collections:
   🪐 Worlds Beyond:
     sort_title: '!06_Worlds_Beyond'
     file_poster: config/winswatch/cards/worlds-beyond.png
-    visible_home: weekly(monday|thursday)
-    visible_shared: weekly(monday|thursday)
+    visible_home: weekly(monday|thursday|sunday)
+    visible_shared: weekly(monday|thursday|sunday)
     visible_library: true
     smart_filter:
       all:
@@ -21,8 +21,8 @@ collections:
   🏔️ Peak TV:
     sort_title: '!06_Peak_TV'
     file_poster: config/winswatch/cards/peak-tv.png
-    visible_home: weekly(monday|tuesday|friday)
-    visible_shared: weekly(monday|tuesday|friday)
+    visible_home: weekly(monday|tuesday|wednesday|friday)
+    visible_shared: weekly(monday|tuesday|wednesday|friday)
     visible_library: true
     smart_filter:
       all:
@@ -38,8 +38,8 @@ collections:
   🚔 Crime Beat:
     sort_title: '!07_Crime_Beat'
     file_poster: config/winswatch/cards/crime-beat.png
-    visible_home: weekly(tuesday|saturday)
-    visible_shared: weekly(tuesday|saturday)
+    visible_home: weekly(tuesday|thursday|saturday)
+    visible_shared: weekly(tuesday|thursday|saturday)
     visible_library: true
     smart_filter:
       all:
@@ -55,8 +55,8 @@ collections:
   🛋️ Comfort Binge:
     sort_title: '!07_Comfort_Binge'
     file_poster: config/winswatch/cards/comfort-binge.png
-    visible_home: weekly(monday|tuesday|friday)
-    visible_shared: weekly(monday|tuesday|friday)
+    visible_home: weekly(monday|tuesday|friday|sunday)
+    visible_shared: weekly(monday|tuesday|friday|sunday)
     visible_library: true
     smart_filter:
       all:
@@ -103,20 +103,5 @@ collections:
         genre:
         - Mystery
         - Crime
-      limit: 40
-      sort_by: random
-  🎨 Not Just Cartoons:
-    sort_title: '!08_Not_Just_Cartoons'
-    file_poster: config/winswatch/cards/not-just-cartoons.png
-    visible_home: weekly(wednesday|thursday|sunday)
-    visible_shared: weekly(wednesday|thursday|sunday)
-    visible_library: true
-    smart_filter:
-      all:
-        user_rating.gte: 6.0
-        genre.not:
-        - Family
-        genre:
-        - Animation
       limit: 40
       sort_by: random

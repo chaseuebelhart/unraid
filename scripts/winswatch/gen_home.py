@@ -22,9 +22,10 @@ def _theme(lib, emoji, slug, sort, filter=None, tmdb_movie=None, summary=None, c
 # uniformly by `_coll` (limit 40, sort_by random — the reshuffle mechanism; smart collections never carry
 # `collection_order`, which is what silently broke Halloween / Date Night / Sunday Slow Burn before).
 #
-# Edge of Your Seat and Not Just Cartoons are retuned per the design spec: their old filters matched ~0 shows
-# because the file used genre names that don't exist / are too narrow for this library. Retuned thresholds and
-# genre lists were validated against Plex in Step 6 (see task-1-report.md for counts).
+# Edge of Your Seat is retuned per the design spec: its old filter matched ~0 shows because the file used a
+# genre name that's too narrow for this library. Retuned thresholds and genre lists were validated against
+# Plex in Step 6 (see task-1-report.md for counts). Not Just Cartoons was retuned the same way but still
+# couldn't clear the bar and was dropped from the rotation entirely — see the note above THEMES_BY_LIB.
 THEMES = {
     "Adrenaline Rush": _theme("movies", "💥", "adrenaline-rush", "!08_Adrenaline_Rush", filter={
         "all": {
@@ -153,12 +154,8 @@ THEMES = {
             "genre.not": ["Animation", "Family"],
             "genre": ["Mystery", "Crime"],
         }}),
-    "Not Just Cartoons": _theme("shows", "🎨", "not-just-cartoons", "!08_Not_Just_Cartoons", filter={
-        "all": {
-            "user_rating.gte": 6.0,  # loosened from 6.5 (Step 6: only 6 matches at 6.5, ≥15 required)
-            "genre.not": ["Family"],
-            "genre": ["Animation"],
-        }}),
+    # Not Just Cartoons was dropped from the rotation (coordinator ruling, Fix round 1): the TV library only
+    # has 6 titles total tagged Plex genre Animation, so no rating threshold gets it to the >=15-match bar.
 }
 THEMES_BY_LIB = {lib: [n for n, t in THEMES.items() if t["lib"] == lib] for lib in ("movies", "shows")}
 
