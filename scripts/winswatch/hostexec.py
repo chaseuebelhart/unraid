@@ -23,7 +23,7 @@ def run(job: str):
     # Jobs are resolved relative to this file (the repo checkout), so a job committed
     # here deploys identically whether run from the repo or the NFS-mounted server tree.
     src = Path(__file__).parent / "host/jobs" / f"{job}.sh"
-    shutil.copy(src, APP / "host/job.sh")
+    shutil.copy(src, APP / "host/job.sh"); (APP / "host/.request").touch()   # run.sh runs job.sh only when a request is pending
     started = time.time() - 5
     ok = None
     try:
