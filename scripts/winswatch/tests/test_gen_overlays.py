@@ -2,7 +2,7 @@ from datetime import date, timedelta
 from pathlib import Path
 import yaml
 import gen_assets, gen_overlays
-from ww.buckets import airdate_label, tab_years
+from ww.buckets import DOW, MON, airdate_label, tab_years
 from ww.chips import chip_combos
 
 def test_gauge_score_plates_cover_every_tenth():
@@ -117,3 +117,18 @@ def test_hand_written_yaml_matches_locked_look():
     svc = sh["templates"]["ww_service"]["overlay"]
     assert svc["font_size"] == 60 and svc["horizontal_align"] == "center" and svc["horizontal_offset"] == 0 and svc["vertical_align"] == "bottom"
     assert "ww_new" not in sh["overlays"]                              # shows never get NEW: the top-edge tab is the only signal
+    # REQUESTED badge (Task 2): same top-left slot as NEW, one group, tabs/bookmarks suppress both via label.not
+    mv = yaml.safe_load((ww / "movies.yml").read_text())["overlays"]
+    every_tab_label = ({f"DaysLeft_{i}" for i in range(1, 31)} | {f"NewEp_{d}" for d in DOW} | {f"ReturnsIn_{i}" for i in range(8, 31)}
+                       | {f"Returns_{m}" for m in MON} | {"Returns_TBA"} | {f"Returns_{y}" for y in tab_years()})
+    for req in (mv["ww_requested"], sh["overlays"]["ww_requested"]):
+        o = req["overlay"]
+        assert o["name"] == "text(REQUESTED)" and o["group"] == "ww_tl" and o["weight"] == 20 and o["back_color"] == "#a78bfa"
+        assert o["font_color"] == "#120a2a" and o["horizontal_align"] == "left" and o["horizontal_offset"] == 40 and o["vertical_offset"] == 40
+        assert req["plex_search"]["all"]["label"] == "Requested" and req["plex_search"]["validate"] is False and req["ignore_blank_results"] is True
+        nots = req["plex_search"]["all"]["label.not"]
+        assert "NewEp_Wed" in nots and "DaysLeft_3" in nots
+        assert set(nots) == every_tab_label and len(nots) == len(every_tab_label)   # static list in YAML must track ww/buckets (bump yearly)
+    new = mv["ww_new"]
+    assert new["overlay"]["group"] == "ww_tl" and new["overlay"]["weight"] == 10
+    assert set(new["plex_search"]["all"]["label.not"]) == every_tab_label

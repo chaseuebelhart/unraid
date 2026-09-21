@@ -58,6 +58,40 @@ overlays:
   ww_s_adultswim:  {template: {name: ww_service, label: ADULT SWIM,     color: "#ffffff", weight: 76,  networks: [Adult Swim]}}
   ww_s_usa:        {template: {name: ww_service, label: USA NETWORK,    color: "#3b82f6", weight: 75,  networks: [USA Network]}}
 
+  # REQUESTED badge, top-left (group ww_tl; shows have no NEW badge so it is the only member here). Any top-edge tab/bookmark
+  # label (DaysLeft_N, NewEp_*, ReturnsIn_N, Returns_*) suppresses it via label.not — tabs beat badges. The list is static:
+  # ReturnsIn_8..30 and the Returns_<year> run mirror ww/buckets (tab_years() = this year..+6) and must be bumped yearly,
+  # same as the tabs. validate: false — labels missing from the library are dropped from the search, not fatal.
+  ww_requested:
+    ignore_blank_results: true
+    plex_search:
+      validate: false
+      all:
+        label: Requested
+        label.not: [DaysLeft_1, DaysLeft_2, DaysLeft_3, DaysLeft_4, DaysLeft_5, DaysLeft_6, DaysLeft_7, DaysLeft_8, DaysLeft_9, DaysLeft_10,
+                    DaysLeft_11, DaysLeft_12, DaysLeft_13, DaysLeft_14, DaysLeft_15, DaysLeft_16, DaysLeft_17, DaysLeft_18, DaysLeft_19, DaysLeft_20,
+                    DaysLeft_21, DaysLeft_22, DaysLeft_23, DaysLeft_24, DaysLeft_25, DaysLeft_26, DaysLeft_27, DaysLeft_28, DaysLeft_29, DaysLeft_30,
+                    NewEp_Mon, NewEp_Tue, NewEp_Wed, NewEp_Thu, NewEp_Fri, NewEp_Sat, NewEp_Sun,
+                    ReturnsIn_8, ReturnsIn_9, ReturnsIn_10, ReturnsIn_11, ReturnsIn_12, ReturnsIn_13, ReturnsIn_14, ReturnsIn_15, ReturnsIn_16,
+                    ReturnsIn_17, ReturnsIn_18, ReturnsIn_19, ReturnsIn_20, ReturnsIn_21, ReturnsIn_22, ReturnsIn_23, ReturnsIn_24, ReturnsIn_25,
+                    ReturnsIn_26, ReturnsIn_27, ReturnsIn_28, ReturnsIn_29, ReturnsIn_30,
+                    Returns_Jan, Returns_Feb, Returns_Mar, Returns_Apr, Returns_May, Returns_Jun, Returns_Jul, Returns_Aug, Returns_Sep, Returns_Oct,
+                    Returns_Nov, Returns_Dec, Returns_TBA, Returns_2026, Returns_2027, Returns_2028, Returns_2029, Returns_2030, Returns_2031, Returns_2032]
+    overlay:
+      name: text(REQUESTED)
+      font: config/winswatch/fonts/Avenir_95_Black.ttf
+      font_size: 58
+      font_color: "#120a2a"
+      back_color: "#a78bfa"
+      back_radius: 15
+      back_padding: 18
+      horizontal_align: left
+      horizontal_offset: 40
+      vertical_align: top
+      vertical_offset: 40
+      group: ww_tl
+      weight: 20
+
   ww_reel:
     plex_all: true
     filters:
