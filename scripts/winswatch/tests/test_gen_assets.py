@@ -14,7 +14,7 @@ def test_generate_all(tmp_path: Path):
     assert Image.open(tmp_path / "bar_bottom_ep.png").size == (1920, 269)   # episode canvas is 1920x1080
     assert Image.open(tmp_path / "reel.png").size == (95, 95)
     bm = Image.open(tmp_path / "bookmark_12.png").convert("RGBA")
-    assert bm.width == 1000 and 130 < bm.height < 150
+    assert bm.width == 1000 and bm.height == Image.open(tmp_path / "tab_NewEp_Wed.png").height   # LEAVING plate = tab height
     tab = Image.open(tmp_path / "tab_NewEp_Wed.png").convert("RGBA")
     assert tab.width == 1000 and 100 < tab.height < 112
     # plate fits its text: plate spans x=40..(text+58); the widest tab is wider than the narrowest

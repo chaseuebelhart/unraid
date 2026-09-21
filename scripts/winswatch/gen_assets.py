@@ -105,18 +105,18 @@ def _line_and_tab(color, ink, parts, out, bookmark=False):
     """Status edge line (26px, full width) + a tab hanging from its bottom edge at x=40 with the text baked in.
     parts: [(text, font_px, weight), ...] drawn on one baseline, 0.1em tracking. Every tab uses the same 46px size; only the
     weight changes (prefix SemiBold, variable part ExtraBold), the LEAVING count is 57px ExtraBold.
-    Padding 18/29/15 (top/sides/bottom); bookmark=True is the LEAVING plate: 20/29/46, same plain rounded shape."""
+    Padding 18/29/15 (top/sides/bottom) for tabs and the LEAVING plate alike (bookmark only picks the colours)."""
     fonts = {(px, wt): _tab_font(px, wt) for _, px, wt in parts}
     track = 4.6
     gap = fonts[(parts[0][1], parts[0][2])].getlength(" ") + track     # word gap between parts
     text_w = sum(_tracked_width(t, fonts[(px, wt)], track) for t, px, wt in parts) + gap * (len(parts) - 1)
     plate_w = int(round(text_w)) + 58
     x0, x1 = 40, 40 + plate_w
-    top_pad = 20 if bookmark else 18
+    top_pad = 18                              # LEAVING plate matches the status tabs exactly (Chase, 2026-09-20)
     cap = 33                                  # cap height of the 46px face; every part shares its baseline
     plate_top = EDGE - 1                      # overlap the line by 1px so line + tab read as one unit
     baseline = plate_top + top_pad + cap
-    y1 = baseline + 13 + (46 if bookmark else 15)       # padding below the 1.5 line box, as in the artifact
+    y1 = baseline + 13 + 15                   # padding below the 1.5 line box, as in the artifact
     im = Image.new("RGBA", (W, y1 + 2), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
     d.rectangle([0, 0, W, EDGE - 1], fill=_hex(color))
     d.rounded_rectangle([x0, plate_top, x1, y1], radius=15, fill=_hex(color))
