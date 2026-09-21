@@ -12,8 +12,8 @@ def band(score: int) -> str:
 CODEC = {
     "k4": ("4K", WHITE), "p1080": ("1080p", WHITE), "p720": ("720p", WHITE), "sd": ("SD", WHITE),
     "dv": ("DV", "#a78bfa"), "dvhdr": ("DV·HDR", "#c084fc"), "hdrp": ("HDR10+", "#fbbf24"), "hdr": ("HDR", "#e8b84a"),
-    "truehdatmos": ("ATMOS", "#60a5fa"), "atmos": ("ATMOS", "#60a5fa"), "ddpatmos": ("DD+ ATMOS", "#7dd3fc"), "truehd": ("TRUEHD", "#2dd4bf"),
-    "dtsx": ("DTS:X", "#f87171"), "dtshd": ("DTS-HD MA", "#fb923c"), "dts": ("DTS", "#ef4444"),
+    "truehdatmos": ("ATMOS", "#60a5fa"), "atmos": ("ATMOS", "#60a5fa"), "ddpatmos": ("DD+", "#7dd3fc"), "truehd": ("TRUEHD", "#2dd4bf"),
+    "dtsx": ("DTS:X", "#f87171"), "dtshd": ("DTS-HD", "#fb923c"), "dts": ("DTS", "#ef4444"),
     "ddp": ("DD+", "#4ade80"), "dd": ("DD", "#a3a3a3"), "aac": ("AAC", "#9ca3af"),
     "flac": ("FLAC", "#9ca3af"), "pcm": ("PCM", "#9ca3af"), "opus": ("OPUS", "#9ca3af"),
 }

@@ -10,11 +10,11 @@ templates:
     overlay:
       name: text(<<label>>)
       font: config/winswatch/fonts/Avenir_95_Black.ttf
-      font_size: 46
+      font_size: 60
       font_color: <<color>>
       back_color: "#00000000"
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
       vertical_offset: 30
       group: ww_service
@@ -78,7 +78,7 @@ overlays:
       horizontal_align: left
       horizontal_offset: 40
       vertical_align: top
-      vertical_offset: 100
+      vertical_offset: 116   # 12px under the status tab (tab plate ends at y=104 with the 26px edge line)
 
   ww_reel:
     plex_all: true

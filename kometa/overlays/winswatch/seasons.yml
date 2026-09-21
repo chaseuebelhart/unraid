@@ -15,5 +15,5 @@ overlays:
       back_padding: 18
       horizontal_align: left
       horizontal_offset: 40
-      vertical_align: bottom
+      vertical_align: top
       vertical_offset: 40

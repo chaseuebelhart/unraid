@@ -1,9 +1,9 @@
 """Emit the generated Kometa overlay files:
-  gauge.yml          arcs + number + votes line (movies and shows)
+  gauge.yml          score plate PNG per rank 0..100 (movies and shows)
   topedge.yml        LEAVING bookmark (movies and shows)
   status.yml         NEW EP / RETURNS tabs + ended/canceled edge lines (shows only: uses tmdb_status)
   chips_movies.yml   codec chip rows on movie posters (one pre-rendered PNG per video/HDR/audio combination)
-  chips_episodes.yml the same rows on episode stills (builder_level: episode, top bar)
+  chips_episodes.yml the same rows on episode stills (builder_level: episode, bottom bar)
 
 Kometa facts these files are shaped around (verified against Kometa 2.4.8):
   * `group` and `queue` cannot be used on the same overlay, and a definition's `overlay:` dict replaces the
@@ -15,41 +15,29 @@ Kometa facts these files are shaped around (verified against Kometa 2.4.8):
 import sys
 from pathlib import Path
 import yaml
-from ww.buckets import VOTE_BUCKETS, DOW, MON, tab_years
-from ww.colors import GOLD, WHITE
+from ww.buckets import DOW, MON, tab_years
 from ww.chips import chip_combos, conditions, weight
-from gen_assets import chip_metrics
+from gen_assets import chip_metrics, EP_SCALE
 
-FONT = "config/winswatch/fonts/Avenir_95_Black.ttf"
 ASSETS = "config/winswatch/assets"
-
-def _txt(name, size, color, **pos):
-    o = {"name": f"text({name})", "font": FONT, "font_size": size, "font_color": color, "back_color": "#00000000"}
-    o.update(pos); return o
 
 def _label_search(mode: str, labels) -> dict:
     """plex_search on labels that tolerates labels which don't exist (yet) in the library."""
     return {"validate": False, mode: {"label": labels}}
 
+SCORE_LIFT = 242   # plate bottom sits this far above the poster bottom: bar 9.4u x 1.3 + 12u lift
+
 def gauge_yaml() -> dict:
+    """One pre-rendered score plate per rank (score_NN.png, flush with the poster's right edge), picked by the
+    item's user_rating window [N/10, (N+1)/10). No separate number or vote-count overlays in the locked look."""
     ov = {}
     for s in range(101):
         lo = round(s / 10, 1)
         vf = {"user_rating.gte": lo} if s == 100 else {"user_rating.gte": lo, "user_rating.lt": round((s + 1) / 10, 1)}
-        ov[f"ww_arc_{s:02d}"] = {
-            "overlay": {"name": f"ww_arc_{s:02d}", "file": f"{ASSETS}/arc_{s:02d}.png",
-                        "horizontal_align": "right", "horizontal_offset": 40, "vertical_align": "bottom", "vertical_offset": 55},
+        ov[f"ww_score_{s:02d}"] = {
+            "overlay": {"name": f"ww_score_{s:02d}", "file": f"{ASSETS}/score_{s:02d}.png",
+                        "horizontal_align": "right", "horizontal_offset": 0, "vertical_align": "bottom", "vertical_offset": SCORE_LIFT},
             "plex_all": True, "ignore_blank_results": True, "filters": vf}
-    num = dict(horizontal_align="right", horizontal_offset=40, vertical_align="bottom", vertical_offset=62, back_width=220, back_height=90)
-    ov["ww_num_white"] = {"overlay": _txt("<<user_rating%>>", 62, WHITE, **num), "plex_all": True, "ignore_blank_results": True,
-                          "filters": {"user_rating.gte": 0.1, "user_rating.lt": 8.5}}
-    ov["ww_num_gold"] = {"overlay": _txt("<<user_rating%>>", 62, GOLD, **num), "plex_all": True, "ignore_blank_results": True,
-                         "filters": {"user_rating.gte": 8.5}}
-    vpos = dict(horizontal_align="right", horizontal_offset=40, vertical_align="bottom", vertical_offset=22, back_width=220, back_height=40)
-    for b in VOTE_BUCKETS:
-        for tone, color, vf in (("white", WHITE, {"user_rating.lt": 8.5}), ("gold", GOLD, {"user_rating.gte": 8.5})):
-            ov[f"ww_votes_{b}_{tone}"] = {"overlay": _txt(f"{b} RATINGS", 31, color, **vpos),
-                                          "plex_search": _label_search("all", f"Votes_{b}"), "ignore_blank_results": True, "filters": vf}
     return {"overlays": ov}
 
 _BG = dict(horizontal_align="center", horizontal_offset=0, vertical_align="top", vertical_offset=0)
@@ -84,17 +72,21 @@ def status_yaml() -> dict:
     ov["ww_edge_ended"] = _top("ww_edge_ended", "edge_gray.png", 100, filters={"tmdb_status": "ended"})
     return {"overlays": ov}
 
+def chip_bottom_offset(level: str | None = None) -> int:
+    """vertical_offset (bottom-aligned) of a chip row. The row PNG carries the font's descent below the baseline, so the
+    spec's 30px bottom gap is measured from the baseline (5px above the old PNG bottom) and the descent + 2 is taken
+    off the offset. Episodes use the same offset x1.92 (1920x1080 canvas)."""
+    _, descent, _ = chip_metrics()
+    off = 30 + 5 - (descent + 2)
+    return round(off * EP_SCALE) if level == "episode" else off
+
 def chips_yaml(level: str | None = None) -> dict:
     """One overlay per codec-row PNG, all in group ww_chips; the heaviest matching row is drawn.
-    level=None -> movie posters, bottom bar; level='episode' -> episode stills, top bar."""
+    level=None -> movie posters; level='episode' -> episode stills. Both sit bottom-left in the bottom bar."""
     # Episode stills are composed on a 1920x1080 canvas (Kometa's landscape_dim), so they use the 1.92x chip renders
     # and 1.92x offsets; posters are 1000x1500.
-    # The row PNG carries the font's descent below the baseline. Episodes are top-aligned (top edge = cap top at 65,
-    # baseline unaffected); movies are bottom-aligned, so the spec's 30px bottom gap is measured from the baseline
-    # (which used to sit 5px above the PNG's bottom edge) and the descent + 2 is taken off the offset.
-    _, descent, _ = chip_metrics()
-    pos = (dict(horizontal_offset=77, vertical_align="top", vertical_offset=65) if level == "episode"
-           else dict(horizontal_offset=40, vertical_align="bottom", vertical_offset=30 + 5 - (descent + 2)))
+    pos = (dict(horizontal_offset=77, vertical_align="bottom", vertical_offset=chip_bottom_offset("episode")) if level == "episode"
+           else dict(horizontal_offset=39, vertical_align="bottom", vertical_offset=chip_bottom_offset()))
     prefix = "chipl" if level == "episode" else "chip"
     ov = {}
     for v, h, a in chip_combos():

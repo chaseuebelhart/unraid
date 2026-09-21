@@ -1,15 +1,16 @@
-# Wins Watch — episode stills: top bar + runtime. Codec chips come from generated/chips_episodes.yml.
-# Kometa composes episode art on a 1920x1080 canvas, so sizes/offsets here are 1.92x the poster spec (46px -> 88px, 40 -> 77).
+# Wins Watch — episode stills: bottom bar + runtime + NEW. Codec chips come from generated/chips_episodes.yml.
+# Kometa composes episode art on a 1920x1080 canvas, so sizes/offsets here are 1.92x the poster spec (60px -> 115px, 40 -> 77).
+# The chips' bottom offset (36 = (30 + 5 - (descent + 2)) x 1.92) is shared with the runtime so both sit on one baseline.
 overlays:
   ww_bar:
     builder_level: episode
     plex_all: true
     overlay:
       name: ww_bar
-      file: config/winswatch/assets/bar_top.png
+      file: config/winswatch/assets/bar_bottom_ep.png
       horizontal_align: center
       horizontal_offset: 0
-      vertical_align: top
+      vertical_align: bottom
       vertical_offset: 0
 
   ww_runtime:
@@ -18,10 +19,30 @@ overlays:
     overlay:
       name: text(<<runtime>>m)
       font: config/winswatch/fonts/Avenir_95_Black.ttf
-      font_size: 88
+      font_size: 115
       font_color: "#ffffff"
       back_color: "#00000000"
       horizontal_align: right
       horizontal_offset: 77
+      vertical_align: bottom
+      vertical_offset: 36
+
+  ww_new:
+    # episode_air_date is a Kometa 2.4.8 plex_search date attribute (modules/plex.py: episode.originallyAvailableAt).
+    builder_level: episode
+    ignore_blank_results: true
+    plex_search:
+      all:
+        episode_air_date: 7
+    overlay:
+      name: text(NEW)
+      font: config/winswatch/fonts/Avenir_95_Black.ttf
+      font_size: 111
+      font_color: "#06131c"
+      back_color: "#5ac8fa"
+      back_radius: 29
+      back_padding: 35
+      horizontal_align: left
+      horizontal_offset: 77
       vertical_align: top
-      vertical_offset: 65
+      vertical_offset: 77

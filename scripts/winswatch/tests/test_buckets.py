@@ -34,6 +34,7 @@ def test_airdate_label():
 
 def test_codec_and_service_tables():
     assert CODEC["dv"] == ("DV", "#a78bfa")
-    assert CODEC["dtshd"] == ("DTS-HD MA", "#fb923c")
+    assert CODEC["dtshd"] == ("DTS-HD", "#fb923c")
+    assert CODEC["ddpatmos"] == ("DD+", "#7dd3fc")   # shortened labels (task 11)
     assert SERVICE["Netflix"] == "#e50914"
     assert SERVICE["Apple TV+"] == "#f5f5f7"

@@ -7,9 +7,9 @@ overlays:
       group: ww_chips
       weight: 4413
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -27,9 +27,9 @@ overlays:
       group: ww_chips
       weight: 4412
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -47,9 +47,9 @@ overlays:
       group: ww_chips
       weight: 4411
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -67,9 +67,9 @@ overlays:
       group: ww_chips
       weight: 4410
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -87,9 +87,9 @@ overlays:
       group: ww_chips
       weight: 4409
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -107,9 +107,9 @@ overlays:
       group: ww_chips
       weight: 4408
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -127,9 +127,9 @@ overlays:
       group: ww_chips
       weight: 4407
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -147,9 +147,9 @@ overlays:
       group: ww_chips
       weight: 4406
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -167,9 +167,9 @@ overlays:
       group: ww_chips
       weight: 4405
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -187,9 +187,9 @@ overlays:
       group: ww_chips
       weight: 4404
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -207,9 +207,9 @@ overlays:
       group: ww_chips
       weight: 4403
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -227,9 +227,9 @@ overlays:
       group: ww_chips
       weight: 4402
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -247,9 +247,9 @@ overlays:
       group: ww_chips
       weight: 4401
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -267,9 +267,9 @@ overlays:
       group: ww_chips
       weight: 4400
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -283,9 +283,9 @@ overlays:
       group: ww_chips
       weight: 4313
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -302,9 +302,9 @@ overlays:
       group: ww_chips
       weight: 4312
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -321,9 +321,9 @@ overlays:
       group: ww_chips
       weight: 4311
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -340,9 +340,9 @@ overlays:
       group: ww_chips
       weight: 4310
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -359,9 +359,9 @@ overlays:
       group: ww_chips
       weight: 4309
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -378,9 +378,9 @@ overlays:
       group: ww_chips
       weight: 4308
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -397,9 +397,9 @@ overlays:
       group: ww_chips
       weight: 4307
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -416,9 +416,9 @@ overlays:
       group: ww_chips
       weight: 4306
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -435,9 +435,9 @@ overlays:
       group: ww_chips
       weight: 4305
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -454,9 +454,9 @@ overlays:
       group: ww_chips
       weight: 4304
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -473,9 +473,9 @@ overlays:
       group: ww_chips
       weight: 4303
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -492,9 +492,9 @@ overlays:
       group: ww_chips
       weight: 4302
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -511,9 +511,9 @@ overlays:
       group: ww_chips
       weight: 4301
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -530,9 +530,9 @@ overlays:
       group: ww_chips
       weight: 4300
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -545,9 +545,9 @@ overlays:
       group: ww_chips
       weight: 4213
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -565,9 +565,9 @@ overlays:
       group: ww_chips
       weight: 4212
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -585,9 +585,9 @@ overlays:
       group: ww_chips
       weight: 4211
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -605,9 +605,9 @@ overlays:
       group: ww_chips
       weight: 4210
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -625,9 +625,9 @@ overlays:
       group: ww_chips
       weight: 4209
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -645,9 +645,9 @@ overlays:
       group: ww_chips
       weight: 4208
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -665,9 +665,9 @@ overlays:
       group: ww_chips
       weight: 4207
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -685,9 +685,9 @@ overlays:
       group: ww_chips
       weight: 4206
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -705,9 +705,9 @@ overlays:
       group: ww_chips
       weight: 4205
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -725,9 +725,9 @@ overlays:
       group: ww_chips
       weight: 4204
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -745,9 +745,9 @@ overlays:
       group: ww_chips
       weight: 4203
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -765,9 +765,9 @@ overlays:
       group: ww_chips
       weight: 4202
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -785,9 +785,9 @@ overlays:
       group: ww_chips
       weight: 4201
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -805,9 +805,9 @@ overlays:
       group: ww_chips
       weight: 4200
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -822,9 +822,9 @@ overlays:
       group: ww_chips
       weight: 4113
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -841,9 +841,9 @@ overlays:
       group: ww_chips
       weight: 4112
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -860,9 +860,9 @@ overlays:
       group: ww_chips
       weight: 4111
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -879,9 +879,9 @@ overlays:
       group: ww_chips
       weight: 4110
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -898,9 +898,9 @@ overlays:
       group: ww_chips
       weight: 4109
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -917,9 +917,9 @@ overlays:
       group: ww_chips
       weight: 4108
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -936,9 +936,9 @@ overlays:
       group: ww_chips
       weight: 4107
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -955,9 +955,9 @@ overlays:
       group: ww_chips
       weight: 4106
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -974,9 +974,9 @@ overlays:
       group: ww_chips
       weight: 4105
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -993,9 +993,9 @@ overlays:
       group: ww_chips
       weight: 4104
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -1012,9 +1012,9 @@ overlays:
       group: ww_chips
       weight: 4103
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -1031,9 +1031,9 @@ overlays:
       group: ww_chips
       weight: 4102
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -1050,9 +1050,9 @@ overlays:
       group: ww_chips
       weight: 4101
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -1069,9 +1069,9 @@ overlays:
       group: ww_chips
       weight: 4100
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -1085,9 +1085,9 @@ overlays:
       group: ww_chips
       weight: 4013
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -1106,9 +1106,9 @@ overlays:
       group: ww_chips
       weight: 4012
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -1127,9 +1127,9 @@ overlays:
       group: ww_chips
       weight: 4011
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -1148,9 +1148,9 @@ overlays:
       group: ww_chips
       weight: 4010
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -1169,9 +1169,9 @@ overlays:
       group: ww_chips
       weight: 4009
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -1190,9 +1190,9 @@ overlays:
       group: ww_chips
       weight: 4008
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -1211,9 +1211,9 @@ overlays:
       group: ww_chips
       weight: 4007
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -1232,9 +1232,9 @@ overlays:
       group: ww_chips
       weight: 4006
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -1253,9 +1253,9 @@ overlays:
       group: ww_chips
       weight: 4005
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -1274,9 +1274,9 @@ overlays:
       group: ww_chips
       weight: 4004
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -1295,9 +1295,9 @@ overlays:
       group: ww_chips
       weight: 4003
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -1316,9 +1316,9 @@ overlays:
       group: ww_chips
       weight: 4002
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -1337,9 +1337,9 @@ overlays:
       group: ww_chips
       weight: 4001
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -1358,9 +1358,9 @@ overlays:
       group: ww_chips
       weight: 4000
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -1375,9 +1375,9 @@ overlays:
       group: ww_chips
       weight: 3413
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -1395,9 +1395,9 @@ overlays:
       group: ww_chips
       weight: 3412
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -1415,9 +1415,9 @@ overlays:
       group: ww_chips
       weight: 3411
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -1435,9 +1435,9 @@ overlays:
       group: ww_chips
       weight: 3410
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -1455,9 +1455,9 @@ overlays:
       group: ww_chips
       weight: 3409
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -1475,9 +1475,9 @@ overlays:
       group: ww_chips
       weight: 3408
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -1495,9 +1495,9 @@ overlays:
       group: ww_chips
       weight: 3407
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -1515,9 +1515,9 @@ overlays:
       group: ww_chips
       weight: 3406
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -1535,9 +1535,9 @@ overlays:
       group: ww_chips
       weight: 3405
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -1555,9 +1555,9 @@ overlays:
       group: ww_chips
       weight: 3404
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -1575,9 +1575,9 @@ overlays:
       group: ww_chips
       weight: 3403
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -1595,9 +1595,9 @@ overlays:
       group: ww_chips
       weight: 3402
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -1615,9 +1615,9 @@ overlays:
       group: ww_chips
       weight: 3401
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -1635,9 +1635,9 @@ overlays:
       group: ww_chips
       weight: 3400
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -1651,9 +1651,9 @@ overlays:
       group: ww_chips
       weight: 3313
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -1670,9 +1670,9 @@ overlays:
       group: ww_chips
       weight: 3312
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -1689,9 +1689,9 @@ overlays:
       group: ww_chips
       weight: 3311
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -1708,9 +1708,9 @@ overlays:
       group: ww_chips
       weight: 3310
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -1727,9 +1727,9 @@ overlays:
       group: ww_chips
       weight: 3309
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -1746,9 +1746,9 @@ overlays:
       group: ww_chips
       weight: 3308
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -1765,9 +1765,9 @@ overlays:
       group: ww_chips
       weight: 3307
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -1784,9 +1784,9 @@ overlays:
       group: ww_chips
       weight: 3306
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -1803,9 +1803,9 @@ overlays:
       group: ww_chips
       weight: 3305
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -1822,9 +1822,9 @@ overlays:
       group: ww_chips
       weight: 3304
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -1841,9 +1841,9 @@ overlays:
       group: ww_chips
       weight: 3303
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -1860,9 +1860,9 @@ overlays:
       group: ww_chips
       weight: 3302
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -1879,9 +1879,9 @@ overlays:
       group: ww_chips
       weight: 3301
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -1898,9 +1898,9 @@ overlays:
       group: ww_chips
       weight: 3300
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_all: true
     filters:
@@ -1913,9 +1913,9 @@ overlays:
       group: ww_chips
       weight: 3213
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -1933,9 +1933,9 @@ overlays:
       group: ww_chips
       weight: 3212
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -1953,9 +1953,9 @@ overlays:
       group: ww_chips
       weight: 3211
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -1973,9 +1973,9 @@ overlays:
       group: ww_chips
       weight: 3210
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -1993,9 +1993,9 @@ overlays:
       group: ww_chips
       weight: 3209
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2013,9 +2013,9 @@ overlays:
       group: ww_chips
       weight: 3208
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2033,9 +2033,9 @@ overlays:
       group: ww_chips
       weight: 3207
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2053,9 +2053,9 @@ overlays:
       group: ww_chips
       weight: 3206
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2073,9 +2073,9 @@ overlays:
       group: ww_chips
       weight: 3205
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2093,9 +2093,9 @@ overlays:
       group: ww_chips
       weight: 3204
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2113,9 +2113,9 @@ overlays:
       group: ww_chips
       weight: 3203
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2133,9 +2133,9 @@ overlays:
       group: ww_chips
       weight: 3202
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2153,9 +2153,9 @@ overlays:
       group: ww_chips
       weight: 3201
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2173,9 +2173,9 @@ overlays:
       group: ww_chips
       weight: 3200
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2190,9 +2190,9 @@ overlays:
       group: ww_chips
       weight: 3113
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2209,9 +2209,9 @@ overlays:
       group: ww_chips
       weight: 3112
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2228,9 +2228,9 @@ overlays:
       group: ww_chips
       weight: 3111
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2247,9 +2247,9 @@ overlays:
       group: ww_chips
       weight: 3110
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2266,9 +2266,9 @@ overlays:
       group: ww_chips
       weight: 3109
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2285,9 +2285,9 @@ overlays:
       group: ww_chips
       weight: 3108
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2304,9 +2304,9 @@ overlays:
       group: ww_chips
       weight: 3107
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2323,9 +2323,9 @@ overlays:
       group: ww_chips
       weight: 3106
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2342,9 +2342,9 @@ overlays:
       group: ww_chips
       weight: 3105
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2361,9 +2361,9 @@ overlays:
       group: ww_chips
       weight: 3104
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2380,9 +2380,9 @@ overlays:
       group: ww_chips
       weight: 3103
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2399,9 +2399,9 @@ overlays:
       group: ww_chips
       weight: 3102
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2418,9 +2418,9 @@ overlays:
       group: ww_chips
       weight: 3101
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2437,9 +2437,9 @@ overlays:
       group: ww_chips
       weight: 3100
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2453,9 +2453,9 @@ overlays:
       group: ww_chips
       weight: 3013
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2474,9 +2474,9 @@ overlays:
       group: ww_chips
       weight: 3012
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2495,9 +2495,9 @@ overlays:
       group: ww_chips
       weight: 3011
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2516,9 +2516,9 @@ overlays:
       group: ww_chips
       weight: 3010
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2537,9 +2537,9 @@ overlays:
       group: ww_chips
       weight: 3009
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2558,9 +2558,9 @@ overlays:
       group: ww_chips
       weight: 3008
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2579,9 +2579,9 @@ overlays:
       group: ww_chips
       weight: 3007
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2600,9 +2600,9 @@ overlays:
       group: ww_chips
       weight: 3006
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2621,9 +2621,9 @@ overlays:
       group: ww_chips
       weight: 3005
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2642,9 +2642,9 @@ overlays:
       group: ww_chips
       weight: 3004
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2663,9 +2663,9 @@ overlays:
       group: ww_chips
       weight: 3003
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2684,9 +2684,9 @@ overlays:
       group: ww_chips
       weight: 3002
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2705,9 +2705,9 @@ overlays:
       group: ww_chips
       weight: 3001
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2726,9 +2726,9 @@ overlays:
       group: ww_chips
       weight: 3000
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2743,9 +2743,9 @@ overlays:
       group: ww_chips
       weight: 2013
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2764,9 +2764,9 @@ overlays:
       group: ww_chips
       weight: 2012
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2785,9 +2785,9 @@ overlays:
       group: ww_chips
       weight: 2011
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2806,9 +2806,9 @@ overlays:
       group: ww_chips
       weight: 2010
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2827,9 +2827,9 @@ overlays:
       group: ww_chips
       weight: 2009
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2848,9 +2848,9 @@ overlays:
       group: ww_chips
       weight: 2008
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2869,9 +2869,9 @@ overlays:
       group: ww_chips
       weight: 2007
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2890,9 +2890,9 @@ overlays:
       group: ww_chips
       weight: 2006
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2911,9 +2911,9 @@ overlays:
       group: ww_chips
       weight: 2005
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2932,9 +2932,9 @@ overlays:
       group: ww_chips
       weight: 2004
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2953,9 +2953,9 @@ overlays:
       group: ww_chips
       weight: 2003
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2974,9 +2974,9 @@ overlays:
       group: ww_chips
       weight: 2002
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -2995,9 +2995,9 @@ overlays:
       group: ww_chips
       weight: 2001
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -3016,9 +3016,9 @@ overlays:
       group: ww_chips
       weight: 2000
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -3033,9 +3033,9 @@ overlays:
       group: ww_chips
       weight: 1013
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -3054,9 +3054,9 @@ overlays:
       group: ww_chips
       weight: 1012
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -3075,9 +3075,9 @@ overlays:
       group: ww_chips
       weight: 1011
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -3096,9 +3096,9 @@ overlays:
       group: ww_chips
       weight: 1010
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -3117,9 +3117,9 @@ overlays:
       group: ww_chips
       weight: 1009
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -3138,9 +3138,9 @@ overlays:
       group: ww_chips
       weight: 1008
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -3159,9 +3159,9 @@ overlays:
       group: ww_chips
       weight: 1007
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -3180,9 +3180,9 @@ overlays:
       group: ww_chips
       weight: 1006
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -3201,9 +3201,9 @@ overlays:
       group: ww_chips
       weight: 1005
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -3222,9 +3222,9 @@ overlays:
       group: ww_chips
       weight: 1004
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -3243,9 +3243,9 @@ overlays:
       group: ww_chips
       weight: 1003
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -3264,9 +3264,9 @@ overlays:
       group: ww_chips
       weight: 1002
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -3285,9 +3285,9 @@ overlays:
       group: ww_chips
       weight: 1001
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:
@@ -3306,9 +3306,9 @@ overlays:
       group: ww_chips
       weight: 1000
       horizontal_align: left
-      horizontal_offset: 40
+      horizontal_offset: 39
       vertical_align: bottom
-      vertical_offset: 23
+      vertical_offset: 19
     ignore_blank_results: true
     plex_search:
       all:

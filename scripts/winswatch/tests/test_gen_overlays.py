@@ -2,36 +2,20 @@ from datetime import date, timedelta
 from pathlib import Path
 import yaml
 import gen_assets, gen_overlays
-from ww.buckets import VOTE_BUCKETS, airdate_label, tab_years
+from ww.buckets import airdate_label, tab_years
 from ww.chips import chip_combos
 
-FONT = "config/winswatch/fonts/Avenir_95_Black.ttf"
-
-def test_gauge_arcs_cover_every_tenth():
+def test_gauge_score_plates_cover_every_tenth():
     g = gen_overlays.gauge_yaml()["overlays"]
-    arcs = {k: v for k, v in g.items() if k.startswith("ww_arc_")}
-    assert len(arcs) == 101
-    lo = [v["filters"]["user_rating.gte"] for v in arcs.values()]
+    assert set(g) == {f"ww_score_{s:02d}" for s in range(101)}     # no separate number / vote overlays in the locked look
+    lo = [v["filters"]["user_rating.gte"] for v in g.values()]
     assert sorted(lo) == [round(i / 10, 1) for i in range(101)]
-    a86 = arcs["ww_arc_86"]
-    assert a86["overlay"]["file"] == "config/winswatch/assets/arc_86.png"
-    assert a86["filters"] == {"user_rating.gte": 8.6, "user_rating.lt": 8.7} and a86["plex_all"] is True
-    assert a86["overlay"]["horizontal_align"] == "right" and a86["overlay"]["vertical_offset"] == 55
-    assert "value_filter" not in a86   # Kometa 2.4.8 rejects user_rating there
-
-def test_gauge_number_and_votes():
-    g = gen_overlays.gauge_yaml()["overlays"]
-    assert g["ww_num_white"]["overlay"]["name"] == "text(<<user_rating%>>)"
-    assert g["ww_num_white"]["filters"] == {"user_rating.gte": 0.1, "user_rating.lt": 8.5}
-    assert g["ww_num_gold"]["filters"] == {"user_rating.gte": 8.5}
-    assert g["ww_num_gold"]["overlay"]["font_color"] == "#f5c518"
-    votes = [k for k in g if k.startswith("ww_votes_")]
-    assert len(votes) == 2 * len(VOTE_BUCKETS)
-    v = g["ww_votes_1.5M_white"]
-    assert v["plex_search"] == {"validate": False, "all": {"label": "Votes_1.5M"}}
-    assert v["ignore_blank_results"] is True     # a missing label skips the overlay instead of erroring
-    assert v["overlay"]["name"] == "text(1.5M RATINGS)"
-    assert v["filters"] == {"user_rating.lt": 8.5}
+    p86 = g["ww_score_86"]
+    assert p86["overlay"] == {"name": "ww_score_86", "file": "config/winswatch/assets/score_86.png",
+                              "horizontal_align": "right", "horizontal_offset": 0, "vertical_align": "bottom", "vertical_offset": 242}
+    assert p86["filters"] == {"user_rating.gte": 8.6, "user_rating.lt": 8.7} and p86["plex_all"] is True and p86["ignore_blank_results"] is True
+    assert g["ww_score_100"]["filters"] == {"user_rating.gte": 10.0}
+    assert "value_filter" not in p86   # Kometa 2.4.8 rejects user_rating there
 
 def test_topedge_and_status_precedence():
     t = gen_overlays.topedge_yaml()["overlays"]
@@ -65,9 +49,12 @@ def test_chips_one_group_best_wins():
     assert m["ww_c_k4_x_x"]["overlay"]["weight"] > m["ww_c_p1080_dvhdr_dtsx"]["overlay"]["weight"]   # video always leads
     assert m["ww_c_k4_dvhdr_atmos"]["overlay"]["weight"] > m["ww_c_k4_dvhdr_truehd"]["overlay"]["weight"]
     _, descent, _ = gen_assets.chip_metrics()
-    assert m["ww_c_k4_x_x"]["overlay"]["vertical_align"] == "bottom" and m["ww_c_k4_x_x"]["overlay"]["vertical_offset"] == 30 + 5 - (descent + 2)   # baseline stays 35px up
-    assert e["ww_c_k4_x_x"]["overlay"]["vertical_align"] == "top" and e["ww_c_k4_x_x"]["builder_level"] == "episode"
-    assert e["ww_c_k4_x_x"]["overlay"]["file"].endswith("/chipl_k4_x_x.png") and e["ww_c_k4_x_x"]["overlay"]["horizontal_offset"] == 77
+    assert gen_assets.CHIP_PX == 60 and gen_assets.CHIP_GAP == 39 and descent == 14
+    mo = m["ww_c_k4_x_x"]["overlay"]
+    assert mo["vertical_align"] == "bottom" and mo["vertical_offset"] == 30 + 5 - (descent + 2) == 19 and mo["horizontal_offset"] == 39   # baseline stays 35px up
+    eo = e["ww_c_k4_x_x"]["overlay"]
+    assert eo["vertical_align"] == "bottom" and eo["vertical_offset"] == round(19 * 1.92) == 36 and e["ww_c_k4_x_x"]["builder_level"] == "episode"
+    assert eo["file"].endswith("/chipl_k4_x_x.png") and eo["horizontal_offset"] == 77
     assert m["ww_c_k4_dvhdr_truehdatmos"]["overlay"]["weight"] > m["ww_c_k4_dvhdr_dtsx"]["overlay"]["weight"]
     assert "builder_level" not in m["ww_c_k4_x_x"]
     sdr = m["ww_c_p1080_x_ddp"]
@@ -80,7 +67,7 @@ def test_chips_one_group_best_wins():
 
 def test_write_roundtrip(tmp_path):
     gen_overlays.write(tmp_path)
-    for f, n in (("gauge.yml", 150), ("topedge.yml", 29), ("status.yml", 49), ("chips_movies.yml", 150), ("chips_episodes.yml", 150)):
+    for f, n in (("gauge.yml", 100), ("topedge.yml", 29), ("status.yml", 49), ("chips_movies.yml", 150), ("chips_episodes.yml", 150)):
         data = yaml.safe_load((tmp_path / f).read_text())
         assert "overlays" in data and len(data["overlays"]) > n
 
@@ -108,4 +95,22 @@ def test_every_referenced_asset_exists(tmp_path):
                 referenced.add(f.rsplit("/", 1)[1])
     missing = referenced - names
     assert not missing, sorted(missing)
-    assert {"arc_86.png", "bar_bottom.png", "bar_top.png", "bookmark_1.png", "tab_Returns_TBA.png", "chip_k4_x_x.png", "chipl_k4_x_x.png"} <= referenced
+    assert {"score_86.png", "bar_bottom.png", "bar_bottom_ep.png", "bookmark_1.png", "tab_Returns_TBA.png", "chip_k4_x_x.png", "chipl_k4_x_x.png"} <= referenced
+
+def test_hand_written_yaml_matches_locked_look():
+    ww = Path(__file__).resolve().parents[3] / "kometa/overlays/winswatch"
+    ep = yaml.safe_load((ww / "episodes.yml").read_text())["overlays"]
+    assert ep["ww_bar"]["overlay"]["file"].endswith("/bar_bottom_ep.png") and ep["ww_bar"]["overlay"]["vertical_align"] == "bottom"
+    rt = ep["ww_runtime"]["overlay"]
+    assert rt["font_size"] == 115 and rt["vertical_align"] == "bottom" and rt["vertical_offset"] == gen_overlays.chip_bottom_offset("episode") and rt["horizontal_offset"] == 77
+    new = ep["ww_new"]
+    assert new["builder_level"] == "episode" and new["plex_search"] == {"all": {"episode_air_date": 7}}
+    assert new["overlay"]["font_size"] == 111 and new["overlay"]["horizontal_offset"] == 77 and new["overlay"]["vertical_offset"] == 77
+    assert new["overlay"]["back_radius"] == 29 and new["overlay"]["back_padding"] == 35 and new["overlay"]["vertical_align"] == "top"
+    se = yaml.safe_load((ww / "seasons.yml").read_text())["overlays"]["ww_new_season"]["overlay"]
+    assert se["vertical_align"] == "top" and se["vertical_offset"] == 40 and se["horizontal_offset"] == 40
+    sh = yaml.safe_load((ww / "shows.yml").read_text())
+    svc = sh["templates"]["ww_service"]["overlay"]
+    assert svc["font_size"] == 60 and svc["horizontal_offset"] == 39 and svc["vertical_align"] == "bottom"
+    new = sh["overlays"]["ww_new"]["overlay"]
+    assert new["font_size"] == 58 and new["vertical_offset"] == 116   # clears the 104px-tall tab by the same 12px as before
