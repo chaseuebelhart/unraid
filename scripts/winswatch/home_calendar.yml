@@ -1,0 +1,39 @@
+# Wins Watch Home rotation. Week A then week B, Mon..Sun. Two shelves a day. Edit this, run gen_home.py, commit both.
+#
+# Kometa's weekly() has no notion of a fortnight, so a theme's visible_home lists every weekday it appears on in
+# EITHER week (the union). That means on some weekdays up to four themes technically qualify for promotion by
+# Kometa's weekly() alone — home.py's `order` step (Task 5) is what actually narrows a day down to the two themes
+# that belong to *this* week's table, demoting the other two so only the current week's pair shows on the shelf.
+movies:
+  - [Adrenaline Rush, Hidden Gems]         # A Mon
+  - [Crime Files, Love & Laughs]           # A Tue
+  - [Sci-Fi Odyssey, Based on a True Story]# A Wed
+  - [Mind Benders, Raunchy Comedy]         # A Thu
+  - [Director's Spotlight, Fresh Picks]    # A Fri  (+ Date Night)
+  - [Adrenaline Rush, Crime Files]         # A Sat  (+ Date Night)
+  - [Hidden Gems, Sci-Fi Odyssey]          # A Sun  (+ Sunday Slow Burn)
+  - [Love & Laughs, Mind Benders]          # B Mon
+  - [Raunchy Comedy, Director's Spotlight] # B Tue
+  - [Fresh Picks, Based on a True Story]   # B Wed
+  - [Adrenaline Rush, Love & Laughs]       # B Thu
+  - [Crime Files, Hidden Gems]             # B Fri  (+ Date Night)
+  - [Sci-Fi Odyssey, Raunchy Comedy]       # B Sat  (+ Date Night)
+  - [Mind Benders, Fresh Picks]            # B Sun  (+ Sunday Slow Burn)
+# Not Just Cartoons was dropped from the rotation (this library only has 6 titles tagged genre Animation —
+# not enough for a shelf; see task-1-report.md "Fix round 1"). 6 themes x 28 slots -> 4 themes appear 5x,
+# 2 appear 4x per fortnight.
+shows:
+  - [Worlds Beyond, Comfort Binge]         # A Mon
+  - [Peak TV, Crime Beat]                  # A Tue
+  - [Just Dropped, Edge of Your Seat]      # A Wed
+  - [Crime Beat, Worlds Beyond]            # A Thu
+  - [Comfort Binge, Peak TV]               # A Fri
+  - [Crime Beat, Just Dropped]             # A Sat
+  - [Edge of Your Seat, Comfort Binge]     # A Sun
+  - [Worlds Beyond, Peak TV]               # B Mon
+  - [Comfort Binge, Crime Beat]            # B Tue
+  - [Just Dropped, Peak TV]                # B Wed
+  - [Edge of Your Seat, Worlds Beyond]     # B Thu
+  - [Peak TV, Comfort Binge]               # B Fri
+  - [Crime Beat, Edge of Your Seat]        # B Sat
+  - [Just Dropped, Worlds Beyond]          # B Sun
