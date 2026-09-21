@@ -3,7 +3,9 @@
     python promote_config.py <config.yml> --phase reset|steady [--write]
 
 reset  : remove_overlays: true, mass_user_rating_update: remove   (run ONCE: strips the old overlays and the old RT user ratings)
-steady : remove_overlays: false, mass_user_rating_update: mdb     (the nightly state: MDBList score in the user-rating slot)
+steady : remove_overlays: false, mass_user_rating_update commented out (the nightly state: scores.py writes the MDBList score
+         into the user-rating slot through the metadata-edit path; Kometa's own mdb writer goes through /:/rate, which plex.tv
+         echoes back rounded to whole numbers — every poster then lands on a multiple of 10)
 
 Both phases replace every `overlay_files:` entry of the Movies / TV Shows libraries with the Wins Watch files and set
 mass_critic_rating_update: mdb_metacritic, mass_audience_rating_update: mdb_letterboxd (Movies) / mdb_trakt (TV Shows).
@@ -48,10 +50,10 @@ def rewrite(text: str, phase: str) -> str:
         # 2. operations
         def setop(key, val):
             for i, l in enumerate(seg):
-                if re.match(rf"^      {key}:", l):
-                    seg[i] = f"      {key}: {val}"; return
+                if re.match(rf"^      (# )?{key}:", l):
+                    seg[i] = f"      {key}: {val}" if val else f"      # {key}: (winswatch scores.py owns this slot)"; return
             raise SystemExit(f"{name}: operations key {key} not found")
-        setop("mass_user_rating_update", "remove" if phase == "reset" else "mdb")
+        setop("mass_user_rating_update", "remove" if phase == "reset" else None)
         setop("mass_critic_rating_update", "mdb_metacritic")
         setop("mass_audience_rating_update", AUDIENCE[name])
         for i, l in enumerate(seg):
