@@ -1,6 +1,7 @@
 # Wins Watch — episode stills: bottom bar + runtime + NEW. Codec chips come from generated/chips_episodes.yml.
 # Kometa composes episode art on a 1920x1080 canvas, so sizes/offsets here are 1.92x the poster spec (60px -> 115px, 40 -> 77).
-# The chips' bottom offset (36 = (30 + 5 - (descent + 2)) x 1.92) is shared with the runtime so both sit on one baseline.
+# Chips sit at bottom offset 36 (= (30 + 5 - (descent + 2)) x 1.92); their PNG carries the font's descent + 2 (30px) under the
+# baseline, while Kometa's text box is glyph-tight, so the runtime is lifted by that 30px (36 + 30 = 66) to share the chips' baseline.
 overlays:
   ww_bar:
     builder_level: episode
@@ -25,7 +26,7 @@ overlays:
       horizontal_align: right
       horizontal_offset: 77
       vertical_align: bottom
-      vertical_offset: 36
+      vertical_offset: 66
 
   ww_new:
     # episode_air_date is a Kometa 2.4.8 plex_search date attribute (modules/plex.py: episode.originallyAvailableAt).

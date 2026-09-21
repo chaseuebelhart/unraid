@@ -102,7 +102,10 @@ def test_hand_written_yaml_matches_locked_look():
     ep = yaml.safe_load((ww / "episodes.yml").read_text())["overlays"]
     assert ep["ww_bar"]["overlay"]["file"].endswith("/bar_bottom_ep.png") and ep["ww_bar"]["overlay"]["vertical_align"] == "bottom"
     rt = ep["ww_runtime"]["overlay"]
-    assert rt["font_size"] == 115 and rt["vertical_align"] == "bottom" and rt["vertical_offset"] == gen_overlays.chip_bottom_offset("episode") and rt["horizontal_offset"] == 77
+    _, ep_descent, _ = gen_assets.chip_metrics(gen_assets.EP_SCALE)
+    # runtime text box is glyph-tight; the chip PNG has descent + 2 below its baseline -> lift the runtime by that much
+    assert rt["font_size"] == 115 and rt["vertical_align"] == "bottom" and rt["horizontal_offset"] == 77
+    assert rt["vertical_offset"] == gen_overlays.chip_bottom_offset("episode") + ep_descent + 2 == 66
     new = ep["ww_new"]
     assert new["builder_level"] == "episode" and new["plex_search"] == {"all": {"episode_air_date": 7}}
     assert new["overlay"]["font_size"] == 111 and new["overlay"]["horizontal_offset"] == 77 and new["overlay"]["vertical_offset"] == 77
@@ -112,5 +115,4 @@ def test_hand_written_yaml_matches_locked_look():
     sh = yaml.safe_load((ww / "shows.yml").read_text())
     svc = sh["templates"]["ww_service"]["overlay"]
     assert svc["font_size"] == 60 and svc["horizontal_offset"] == 39 and svc["vertical_align"] == "bottom"
-    new = sh["overlays"]["ww_new"]["overlay"]
-    assert new["font_size"] == 58 and new["vertical_offset"] == 116   # clears the 104px-tall tab by the same 12px as before
+    assert "ww_new" not in sh["overlays"]                              # shows never get NEW: the top-edge tab is the only signal

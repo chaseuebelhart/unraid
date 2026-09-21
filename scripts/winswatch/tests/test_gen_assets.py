@@ -55,6 +55,9 @@ def test_score_plate(tmp_path: Path):
     gen_assets.generate(tmp_path)
     p86 = Image.open(tmp_path / "score_86.png").convert("RGBA")
     assert 180 < p86.width < 260 and 170 < p86.height < 230
+    # content is flush with the right edge (glyph pixels in the last few columns), 6px safety on the left only
+    assert any(p86.getpixel((p86.width - 1, y))[:3] != (0, 0, 0) for y in range(p86.height))
+    assert all(max(p86.getpixel((3, y))[:3]) < 40 for y in range(p86.height) if p86.getpixel((3, y))[3] == 255)
     # flush box: the right-most column is opaque near the bottom (square right corners), the top row is transparent (fade)
     assert p86.getpixel((p86.width - 1, p86.height - 5))[3] == 255
     assert all(p86.getpixel((x, 0))[3] == 0 for x in range(p86.width))

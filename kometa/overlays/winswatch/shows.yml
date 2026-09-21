@@ -1,4 +1,4 @@
-# Wins Watch — show posters. Bottom bar, streaming service (no codecs), NEW (lower, under the tab zone), reel.
+# Wins Watch — show posters. Bottom bar, streaming service (no codecs), reel. Shows never get a NEW tag: the top-edge tab is the only 'new' signal.
 templates:
   ww_service:
     # validate: false — network values missing from the library are dropped, not fatal (see generated/ note)
@@ -57,28 +57,6 @@ overlays:
   ww_s_starz:      {template: {name: ww_service, label: STARZ,          color: "#ffffff", weight: 77,  networks: [Starz, STARZ]}}
   ww_s_adultswim:  {template: {name: ww_service, label: ADULT SWIM,     color: "#ffffff", weight: 76,  networks: [Adult Swim]}}
   ww_s_usa:        {template: {name: ww_service, label: USA NETWORK,    color: "#3b82f6", weight: 75,  networks: [USA Network]}}
-
-  ww_new:
-    ignore_blank_results: true
-    plex_search:
-      validate: false
-      all:
-        added: 14
-        label.not: [DaysLeft_1, DaysLeft_2, DaysLeft_3, DaysLeft_4, DaysLeft_5, DaysLeft_6, DaysLeft_7, DaysLeft_8, DaysLeft_9, DaysLeft_10,
-                    DaysLeft_11, DaysLeft_12, DaysLeft_13, DaysLeft_14, DaysLeft_15, DaysLeft_16, DaysLeft_17, DaysLeft_18, DaysLeft_19, DaysLeft_20,
-                    DaysLeft_21, DaysLeft_22, DaysLeft_23, DaysLeft_24, DaysLeft_25, DaysLeft_26, DaysLeft_27, DaysLeft_28, DaysLeft_29, DaysLeft_30]
-    overlay:
-      name: text(NEW)
-      font: config/winswatch/fonts/Avenir_95_Black.ttf
-      font_size: 58
-      font_color: "#06131c"
-      back_color: "#5ac8fa"
-      back_radius: 15
-      back_padding: 18
-      horizontal_align: left
-      horizontal_offset: 40
-      vertical_align: top
-      vertical_offset: 116   # 12px under the status tab (tab plate ends at y=104 with the 26px edge line)
 
   ww_reel:
     plex_all: true

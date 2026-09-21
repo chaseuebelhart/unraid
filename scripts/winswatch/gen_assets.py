@@ -42,7 +42,8 @@ def _glow(layer: Image.Image, radius: float, alpha: float = 0.9) -> Image.Image:
 def _score_plate(score: int, out: Path):
     """The locked score block: 'WINS <paw>' / 'RANK' in white over the score in the band colour, on a black plate
     flush with the poster's right edge (right corners square, TL r25 / BL r12, feathered top). Sizes in poster px:
-    label 45px (0.14em tracking), paw 52px, score 83px, padding 42 top / 0 sides (+6 safety) / 12 bottom."""
+    label 45px (0.14em tracking), paw 52px, score 83px, padding 42 top / 0 sides / 12 bottom, plus a 6px glow safety on the
+    left only: the content is flush with the PNG's right edge, which Kometa puts on the poster's right edge."""
     S = 2
     f45, f83 = ImageFont.truetype(str(FONT), 45 * S), ImageFont.truetype(str(FONT), 83 * S)
     cap45, cap83 = -f45.getbbox("H", anchor="ls")[1], -f83.getbbox("H", anchor="ls")[1]
@@ -51,8 +52,9 @@ def _score_plate(score: int, out: Path):
     w1 = _tracked_width("WINS", f45, track) + paw_gap + paw_px
     w2 = _tracked_width("RANK", f45, track)
     w3 = f83.getlength(text)
-    pad = 6 * S
-    pw = int(math.ceil(max(w1, w2, w3))) + 2 * pad
+    pad = 6 * S                                   # left-only safety; right side is the poster edge
+    cw = int(math.ceil(max(w1, w2, w3)))
+    pw = pad + cw
     base1 = 42 * S + cap45                       # line 1 baseline (cap top = 42px top padding)
     base2 = base1 + round(1.05 * 45 * S)          # line pitch 1.05 x 45px
     base3 = base2 + 6 * S + cap83                 # score cap top 6px below RANK's baseline
@@ -69,15 +71,15 @@ def _score_plate(score: int, out: Path):
     plate.putalpha(ImageChops.multiply(plate.getchannel("A"), ImageChops.multiply(m1, m2)))
     # content layers (drawn on their own canvases so the glow is blurred from the exact glyph alpha)
     labels = Image.new("RGBA", (pw, ph), (0, 0, 0, 0)); d = ImageDraw.Draw(labels)
-    x1 = (pw - w1) / 2
-    xe = _tracked(d, x1, base1, "WINS", f45, _hex(WHITE), track)
-    _tracked(d, (pw - w2) / 2, base2, "RANK", f45, _hex(WHITE), track)
+    cx = lambda w: pad + (cw - w) / 2               # centred in the content area [pad, pw)
+    xe = _tracked(d, cx(w1), base1, "WINS", f45, _hex(WHITE), track)
+    _tracked(d, cx(w2), base2, "RANK", f45, _hex(WHITE), track)
     paw = Image.open(PAW).convert("RGBA").resize((paw_px, paw_px), Image.LANCZOS)
     tint = Image.new("RGBA", paw.size, _hex(col)); tint.putalpha(paw.getchannel("A"))
     py = round(base1 - cap45 / 2 - paw_px / 2)   # centred on the cap height
     labels.alpha_composite(tint, (round(xe + paw_gap), py))
     num = Image.new("RGBA", (pw, ph), (0, 0, 0, 0))
-    ImageDraw.Draw(num).text(((pw - w3) / 2, base3), text, font=f83, fill=_hex(col), anchor="ls")
+    ImageDraw.Draw(num).text((cx(w3), base3), text, font=f83, fill=_hex(col), anchor="ls")
     im = plate
     im.alpha_composite(_glow(labels, 6 * S)); im.alpha_composite(labels)
     im.alpha_composite(_glow(num, 10 * S)); im.alpha_composite(num)
