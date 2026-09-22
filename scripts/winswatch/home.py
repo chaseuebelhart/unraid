@@ -1,16 +1,17 @@
-"""Wins Watch Home: Plex-side state for the home screen. Usage: home.py <requested|rows|cards|order> --sections 1,2 [--dry-run] [--env PATH]
+"""Wins Watch Home: Plex-side state for the home screen. Usage: home.py <requested|rows|cards|order|check> --sections 1,2 [--dry-run] [--env PATH]
 
 requested — one `Requested` label per item that an Overseerr request made available in the last 30 days (Kometa draws the
             REQUESTED badge from it; a LEAVING bookmark / status tab suppresses the badge via label.not in the overlay YAML).
 order     — sort each library's promoted hubs into the design §1 row order for today and demote the rest (ww/plexhome.py).
-rows      — per-user 📥 New · Your Requests collections (ww/shares.py). cards — upload the generated collection cards."""
-import argparse, hashlib, os, re, time
+rows      — per-user 📥 New · Your Requests collections (ww/shares.py). cards — upload the generated collection cards.
+check     — read-only post-condition health check of everything above (ww/health.py); exits non-zero on any FAIL."""
+import argparse, hashlib, json, os, re, time
 from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 from dotenv import load_dotenv
 from ww.plexlib import PlexLib
-from ww import overseerr, plexhome
+from ww import health, maintainerr, overseerr, plexhome, sonarr
 import gen_cards, gen_home
 
 LABEL = "Requested"
@@ -274,14 +275,71 @@ def cmd_rows(a, env):
     if problems:
         raise SystemExit(f"rows: {len(problems)} problem(s), see !! lines above")
 
+
+# --- check: post-condition health check (ww/health.py) --------------------------------------------------------------
+# Read-only. Every producer the nightly runs is compared against the source it writes from, because the 2026-09-21
+# rename incident (see ww/health.py and design §10) proved that a producer can stop writing without anything failing.
+
+def _labels(item) -> set:
+    return {l.tag for l in item.labels}
+
+def collect(env: dict, sec_ids: list[int], day, p: PlexLib | None = None, account=None) -> list:
+    """Read Plex, Maintainerr and Sonarr once and return every health.Result. The I/O lives here; the thresholds live
+    in ww/health.py."""
+    from plexapi.myplex import MyPlexAccount
+    p = p or plex(env)
+    cal = gen_home.load_calendar(Path(__file__).with_name("home_calendar.yml"))
+    mcols = maintainerr.collections(env.get("MAINTAINERR_URL", maintainerr.DEFAULT_URL))
+    series = sonarr.series_index(env["SONARR_URL"], env["SONARR_API_KEY"])
+    cache_path = Path(env.get("CACHE_DIR", "cache")) / "cards.json"
+    cards_cache = json.loads(cache_path.read_text()) if cache_path.exists() else {}
+    prefixes = gen_cards._upload_prefixes()
+    users = _users(account or MyPlexAccount(token=env["PLEX_TOKEN"]))
+    out = []
+    for sec in sec_ids:
+        section = p.section(sec)
+        name, items = section.title, section.all()
+        tags = [_labels(it) for it in items]
+        out.append(health.check_days_left(name, sum(1 for t in tags if any(x.startswith(health.DAYS_LEFT_PREFIX) for x in t)),
+                                          [c for c in mcols if c["type"] == section.type], section.type))
+        if section.type == "show":
+            continuing = sum(1 for it in items
+                             if (e := series.get(p.tvdb_id(it) or "")) and e["status"] in ("continuing", "upcoming") and e["monitored"])
+            out.append(health.check_airdates(name, sum(1 for t in tags if any(x.startswith(health.AIRDATE_PREFIXES) for x in t)), continuing))
+        out.append(health.check_scores(name, sum(1 for it in items if getattr(it, "userRating", None) is not None), len(items)))
+        out.append(health.check_requested(name, sum(1 for t in tags if health.REQUESTED_LABEL in t)))
+        cols = section.collections()
+        hubs = section.managedHubs()
+        plexhome.resolve_titles(hubs, {str(c.ratingKey): c.title for c in cols})
+        desired = plexhome.desired_order(plexhome.lib_for(section), day, cal)
+        out.append(health.check_home_rows(name, [h.title for h in hubs if plexhome._promoted(h)], desired))
+        base = NEW_BASE[section.TYPE]
+        out.append(health.check_user_rows(name, sum(1 for c in cols if gen_cards._clean_title(c.title).startswith(base)), len(users)))
+        matched = []
+        for c in cols:
+            title = gen_cards._clean_title(c.title)
+            slug = next((s for s, pre in prefixes.items() if title.startswith(pre)), None)
+            if slug:
+                matched.append((str(c.ratingKey), title, slug))
+        out.append(health.check_cards(name, matched, cards_cache))
+    return out
+
+def cmd_check(a, env):
+    results = collect(env, sections(a.sections), today(env))
+    for line in health.render(results):
+        print(line)
+    failed = [r for r in results if r.status == health.FAIL]
+    if failed:
+        raise SystemExit(f"check: {len(failed)} FAIL — " + "; ".join(f"{r.check}/{r.scope}" for r in failed))
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
-    for name in ("requested", "rows", "cards", "order"):
+    for name in ("requested", "rows", "cards", "order", "check"):
         sp = sub.add_parser(name)
         sp.add_argument("--sections", required=True); sp.add_argument("--dry-run", action="store_true"); sp.add_argument("--env", default=".env")
     a = ap.parse_args(argv)
-    cmds = {"requested": cmd_requested, "rows": cmd_rows, "cards": cmd_cards, "order": cmd_order}
+    cmds = {"requested": cmd_requested, "rows": cmd_rows, "cards": cmd_cards, "order": cmd_order, "check": cmd_check}
     if a.cmd not in cmds:
         raise SystemExit(f"{a.cmd}: not implemented")
     cmds[a.cmd](a, load_env(a.env))

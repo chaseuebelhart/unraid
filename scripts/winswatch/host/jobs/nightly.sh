@@ -5,6 +5,8 @@
 # 3. home.py requested: `Requested` labels (Kometa's REQUESTED badge) from Overseerr
 # 4. home.py rows: per-user "📥 New · Your Requests" collections + plex.tv share filters (merge); exits non-zero on any !! line
 # 5. home.py cards: card posters for the Home rows we own (Shortlist / Maintainerr / per-user rows)
+# 6. home.py check: read-only post-condition health check (ww/health.py) — prints a delimited block and exits non-zero
+#    on any FAIL, so `rc` carries it. Runs last and cannot abort the steps above (same `|| rc=$?` pattern).
 # Hub ORDER is not here: Kometa (05:00) re-promotes its rows and appends new ones at the end, so home.py order runs from
 # the "winswatch-order" user script at :50 of every server hour from 05 to 21 (host/jobs/order.sh).
 # Mounts mirror the repo layout (scripts/winswatch + kometa/overlays/winswatch) because gen_cards/gen_home resolve the
@@ -21,4 +23,5 @@ docker run --rm -v "$ROOT":/app/scripts/winswatch -v "$KCFG/winswatch":/app/kome
    python home.py requested --sections $SECTIONS || rc=\$?; \
    python home.py rows --sections $SECTIONS || rc=\$?; \
    python home.py cards --sections $SECTIONS || rc=\$?; \
+   python home.py check --sections $SECTIONS || rc=\$?; \
    exit \$rc; }"

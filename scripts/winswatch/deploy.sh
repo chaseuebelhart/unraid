@@ -5,7 +5,7 @@ REPO=$(cd "$(dirname "$0")/../.." && pwd)
 APP=/mnt/nastower/appdata/scripts/winswatch
 KCFG=/mnt/nastower/appdata/Kometa/config
 mkdir -p "$APP/host/jobs" "$APP/cache" "$KCFG/winswatch/collections"
-rsync -rlt --delete --exclude .venv --exclude tests --exclude __pycache__ --exclude cache --exclude .env --exclude host/last.log --exclude host/order.log --exclude host/job.sh --exclude host/.request --exclude host/lab_sections \
+rsync -rlt --delete --exclude .venv --exclude tests --exclude __pycache__ --exclude cache --exclude .env --exclude host/last.log --exclude host/order.log --exclude host/check.log --exclude host/job.sh --exclude host/.request --exclude host/lab_sections \
   "$REPO/scripts/winswatch/" "$APP/"
 rsync -rlt --delete --exclude /collections "$REPO/kometa/overlays/winswatch/" "$KCFG/winswatch/"
 # Kometa collection files referenced by config.yml (promote_config.py --phase home): the generated Home rotation plus the
