@@ -52,8 +52,7 @@ def test_plan_requested_newest_request_wins_regardless_of_input_order():
     for reqs in ([stale_tv, old_tv], [old_tv, stale_tv]):
         assert home.plan_requested([show], reqs, today) == [(show, False)], reqs
 
-def test_sections_and_stubs():
+def test_sections_and_commands():
     assert home.sections("4, 5") == [4, 5]
-    for cmd in ("rows",):
-        with pytest.raises(SystemExit, match="not implemented"):
-            home.main([cmd, "--sections", "4"])
+    with pytest.raises(SystemExit):                      # argparse rejects an unknown subcommand; every real one is wired
+        home.main(["bogus", "--sections", "4"])
