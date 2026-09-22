@@ -5,10 +5,12 @@ requested — one `Requested` label per item that an Overseerr request made avai
 rows / cards / order — Tasks 3/4/5."""
 import argparse, os
 from datetime import datetime
+from pathlib import Path
 from zoneinfo import ZoneInfo
 from dotenv import load_dotenv
 from ww.plexlib import PlexLib
 from ww import overseerr
+import gen_cards
 
 LABEL = "Requested"
 AVAILABLE = (4, 5)          # Overseerr media status: partially available / available
@@ -72,6 +74,14 @@ def cmd_requested(a, env):
                 p.set_labels(it, {LABEL} if want else set(), (LABEL,))
             print(f"{'DRY ' if a.dry_run else ''}{section.title:>18} | {it.title[:44]:<44} | {'+' if want else '-'}{LABEL}")
 
+def cmd_cards(a, env):
+    p = plex(env)
+    cards_dir = Path(__file__).resolve().parent.parents[1] / "kometa/overlays/winswatch/cards"
+    cache_path = Path(env.get("CACHE_DIR", "cache")) / "cards.json"
+    secs = [p.section(s) for s in sections(a.sections)]
+    for line in gen_cards.upload_cards(p, secs, cards_dir, cache_path, dry_run=a.dry_run):
+        print(line)
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -79,6 +89,8 @@ def main(argv=None):
         sp = sub.add_parser(name)
         sp.add_argument("--sections", required=True); sp.add_argument("--dry-run", action="store_true"); sp.add_argument("--env", default=".env")
     a = ap.parse_args(argv)
+    if a.cmd == "cards":
+        return cmd_cards(a, load_env(a.env))
     if a.cmd != "requested":
         raise SystemExit(f"{a.cmd}: not implemented")
     cmd_requested(a, load_env(a.env))

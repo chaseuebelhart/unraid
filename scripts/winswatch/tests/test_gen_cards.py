@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 import gen_cards
+import gen_home
 
 
 def test_every_slug_renders_correct_size():
@@ -32,6 +33,13 @@ def test_generate_writes_every_card(tmp_path: Path):
 def test_non_personal_has_no_ring():
     im = gen_cards.render("popular-movies").convert("RGB")
     assert im.getpixel((14, 750)) != (0x5A, 0xC8, 0xFA)
+
+
+def test_every_gen_home_card_slug_exists():
+    """Parity with Task 1: every theme/extra gen_home.py knows about must have a card."""
+    slugs = {t["card"] for t in gen_home.THEMES.values()} | {t["card"] for t in gen_home.EXTRAS.values()}
+    missing = slugs - set(gen_cards.CARDS)
+    assert not missing, f"gen_cards.CARDS is missing slugs gen_home references: {missing}"
 
 
 # --- Step 5: upload_cards ---

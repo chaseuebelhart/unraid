@@ -46,7 +46,6 @@ CARDS = {
     "comfort-binge": ("theme", "\U0001F6CB️", "Comfort Binge"),
     "just-dropped": ("theme", "\U0001F4FA", "Just Dropped"),
     "edge-of-your-seat": ("theme", "\U0001F3A2", "Edge of Your Seat"),
-    "not-just-cartoons": ("theme", "\U0001F3A8", "Not Just Cartoons"),
     "date-night": ("theme", "\U0001F377", "Date Night"),
     "sunday-slow-burn": ("theme", "☕", "Sunday Slow Burn"),
     # seasonal
@@ -249,7 +248,7 @@ def render(slug: str) -> Image.Image:
     tinted.putalpha(paw.getchannel("A").point(lambda v: round(v * 0.9)))
     im.alpha_composite(tinted, (810, 80))
     if ring:
-        ImageDraw.Draw(im).rectangle([14, 14, W - 15, H - 15], outline=_hex(RING_COLOR), width=6)
+        d.rectangle([14, 14, W - 15, H - 15], outline=_hex(RING_COLOR), width=6)
     return im.convert("RGB")
 
 
