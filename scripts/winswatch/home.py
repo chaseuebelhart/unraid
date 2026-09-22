@@ -2,13 +2,16 @@
 
 requested — one `Requested` label per item that an Overseerr request made available in the last 30 days (Kometa draws the
             REQUESTED badge from it; a LEAVING bookmark / status tab suppresses the badge via label.not in the overlay YAML).
-rows / cards / order — Tasks 3/4/5."""
+order     — sort each library's promoted hubs into the design §1 row order for today and demote the rest (ww/plexhome.py).
+rows / cards — Tasks 3/4."""
 import argparse, os
 from datetime import datetime
+from pathlib import Path
 from zoneinfo import ZoneInfo
 from dotenv import load_dotenv
 from ww.plexlib import PlexLib
-from ww import overseerr
+from ww import overseerr, plexhome
+import gen_home
 
 LABEL = "Requested"
 AVAILABLE = (4, 5)          # Overseerr media status: partially available / available
@@ -72,6 +75,15 @@ def cmd_requested(a, env):
                 p.set_labels(it, {LABEL} if want else set(), (LABEL,))
             print(f"{'DRY ' if a.dry_run else ''}{section.title:>18} | {it.title[:44]:<44} | {'+' if want else '-'}{LABEL}")
 
+def cmd_order(a, env):
+    """Sort each section's managed hubs into design §1 order for today and demote every other promoted hub (§6)."""
+    p, day = plex(env), today(env)
+    cal = gen_home.load_calendar(Path(__file__).with_name("home_calendar.yml"))
+    for sec in sections(a.sections):
+        section = p.section(sec)
+        ordered, demote = plexhome.plan(section.managedHubs(), plexhome.desired_order(plexhome.lib_for(section), day, cal))
+        plexhome.apply(section, ordered, demote, a.dry_run)
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -79,6 +91,7 @@ def main(argv=None):
         sp = sub.add_parser(name)
         sp.add_argument("--sections", required=True); sp.add_argument("--dry-run", action="store_true"); sp.add_argument("--env", default=".env")
     a = ap.parse_args(argv)
+    if a.cmd == "order": return cmd_order(a, load_env(a.env))
     if a.cmd != "requested":
         raise SystemExit(f"{a.cmd}: not implemented")
     cmd_requested(a, load_env(a.env))
