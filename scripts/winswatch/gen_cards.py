@@ -3,6 +3,7 @@ leaving, theme, seasonal), and (Step 5) upload the ones we own to the matching P
 import json, subprocess, sys
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
+import gen_home
 
 W, H = 1000, 1500
 HERE = Path(__file__).resolve().parents[2] / "kometa/overlays/winswatch"
@@ -10,8 +11,25 @@ TITLE_FONT = HERE / "fonts/BricolageGrotesque[opsz,wdth,wght].ttf"
 EYEBROW_FONT = HERE / "fonts/Manrope[wght].ttf"
 PAW = HERE / "src/paw_512.png"
 
+# Card slugs whose kind is "seasonal" rather than "theme" (fixed-date rows, distinct tint per season).
+# Everything else in gen_home.THEMES/EXTRAS — including the weekly Date Night / Sunday Slow Burn extras
+# — is a "theme" card ("today's shelf" eyebrow).
+_SEASONAL_SLUGS = {"halloween", "christmas", "valentines", "awards-season"}
+
+
+def _theme_and_extra_cards() -> dict:
+    """slug -> (kind, emoji, title) for every gen_home theme/extra, derived from gen_home.THEMES /
+    gen_home.EXTRAS so the two never drift apart (single source of truth for emoji + title)."""
+    out = {}
+    for name, t in {**gen_home.THEMES, **gen_home.EXTRAS}.items():
+        kind = "seasonal" if t["card"] in _SEASONAL_SLUGS else "theme"
+        out[t["card"]] = (kind, t["emoji"], name)
+    return out
+
+
 # slug -> (kind, emoji, title). Every Home row, incl. the generic personal "byw" (Because you watched)
-# card, every theme slug and every seasonal card.
+# card. Theme/seasonal entries come from gen_home (see _theme_and_extra_cards); only the rows Kometa
+# doesn't own (personal, trending, new, popular, leaving) are defined here.
 CARDS = {
     # personal (Shortlist, per person)
     "for-you-movies": ("personal", "✨", "Movies for you"),
@@ -29,31 +47,8 @@ CARDS = {
     # leaving (Maintainerr)
     "leaving-movies": ("leaving", "⏳", "Movies Leaving Wins Watch"),
     "leaving-shows": ("leaving", "⏳", "Shows Leaving Wins Watch"),
-    # theme (Kometa smart collections, "today's shelf")
-    "adrenaline-rush": ("theme", "\U0001F4A5", "Adrenaline Rush"),
-    "crime-files": ("theme", "\U0001F575️", "Crime Files"),
-    "sci-fi-odyssey": ("theme", "\U0001F680", "Sci-Fi Odyssey"),
-    "hidden-gems": ("theme", "\U0001F48E", "Hidden Gems"),
-    "love-and-laughs": ("theme", "\U0001F498", "Love & Laughs"),
-    "mind-benders": ("theme", "\U0001F300", "Mind Benders"),
-    "based-on-a-true-story": ("theme", "\U0001F4F0", "Based on a True Story"),
-    "directors-spotlight": ("theme", "\U0001F3AC", "Director's Spotlight"),
-    "fresh-picks": ("theme", "\U0001F37F", "Fresh Picks"),
-    "raunchy-comedy": ("theme", "\U0001F37A", "Raunchy Comedy"),
-    "worlds-beyond": ("theme", "\U0001FA90", "Worlds Beyond"),
-    "peak-tv": ("theme", "\U0001F3D4️", "Peak TV"),
-    "crime-beat": ("theme", "\U0001F694", "Crime Beat"),
-    "comfort-binge": ("theme", "\U0001F6CB️", "Comfort Binge"),
-    "just-dropped": ("theme", "\U0001F4FA", "Just Dropped"),
-    "edge-of-your-seat": ("theme", "\U0001F3A2", "Edge of Your Seat"),
-    "date-night": ("theme", "\U0001F377", "Date Night"),
-    "sunday-slow-burn": ("theme", "☕", "Sunday Slow Burn"),
-    # seasonal
-    "halloween": ("seasonal", "\U0001F383", "Halloween"),
-    "christmas": ("seasonal", "\U0001F384", "Christmas Movies"),
-    "valentines": ("seasonal", "\U0001F498", "Valentine's Picks"),
-    "awards-season": ("seasonal", "\U0001F3C6", "Awards Season"),
 }
+CARDS.update(_theme_and_extra_cards())
 
 EYEBROW = {
     "personal": "JUST FOR YOU",
