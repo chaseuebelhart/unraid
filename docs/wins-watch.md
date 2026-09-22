@@ -108,11 +108,17 @@ generated from a photo of Win with 0.4 s fades top and tail.
 
 Enabled 2026-09-22: `GenerateBIFBehavior=scheduled`, `ButlerTaskGenerateMediaIndexFiles=true`,
 `GenerateIndexFilesDuringAnalysis=true` (new items get them at scan), frame interval 2 s, keyframes only, hardware
-accelerated. Generated in the butler window, which was moved to **01:00–04:00** so it finishes before the 04:30 nightly
-and Kometa's 05:00 run. Files land in `appdata/Plex-Media-Server/Library/.../Media/` — the appdata share is
+accelerated. Generated in the butler window, set to **05:00–08:00** (server clock): clear of the Monday 03:00 appdata backup, the
+03:40 mover and the 04:30 nightly, overlapping only Kometa's ~16-minute run, which is API-bound while this is QSV-bound. Files land in `appdata/Plex-Media-Server/Library/.../Media/` — the appdata share is
 `use_cache: prefer` on the 1 TB NVMe pool (596 GB free), so they stay on the cache pool and never touch the array.
-Expect ~45 GB for the current 3,200 hours, built over several nights. Turn it off with `GenerateBIFBehavior=never`;
-delete the existing files by removing the per-item `Contents/Indexes` folders.
+Expect ~45 GB for the current 3,200 hours. Turn it off with `GenerateBIFBehavior=never`; delete the existing files by
+removing the per-item `Contents/Indexes` folders.
+
+The weekly **Appdata.Backup** (Mondays 03:00, containers stopped, then `backup_appdata` zips + rclones to Cloudflare R2)
+excludes Plex's regenerable dirs so those 45 GB never reach the backup — `containerSettings → Plex-Media-Server → exclude`
+in `/boot/config/plugins/appdata.backup/config.json` lists `Library/Application Support/Plex Media Server/Media` and
+`…/Cache` (set 2026-09-22; a timestamped `.bak` of the config sits beside it). The library database, watch history and
+settings live in `Plug-in Support/Databases` and `Preferences.xml` and are still backed up.
 
 ## 7. Credentials and access
 
