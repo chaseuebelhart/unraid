@@ -51,7 +51,7 @@ THEMES = {
             "user_rating.gte": 7.5,
             "genre.not": ["Animation", "Family", "Documentary", "Horror"],
         }}),
-    "Love & Laughs": _theme("movies", "💘", "love-and-laughs", "!09_Love_and_Laughs", filter={
+    "Love & Laughs": _theme("movies", "😂", "love-and-laughs", "!09_Love_and_Laughs", filter={
         "all": {
             "title.not": ["porn", "Joe Dirt"],
             "genre.not": ["Animation", "Horror"],
@@ -124,7 +124,7 @@ THEMES = {
         }}),
     "Peak TV": _theme("shows", "🏔️", "peak-tv", "!06_Peak_TV", filter={
         "all": {
-            "user_rating.gte": 7,
+            "user_rating.gte": 7.0,
             "genre.not": ["Animation", "Family", "Comedy"],
             "genre": ["Drama"],
         }}),

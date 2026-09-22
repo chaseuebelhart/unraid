@@ -3,8 +3,8 @@ collections:
   🪐 Worlds Beyond:
     sort_title: '!06_Worlds_Beyond'
     file_poster: config/winswatch/cards/worlds-beyond.png
-    visible_home: weekly(monday|thursday|sunday)
-    visible_shared: weekly(monday|thursday|sunday)
+    visible_home: weekly(monday|thursday)
+    visible_shared: weekly(monday|thursday)
     visible_library: true
     smart_filter:
       all:
@@ -21,12 +21,12 @@ collections:
   🏔️ Peak TV:
     sort_title: '!06_Peak_TV'
     file_poster: config/winswatch/cards/peak-tv.png
-    visible_home: weekly(monday|tuesday|wednesday|friday)
-    visible_shared: weekly(monday|tuesday|wednesday|friday)
+    visible_home: weekly(monday|tuesday|wednesday|friday|sunday)
+    visible_shared: weekly(monday|tuesday|wednesday|friday|sunday)
     visible_library: true
     smart_filter:
       all:
-        user_rating.gte: 7
+        user_rating.gte: 7.0
         genre.not:
         - Animation
         - Family
