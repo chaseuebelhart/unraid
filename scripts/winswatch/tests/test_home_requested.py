@@ -54,6 +54,6 @@ def test_plan_requested_newest_request_wins_regardless_of_input_order():
 
 def test_sections_and_stubs():
     assert home.sections("4, 5") == [4, 5]
-    for cmd in ("rows", "cards", "order"):
+    for cmd in ("cards", "order"):
         with pytest.raises(SystemExit, match="not implemented"):
             home.main([cmd, "--sections", "4"])

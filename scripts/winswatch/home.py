@@ -3,7 +3,7 @@
 requested — one `Requested` label per item that an Overseerr request made available in the last 30 days (Kometa draws the
             REQUESTED badge from it; a LEAVING bookmark / status tab suppresses the badge via label.not in the overlay YAML).
 rows / cards / order — Tasks 3/4/5."""
-import argparse, os
+import argparse, hashlib, os, re, time
 from datetime import datetime
 from zoneinfo import ZoneInfo
 from dotenv import load_dotenv
@@ -72,6 +72,123 @@ def cmd_requested(a, env):
                 p.set_labels(it, {LABEL} if want else set(), (LABEL,))
             print(f"{'DRY ' if a.dry_run else ''}{section.title:>18} | {it.title[:44]:<44} | {'+' if want else '-'}{LABEL}")
 
+# --- rows: per-user "📥 New · Your Requests" collections (Task 3) ---------------------------------------------------------
+# One collection per shared/home user and library, visible to that user only through the Shortlist mechanism: label
+# `Winswatch_<slug>` on the collection (Plex title-cases tags), `label!=Winswatch_<slug>` merged into every OTHER account's share filter (ww.shares).
+# Plex needs distinct titles, so each gets Shortlist's zero-width suffix (row_title). The owner gets no row (no share with self).
+NEW_BASE = {"movie": "📥 New Movies · Your Requests", "show": "📥 New Shows · Your Requests"}
+N_RECENT, REQUEST_DAYS, SERVER_NAME = 40, 90, "NASTower"
+ZW0, ZW1 = "​", "‌"   # Shortlist's alphabet: 64 chars = bits of the Plex account id, LSB first (0 -> U+200B, 1 -> U+200C)
+
+def user_slug(username: str) -> str:
+    """Shortlist's slug: lower-case, every run of non-alphanumerics -> '_' (Lily.Arnold -> lily_arnold, Chase_Test -> chase_test)."""
+    return re.sub(r"[^a-z0-9]+", "_", username.lower()).strip("_")
+
+def row_title(base: str, ident) -> str:
+    """base + 64 zero-width chars. ident = the Plex account id (int) -> byte-identical to Shortlist's suffix for that user;
+    a slug (str) -> the same encoding of a stable 64-bit hash of it (tests / users without an id)."""
+    value = ident if isinstance(ident, int) else int.from_bytes(hashlib.blake2b(ident.encode(), digest_size=8).digest(), "little")
+    return base + "".join(ZW1 if (value >> i) & 1 else ZW0 for i in range(64))
+
+def strip_zw(title: str) -> str:
+    return title.rstrip(ZW0 + ZW1)
+
+def build_new_row(recent: list, requests: list, n_recent: int = N_RECENT) -> list:
+    """Weave: the user's requests take every 4th slot from index 1 (1, 5, 9, …) in the newest-added run; leftovers are appended.
+    A requested item that is also in `recent` keeps only its request slot. De-duplicated by ratingKey."""
+    seen, reqs = set(), []
+    for q in requests:
+        if q.ratingKey not in seen:
+            seen.add(q.ratingKey); reqs.append(q)
+    rec = [r for r in recent if r.ratingKey not in seen][:n_recent]
+    out, qi = [], 0
+    for r in rec:
+        if len(out) % 4 == 1 and qi < len(reqs):
+            out.append(reqs[qi]); qi += 1
+        out.append(r)
+    return out + reqs[qi:]
+
+def exclusions_for(users) -> dict:
+    """{user.id: {"Winswatch_<slug>" of every OTHER user}} — the full desired set per account, so one plex.tv write each."""
+    labels = {u.id: f"Winswatch_{u.slug}" for u in users}
+    return {u.id: {l for uid, l in labels.items() if uid != u.id} for u in users}
+
+def _requests_for(section, p: PlexLib, reqs: list) -> dict:
+    """{plex account id: [items of this section the user requested, newest request first]} — resolves like plan_requested:
+    Overseerr's ratingKey when it has one, else (type, tmdb guid) within the section (Overseerr's Plex scan is dead since 2025-11)."""
+    by_key, by_tmdb = {}, {}
+    for it in section.all():
+        by_key[str(it.ratingKey)] = it
+        tid = p.tmdb_id(it)
+        if tid: by_tmdb[(it.type, str(tid))] = it
+    out = {}
+    for r in sorted(reqs, key=lambda r: r.get("created_at") or "", reverse=True):
+        if r.get("status") not in AVAILABLE or r.get("requested_by_plex_id") is None:
+            continue
+        it = by_key.get(str(r["plex_rating_key"])) if r.get("plex_rating_key") else None
+        if it is None and r.get("tmdb_id") is not None:
+            it = by_tmdb.get((_ITEM_TYPE.get(r.get("type")), str(r["tmdb_id"])))
+        if it is not None and it.type == section.TYPE:
+            out.setdefault(int(r["requested_by_plex_id"]), []).append(it)
+    return out
+
+def cmd_rows(a, env):
+    from plexapi.myplex import MyPlexAccount
+    from ww import shares
+    p = plex(env)
+    account = MyPlexAccount(token=env["PLEX_TOKEN"])
+    users = account.users()                                   # shared + home users; the owner is not in this list
+    for u in users:
+        u.slug = user_slug(u.username or u.title)
+    reqs = overseerr.Client(env["OVERSEERR_URL"], env["OVERSEERR_API_KEY"]).requests(since_days=REQUEST_DAYS)
+    dry = "DRY " if a.dry_run else ""
+    wanted = {"movie": {}, "show": {}}                         # kind -> {user.id: desired filter string}
+    for sec in sections(a.sections):
+        section = p.section(sec)
+        base = NEW_BASE[section.TYPE]
+        recent = section.search(sort="addedAt:desc", maxresults=N_RECENT, libtype=section.TYPE)
+        per_user = _requests_for(section, p, reqs)
+        for u in users:
+            items = build_new_row(recent, per_user.get(u.id, []))
+            title, label = row_title(base, u.id), f"Winswatch_{u.slug}"
+            print(f"{dry}{section.title:>18} | {strip_zw(title)} [{u.slug}] | {len(items)} items, {len(per_user.get(u.id, []))} requested"
+                  + (": " + ", ".join(i.title for i in items[:12]) + (" …" if len(items) > 12 else "") if a.dry_run else ""))
+            if a.dry_run:
+                continue
+            col = p.upsert_collection(section, title, items, label)
+            if col is not None:
+                hub = col.visibility()
+                if not (hub.promotedToSharedHome and hub.promotedToRecommended):
+                    # friends' Home + the library's Recommended tab (what Shortlist sets); never promoteHome (owner Home stays clean)
+                    hub = hub.updateVisibility(shared=True, recommended=True)
+                print(f"{'':>18} | collection {col.ratingKey}: sort={col.collectionSort} labels={[l.tag for l in col.labels]} "
+                      f"hub shared={hub.promotedToSharedHome} own={hub.promotedToOwnHome}")
+        for uid, add in exclusions_for(users).items():
+            u = next(x for x in users if x.id == uid)
+            current = u.filterMovies if section.TYPE == "movie" else u.filterTelevision
+            wanted[section.TYPE][uid] = shares.merge_exclusions(current, add)
+    written = {}
+    for u in users:                                            # one plex.tv write per user, both filters at once
+        fm, ft = wanted["movie"].get(u.id), wanted["show"].get(u.id)
+        try:
+            fields = shares.apply(account, SERVER_NAME, u, fm, ft, a.dry_run)
+        except Exception as e:                                 # managed profiles with a parental preset are refused (422)
+            print(f"!! share filter not applied for {u.title}: {type(e).__name__}: {e}")
+            continue
+        if fields:
+            written[u.id] = fields
+            for field, value in fields.items():
+                print(f"{dry}{'share filter':>18} | {u.title:<16} | {field}: {value}")
+    if written and not a.dry_run:
+        time.sleep(shares.NUDGE_DELAY_S)                       # the PMS debounces sharing-change pushes (~6 s) and drops the rest:
+        shares.nudge(account, next(iter(users)))               # one more push after a quiet gap makes it re-read every filter
+        after = {u.id: u for u in account.users()}             # read back: plex.tv stored exactly what we sent
+        for uid, fields in written.items():
+            for field, value in fields.items():
+                got = getattr(after[uid], field)
+                if got != value:
+                    print(f"!! read-back mismatch for {after[uid].title} {field}: {got!r}")
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -79,9 +196,10 @@ def main(argv=None):
         sp = sub.add_parser(name)
         sp.add_argument("--sections", required=True); sp.add_argument("--dry-run", action="store_true"); sp.add_argument("--env", default=".env")
     a = ap.parse_args(argv)
-    if a.cmd != "requested":
+    cmds = {"requested": cmd_requested, "rows": cmd_rows}
+    if a.cmd not in cmds:
         raise SystemExit(f"{a.cmd}: not implemented")
-    cmd_requested(a, load_env(a.env))
+    cmds[a.cmd](a, load_env(a.env))
 
 if __name__ == "__main__":
     main()
