@@ -96,7 +96,7 @@ Read it first when something looks wrong — it names the broken link.
    windowing on the item's Plex `addedAt`. Fixed by pointing Overseerr at `192.168.0.20` + SSL off and restarting it.
 9. **`hostexec.py` shares one `job.sh` / `last.log`** — two concurrent host jobs clobber each other. Run them serially.
 
-## 6. Preroll
+## 5. Preroll
 
 A bumper plays before every **movie** (never episodes, never on resume): `/mnt/user/appdata/Plex-Media-Server/prerolls/winswatch-preroll.mp4`,
 pointed at by the Plex setting `CinemaTrailersPrerollID` = `/config/prerolls/winswatch-preroll.mp4` (the container's view of the same
@@ -104,7 +104,7 @@ path). Swap it by dropping a new file there; disable it by blanking that prefere
 `curl -X PUT "$PLEX_URL/:/prefs?CinemaTrailersPrerollID=&X-Plex-Token=$PLEX_TOKEN"`. The current one is 8 s, 1920×1080 h264/aac,
 generated from a photo of Win with 0.4 s fades top and tail.
 
-## 7. Credentials and access
+## 6. Credentials and access
 
 - Scripts read `/mnt/nastower/appdata/scripts/winswatch/.env` (`PLEX_URL/TOKEN`, `MDBLIST_API_KEY`, `SONARR_*`,
   `OVERSEERR_*`, `TZ=America/Chicago`). `deploy.sh` creates it from Kometa's `.env` only when missing.
