@@ -104,7 +104,17 @@ path). Swap it by dropping a new file there; disable it by blanking that prefere
 `curl -X PUT "$PLEX_URL/:/prefs?CinemaTrailersPrerollID=&X-Plex-Token=$PLEX_TOKEN"`. The current one is 8 s, 1920×1080 h264/aac,
 generated from a photo of Win with 0.4 s fades top and tail.
 
-## 6. Credentials and access
+## 6. Video preview thumbnails (BIF)
+
+Enabled 2026-09-22: `GenerateBIFBehavior=scheduled`, `ButlerTaskGenerateMediaIndexFiles=true`,
+`GenerateIndexFilesDuringAnalysis=true` (new items get them at scan), frame interval 2 s, keyframes only, hardware
+accelerated. Generated in the butler window, which was moved to **01:00–04:00** so it finishes before the 04:30 nightly
+and Kometa's 05:00 run. Files land in `appdata/Plex-Media-Server/Library/.../Media/` — the appdata share is
+`use_cache: prefer` on the 1 TB NVMe pool (596 GB free), so they stay on the cache pool and never touch the array.
+Expect ~45 GB for the current 3,200 hours, built over several nights. Turn it off with `GenerateBIFBehavior=never`;
+delete the existing files by removing the per-item `Contents/Indexes` folders.
+
+## 7. Credentials and access
 
 - Scripts read `/mnt/nastower/appdata/scripts/winswatch/.env` (`PLEX_URL/TOKEN`, `MDBLIST_API_KEY`, `SONARR_*`,
   `OVERSEERR_*`, `TZ=America/Chicago`). `deploy.sh` creates it from Kometa's `.env` only when missing.
