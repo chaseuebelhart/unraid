@@ -146,3 +146,13 @@ def test_upload_cards_dry_run_does_not_upload(tmp_path):
     assert len(would) == 1
     assert col.uploads == []
     assert not cache_path.exists()
+
+
+def test_upload_matches_shortlist_tv_row_names(tmp_path):
+    """Shortlist names the TV rows "TV Shows ..." (its template can only say the library name); the cards still match."""
+    cards_dir = tmp_path / "cards"; cards_dir.mkdir()
+    for slug in ("for-you-shows", "popular-shows"):
+        (cards_dir / f"{slug}.png").write_bytes(b"png")
+    cols = [FakeCollection(30, "✨ TV Shows for you" + "\u200b" * 4), FakeCollection(31, "\U0001F465 Popular TV Shows on Wins Watch")]
+    actions = gen_cards.upload_cards(None, [FakeSection(cols)], cards_dir, tmp_path / "cards.json", dry_run=True)
+    assert actions == ["✨ Shows for you -> for-you-shows", "\U0001F465 Popular Shows on Wins Watch -> popular-shows"]

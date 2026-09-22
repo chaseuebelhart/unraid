@@ -1,13 +1,18 @@
 #!/bin/bash
-# Copy scripts + overlay files to the server over NFS. Creates .env on the server from Kometa's .env if missing.
+# Copy scripts, overlay files and the Home collection files to the server over NFS. Creates .env on the server from Kometa's .env if missing.
 set -euo pipefail
 REPO=$(cd "$(dirname "$0")/../.." && pwd)
 APP=/mnt/nastower/appdata/scripts/winswatch
 KCFG=/mnt/nastower/appdata/Kometa/config
-mkdir -p "$APP/host/jobs" "$APP/cache" "$KCFG/winswatch"
-rsync -rlt --delete --exclude .venv --exclude tests --exclude __pycache__ --exclude cache --exclude .env --exclude host/last.log --exclude host/job.sh --exclude host/.request --exclude host/lab_sections \
+mkdir -p "$APP/host/jobs" "$APP/cache" "$KCFG/winswatch/collections"
+rsync -rlt --delete --exclude .venv --exclude tests --exclude __pycache__ --exclude cache --exclude .env --exclude host/last.log --exclude host/order.log --exclude host/job.sh --exclude host/.request --exclude host/lab_sections \
   "$REPO/scripts/winswatch/" "$APP/"
-rsync -rlt --delete "$REPO/kometa/overlays/winswatch/" "$KCFG/winswatch/"
+rsync -rlt --delete --exclude /collections "$REPO/kometa/overlays/winswatch/" "$KCFG/winswatch/"
+# Kometa collection files referenced by config.yml (promote_config.py --phase home): the generated Home rotation plus the
+# four hand-written row files, flat in config/winswatch/collections/.
+HOME_COLLECTIONS=(trending_movies.yml movies_leaving_soon.yml shows_trending.yml shows_leaving_soon.yml)
+rsync -rlt --delete "${HOME_COLLECTIONS[@]/#/--exclude=/}" "$REPO/kometa/collections/winswatch/" "$KCFG/winswatch/collections/"
+cp "${HOME_COLLECTIONS[@]/#/$REPO/kometa/collections/}" "$KCFG/winswatch/collections/"
 chmod +x "$APP"/host/*.sh "$APP"/host/jobs/*.sh
 # Overseerr API key lives in overseerr/settings.json; only read it when .env actually needs it (a missing/locked file must not
 # fail a routine deploy).

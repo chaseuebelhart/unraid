@@ -262,7 +262,9 @@ def generate(out_dir) -> list[Path]:
 
 
 def _clean_title(title: str) -> str:
-    return title.rstrip(ZW_CHARS) if title else title
+    """Strip Shortlist's zero-width suffix; Shortlist's row template can only say the library name, so its TV rows read
+    "✨ TV Shows for you" / "👥 Popular TV Shows on Wins Watch" — fold that to the card's "Shows" wording for the match."""
+    return title.rstrip(ZW_CHARS).replace("TV Shows", "Shows") if title else title
 
 
 def _upload_prefixes() -> dict:
