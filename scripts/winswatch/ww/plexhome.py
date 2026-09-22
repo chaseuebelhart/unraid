@@ -50,6 +50,15 @@ def desired_order(lib: str, today: date, calendar, themes=None, extras=None, sch
     if weekend: shelf2 = label(weekend[0], extras)
     return FIXED_TOP + [shelf1, shelf2] + FIXED_BOTTOM
 
+def resolve_titles(hubs, titles: dict) -> None:
+    """The manage list reports each collection hub's title as it was when the hub was promoted; a collection renamed
+    since (our ⏳ rows, Shortlist rows renamed in its settings) keeps the stale title there. `titles` = {ratingKey (str):
+    current collection title}; a hub whose identifier is custom.collection.<section>.<ratingKey> gets the current title."""
+    for h in hubs:
+        m = re.fullmatch(r"custom\.collection\.\d+\.(\d+)", getattr(h, "identifier", "") or "")
+        if m and m.group(1) in titles:
+            h.title = titles[m.group(1)]
+
 def _promoted(hub) -> bool:
     return bool(getattr(hub, "promotedToSharedHome", False) or getattr(hub, "promotedToOwnHome", False))
 

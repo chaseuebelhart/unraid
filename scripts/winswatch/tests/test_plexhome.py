@@ -99,7 +99,7 @@ def test_lib_for_section():
 def test_home_order_command_dispatches_dry_run(monkeypatch, capsys):
     import home
     hubs = [FakeHub("IMDb Popular"), FakeHub("💎 Hidden Gems"), FakeHub("✨ Movies for you​", home=False)]
-    section = NS(title="Wins Watch Lab", key=4, type="movie", managedHubs=lambda: hubs)
+    section = NS(title="Wins Watch Lab", key=4, type="movie", managedHubs=lambda: hubs, collections=lambda: [])
     class FakePlexLib:
         def __init__(self, url, token): pass
         def section(self, sec_id): assert sec_id == 4; return section
@@ -109,3 +109,13 @@ def test_home_order_command_dispatches_dry_run(monkeypatch, capsys):
     out = capsys.readouterr().out
     assert "DRY" in out and "demote IMDb Popular" in out and "move   ✨ Movies for you" in out
     assert all(h.moves == [] and h.vis is None for h in hubs)
+
+
+def test_resolve_titles_uses_current_collection_title():
+    """/hubs/sections/N/manage keeps the title from promotion time: a renamed collection must be matched by its current name."""
+    from types import SimpleNamespace as NS
+    hubs = [NS(identifier="custom.collection.1.7486", title="Movies Leaving Soon"),
+            NS(identifier="custom.collection.1.999", title="Gone"),
+            NS(identifier="movie.recentlyadded", title="Recently Added Movies")]
+    plexhome.resolve_titles(hubs, {"7486": "⏳ Movies Leaving Wins Watch"})
+    assert [h.title for h in hubs] == ["⏳ Movies Leaving Wins Watch", "Gone", "Recently Added Movies"]

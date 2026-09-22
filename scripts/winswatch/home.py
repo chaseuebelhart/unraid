@@ -89,26 +89,33 @@ def cmd_order(a, env):
     cal = gen_home.load_calendar(Path(__file__).with_name("home_calendar.yml"))
     for sec in sections(a.sections):
         section = p.section(sec)
-        ordered, demote = plexhome.plan(section.managedHubs(), plexhome.desired_order(plexhome.lib_for(section), day, cal))
+        hubs = section.managedHubs()
+        plexhome.resolve_titles(hubs, {str(c.ratingKey): c.title for c in section.collections()})
+        ordered, demote = plexhome.plan(hubs, plexhome.desired_order(plexhome.lib_for(section), day, cal))
         plexhome.apply(section, ordered, demote, a.dry_run)
 
 # --- rows: per-user "📥 New · Your Requests" collections (Task 3) ---------------------------------------------------------
 # One collection per shared/home user and library, visible to that user only through the Shortlist mechanism: label
 # `Winswatch_<slug>` on the collection (Plex title-cases tags), `label!=Winswatch_<slug>` merged into every OTHER account's share filter (ww.shares).
-# Plex needs distinct titles, so each gets Shortlist's zero-width suffix (row_title). The owner gets no row (no share with self).
+# Plex needs distinct titles, so each gets an invisible zero-width suffix (row_title). The owner gets no row (no share with self).
 NEW_BASE = {"movie": "📥 New Movies · Your Requests", "show": "📥 New Shows · Your Requests"}
 N_RECENT, REQUEST_DAYS, SERVER_NAME = 40, 90, "NASTower"
-ZW0, ZW1 = "​", "‌"   # Shortlist's alphabet: 64 chars = bits of the Plex account id, LSB first (0 -> U+200B, 1 -> U+200C)
+ZW0, ZW1 = "​", "‌"   # Shortlist's (client-proven) zero-width alphabet: bits of the Plex account id, LSB first (0 -> U+200B, 1 -> U+200C)
+# MARKER_BITS must stay != 64: Shortlist's sweep_broken_rows treats ANY collection whose last 64 chars are all zero-width as
+# its own orphan when it lacks a Shortlist_ label, and DELETES it (it did, to all 16 rows, on 2026-09-21). 40 bits is still
+# injective over Plex account ids (32-bit ints) and never looks like a Shortlist marker.
+MARKER_BITS = 40
 
 def user_slug(username: str) -> str:
     """Shortlist's slug: lower-case, every run of non-alphanumerics -> '_' (Lily.Arnold -> lily_arnold, Chase_Test -> chase_test)."""
     return re.sub(r"[^a-z0-9]+", "_", username.lower()).strip("_")
 
 def row_title(base: str, ident) -> str:
-    """base + 64 zero-width chars. ident = the Plex account id (int) -> byte-identical to Shortlist's suffix for that user;
-    a slug (str) -> the same encoding of a stable 64-bit hash of it (tests / users without an id)."""
+    """base + MARKER_BITS zero-width chars. ident = the Plex account id (int); a slug (str) -> a stable hash of it (tests /
+    users without an id). Same alphabet as Shortlist's marker, different length — see MARKER_BITS."""
     value = ident if isinstance(ident, int) else int.from_bytes(hashlib.blake2b(ident.encode(), digest_size=8).digest(), "little")
-    return base + "".join(ZW1 if (value >> i) & 1 else ZW0 for i in range(64))
+    assert 0 <= value < (1 << MARKER_BITS) or not isinstance(ident, int), f"account id {ident} does not fit the {MARKER_BITS}-bit marker"
+    return base + "".join(ZW1 if (value >> i) & 1 else ZW0 for i in range(MARKER_BITS))
 
 def strip_zw(title: str) -> str:
     return title.rstrip(ZW0 + ZW1)

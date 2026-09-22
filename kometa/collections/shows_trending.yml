@@ -4,6 +4,7 @@ collections:
     summary: "Shows that are currently trending on TMDb."
     sort_title: "!03_Trending_Shows"
     collection_order: random
+    sync_mode: sync                         # exactly the list (the global default is append: the row would grow past 40)
     visible_home: true
     visible_library: true
     visible_shared: true

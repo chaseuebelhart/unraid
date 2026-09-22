@@ -4,6 +4,7 @@ collections:
     summary: "Movies that are currently trending."
     sort_title: "!01_Trending_Movies"
     collection_order: random
+    sync_mode: sync                         # exactly the list (the global default is append: the row would grow past 40)
     visible_home: true
     visible_library: true
     visible_shared: true

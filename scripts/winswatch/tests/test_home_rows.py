@@ -40,16 +40,21 @@ def test_row_title_zero_width_suffix():
     assert a.startswith(BASE) and b.startswith(BASE)
     assert a != b
     assert home.strip_zw(a) == home.strip_zw(b) == BASE
-    assert set(a[len(BASE):]) <= {"​", "‌"} and len(a) - len(BASE) == 64
+    assert set(a[len(BASE):]) <= {"​", "‌"} and len(a) - len(BASE) == home.MARKER_BITS
     assert home.row_title(BASE, "lily_arnold") == a                     # deterministic
 
-def test_row_title_with_plex_id_is_shortlist_identical():
-    """Shortlist's suffix = 64 bits of the Plex account id, LSB first, U+200B = 0 / U+200C = 1 (read from
-    '✨ Movies Recommended For You' 13527 / labels Shortlist_mike_nordby, id 838573123, on 2026-09-21)."""
+def test_row_title_with_plex_id_uses_shortlist_alphabet_but_not_its_marker():
+    """Same bit encoding as Shortlist (LSB first, U+200B = 0 / U+200C = 1; id 838573123 = Shortlist_mike_nordby on
+    2026-09-21) but 40 chars, never 64: Shortlist's sweep_broken_rows deletes any label-less collection whose last 64
+    chars are all zero-width (it deleted all 16 of our rows on 2026-09-21 when the suffix was byte-identical to its own)."""
     t = home.row_title(BASE, 838573123)
     bits = "".join("0" if ch == "​" else "1" for ch in t[len(BASE):])
-    assert bits == "1100001000111001110111111000110000000000000000000000000000000000"
-    assert home.row_title(BASE, 0) == BASE + "​" * 64
+    assert bits == "1100001000111001110111111000110000000000"
+    assert home.row_title(BASE, 0) == BASE + "​" * 40
+    assert home.MARKER_BITS != 64
+    for title in (t, home.row_title(BASE, 0), home.row_title(BASE, "da6490")):
+        suffix = title[-64:]
+        assert not (len(suffix) == 64 and all(c in "​‌" for c in suffix)), "would read as a Shortlist marker"
 
 def test_exclusion_plan_every_other_user():
     users = [NS(id=1, slug="a"), NS(id=2, slug="b"), NS(id=3, slug="c")]
