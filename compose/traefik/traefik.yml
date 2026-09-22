@@ -1,0 +1,78 @@
+# =============================================================================
+# Traefik Static Configuration
+# =============================================================================
+# This is the main Traefik configuration file
+# Dynamic configuration is loaded from ./dynamic/ directory
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Global settings
+# -----------------------------------------------------------------------------
+global:
+  checkNewVersion: false
+  sendAnonymousUsage: false
+
+# -----------------------------------------------------------------------------
+# API and Dashboard
+# -----------------------------------------------------------------------------
+api:
+  dashboard: true
+  insecure: true  # For local access; disable in production or use auth
+
+# -----------------------------------------------------------------------------
+# Logging
+# -----------------------------------------------------------------------------
+log:
+  level: INFO
+  format: common
+
+accessLog:
+  format: common
+  filePath: /var/log/traefik/access.log
+  bufferingSize: 100
+
+# -----------------------------------------------------------------------------
+# Entry Points
+# -----------------------------------------------------------------------------
+entryPoints:
+  web:
+    address: ":80"
+    # Uncomment to redirect HTTP to HTTPS
+    # http:
+    #   redirections:
+    #     entryPoint:
+    #       to: websecure
+    #       scheme: https
+
+  websecure:
+    address: ":443"
+    http:
+      tls: {}
+
+# -----------------------------------------------------------------------------
+# Providers
+# -----------------------------------------------------------------------------
+providers:
+  # Docker provider - auto-discovers containers with traefik labels
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    exposedByDefault: false
+    network: proxy
+    watch: true
+
+  # File provider - loads dynamic config from files
+  file:
+    directory: /dynamic
+    watch: true
+
+# -----------------------------------------------------------------------------
+# Certificate Resolvers (optional - for HTTPS)
+# -----------------------------------------------------------------------------
+# Uncomment and configure for Let's Encrypt certificates
+# certificatesResolvers:
+#   letsencrypt:
+#     acme:
+#       email: your@email.com
+#       storage: /acme/acme.json
+#       httpChallenge:
+#         entryPoint: web

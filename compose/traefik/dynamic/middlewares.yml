@@ -1,0 +1,77 @@
+# =============================================================================
+# Traefik Dynamic Configuration - Middlewares
+# =============================================================================
+# This file defines reusable middlewares for Traefik
+# =============================================================================
+
+http:
+  middlewares:
+    # -------------------------------------------------------------------------
+    # Basic Authentication Middleware (for local environment)
+    # -------------------------------------------------------------------------
+    # Credentials are loaded from environment variables via file template
+    # The hash must be escaped with $$ for docker-compose
+    local-auth:
+      basicAuth:
+        # Use file-based credentials for security
+        usersFile: /dynamic/users.txt
+        realm: "Home Lab"
+        removeHeader: false
+
+    # -------------------------------------------------------------------------
+    # Security Headers Middleware
+    # -------------------------------------------------------------------------
+    secure-headers:
+      headers:
+        browserXssFilter: true
+        contentTypeNosniff: true
+        forceSTSHeader: true
+        stsIncludeSubdomains: true
+        stsPreload: true
+        stsSeconds: 31536000
+        customFrameOptionsValue: "SAMEORIGIN"
+        referrerPolicy: "strict-origin-when-cross-origin"
+
+    # -------------------------------------------------------------------------
+    # Rate Limiting Middleware
+    # -------------------------------------------------------------------------
+    rate-limit:
+      rateLimit:
+        average: 100
+        burst: 50
+        period: 1s
+
+    # -------------------------------------------------------------------------
+    # Compress Middleware
+    # -------------------------------------------------------------------------
+    compress:
+      compress:
+        excludedContentTypes:
+          - text/event-stream
+
+    # -------------------------------------------------------------------------
+    # Retry Middleware
+    # -------------------------------------------------------------------------
+    retry:
+      retry:
+        attempts: 3
+        initialInterval: 100ms
+
+    # -------------------------------------------------------------------------
+    # Chain: Default security for local environment
+    # -------------------------------------------------------------------------
+    local-secure-chain:
+      chain:
+        middlewares:
+          - local-auth
+          - secure-headers
+          - compress
+
+    # -------------------------------------------------------------------------
+    # Chain: Production security (no basic auth)
+    # -------------------------------------------------------------------------
+    prod-secure-chain:
+      chain:
+        middlewares:
+          - secure-headers
+          - compress

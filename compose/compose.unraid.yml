@@ -1,0 +1,114 @@
+# =============================================================================
+# Home Lab Docker Compose - UNRAID Production Override
+# =============================================================================
+# This file adds Unraid-specific configurations:
+# - Production paths (mnt/user/...)
+# - PiHole for network-wide DNS
+# - Cloudflared for tunnel access
+# - Hardware transcoding for Plex
+# - Profile-based services
+# =============================================================================
+
+services:
+
+  # ---------------------------------------------------------------------------
+  # INFRASTRUCTURE - Production Services
+  # ---------------------------------------------------------------------------
+
+  pihole:
+    image: pihole/pihole:latest
+    container_name: pihole
+    restart: unless-stopped
+    profiles:
+      - dns
+      - full
+    networks:
+      - proxy
+      - apps
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "67:67/udp"  # DHCP (optional)
+    environment:
+      - TZ=${TZ}
+      - WEBPASSWORD=${PIHOLE_WEBPASSWORD}
+      - FTLCONF_LOCAL_IPV4=${PIHOLE_LOCAL_IP:-}
+      - VIRTUAL_HOST=pihole.${BASE_DOMAIN}
+      - DNSMASQ_LISTENING=all
+    volumes:
+      - ${APPDATA_ROOT}/pihole/etc-pihole:/etc/pihole
+      - ${APPDATA_ROOT}/pihole/etc-dnsmasq.d:/etc/dnsmasq.d
+    cap_add:
+      - NET_ADMIN
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pihole.rule=Host(`pihole.${BASE_DOMAIN}`)"
+      - "traefik.http.routers.pihole.entrypoints=web"
+      - "traefik.http.routers.pihole.service=pihole"
+      - "traefik.http.services.pihole.loadbalancer.server.port=80"
+
+  cloudflared:
+    image: crazymax/cloudflared:latest
+    container_name: cloudflared
+    restart: unless-stopped
+    profiles:
+      - tunnel
+      - full
+    networks:
+      - proxy
+    environment:
+      - TZ=${TZ}
+      - TUNNEL_TOKEN=${CLOUDFLARED_TUNNEL_TOKEN}
+    command: tunnel run
+
+  unraid-cloudflared-tunnel:
+    image: figro/unraid-cloudflared-tunnel:latest
+    container_name: unraid-cloudflared-tunnel
+    restart: unless-stopped
+    profiles:
+      - unraid-tunnel
+      - full
+    networks:
+      - proxy
+    environment:
+      - TZ=${TZ}
+      - TUNNEL_TOKEN=${CLOUDFLARED_TUNNEL_TOKEN}
+
+  # ---------------------------------------------------------------------------
+  # PLEX - Enable Hardware Transcoding
+  # ---------------------------------------------------------------------------
+  plex:
+    devices:
+      - /dev/dri:/dev/dri
+    environment:
+      - TZ=${TZ}
+      - PLEX_UID=${PUID}
+      - PLEX_GID=${PGID}
+      - PLEX_CLAIM=${PLEX_CLAIM:-}
+      # Intel Quick Sync / VAAPI
+      - NVIDIA_VISIBLE_DEVICES=
+      - NVIDIA_DRIVER_CAPABILITIES=
+
+  # ---------------------------------------------------------------------------
+  # HOME ASSISTANT - Privileged mode for hardware access on Unraid
+  # ---------------------------------------------------------------------------
+  homeassistant:
+    privileged: true
+    network_mode: host
+    labels:
+      # When using host network, Traefik can't route internally
+      # Access via http://<unraid-ip>:8123 or configure external Traefik
+      - "traefik.enable=false"
+
+  # ---------------------------------------------------------------------------
+  # GOVEE2MQTT - Host network for device discovery
+  # ---------------------------------------------------------------------------
+  govee2mqtt:
+    network_mode: host
+    environment:
+      - TZ=${TZ}
+      - GOVEE_EMAIL=${GOVEE_EMAIL}
+      - GOVEE_PASSWORD=${GOVEE_PASSWORD}
+      - GOVEE_API_KEY=${GOVEE_API_KEY}
+      - GOVEE_MQTT_HOST=localhost
+      - GOVEE_MQTT_PORT=1883

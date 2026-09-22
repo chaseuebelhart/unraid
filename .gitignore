@@ -21,3 +21,9 @@ venv/
 **/config.yml
 .superpowers/
 kometa/config.yml
+
+# folded-in projects (2026-09-22)
+esphome/secrets.yaml
+esphome/.esphome/
+compose/.env.secrets
+compose/build/

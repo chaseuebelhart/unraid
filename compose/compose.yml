@@ -1,0 +1,525 @@
+# =============================================================================
+# Home Lab Docker Compose - Base Configuration
+# =============================================================================
+# Usage:
+#   Local:  docker compose --env-file .env.common --env-file .env.local --env-file .env.secrets -f compose.yml -f compose.local.yml up -d
+#   Unraid: docker compose --env-file .env.common --env-file .env.unraid --env-file .env.secrets -f compose.yml -f compose.unraid.yml up -d
+# =============================================================================
+
+networks:
+  proxy:
+    name: proxy
+    driver: bridge
+  apps:
+    name: apps
+    driver: bridge
+    internal: true
+
+# =============================================================================
+# SERVICES
+# =============================================================================
+services:
+
+  # ---------------------------------------------------------------------------
+  # INFRASTRUCTURE / NETWORKING
+  # ---------------------------------------------------------------------------
+
+  traefik:
+    image: traefik:v2.11
+    container_name: traefik
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - proxy
+      - apps
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - TZ=${TZ}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ${APPDATA_ROOT}/traefik/acme:/acme
+      - ./traefik/traefik.yml:/traefik.yml:ro
+      - ./traefik/dynamic:/dynamic:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik-dashboard.rule=Host(`traefik.${BASE_DOMAIN}`)"
+      - "traefik.http.routers.traefik-dashboard.service=api@internal"
+      - "traefik.http.routers.traefik-dashboard.entrypoints=web"
+
+  mosquitto:
+    image: eclipse-mosquitto:2
+    container_name: mosquitto
+    restart: unless-stopped
+    networks:
+      - apps
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    environment:
+      - TZ=${TZ}
+    volumes:
+      - ${APPDATA_ROOT}/mosquitto/data:/mosquitto/data
+      - ${APPDATA_ROOT}/mosquitto/log:/mosquitto/log
+      - ./mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+
+  # ---------------------------------------------------------------------------
+  # VPN / DOWNLOAD CLIENTS
+  # ---------------------------------------------------------------------------
+
+  gluetun:
+    image: qmcgaw/gluetun:latest
+    container_name: gluetun
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    networks:
+      - proxy
+      - apps
+    ports:
+      # qBittorrent WebUI (exposed through gluetun)
+      - "${QBIT_WEBUI_PORT:-8080}:8080"
+      # qBittorrent torrenting port
+      - "${TORRENTING_PORT:-6881}:6881"
+      - "${TORRENTING_PORT:-6881}:6881/udp"
+    environment:
+      - TZ=${TZ}
+      - VPN_SERVICE_PROVIDER=${VPN_SERVICE_PROVIDER}
+      - VPN_TYPE=${VPN_TYPE}
+      - WIREGUARD_PRIVATE_KEY=${WIREGUARD_PRIVATE_KEY}
+      - WIREGUARD_ADDRESSES=${WIREGUARD_ADDRESSES}
+      - SERVER_COUNTRIES=${SERVER_COUNTRIES}
+      - SERVER_CITIES=${SERVER_CITIES}
+      - FIREWALL_OUTBOUND_SUBNETS=${FIREWALL_OUTBOUND_SUBNETS}
+      - HTTPPROXY=off
+      - SHADOWSOCKS=off
+    volumes:
+      - ${APPDATA_ROOT}/gluetun:/gluetun
+    labels:
+      # Traefik routes for qBittorrent (via gluetun network namespace)
+      - "traefik.enable=true"
+      - "traefik.http.routers.qbittorrent.rule=Host(`qb.${BASE_DOMAIN}`)"
+      - "traefik.http.routers.qbittorrent.entrypoints=web"
+      - "traefik.http.routers.qbittorrent.service=qbittorrent"
+      - "traefik.http.services.qbittorrent.loadbalancer.server.port=8080"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8080"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    restart: unless-stopped
+    # Share network namespace with gluetun - ALL qbit traffic goes through VPN
+    network_mode: "service:gluetun"
+    depends_on:
+      gluetun:
+        condition: service_healthy
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=${UMASK}
+      - WEBUI_PORT=8080
+      - TORRENTING_PORT=${TORRENTING_PORT:-6881}
+    volumes:
+      - ${APPDATA_ROOT}/qbittorrent:/config
+      - ${DATA_ROOT}/downloads:/downloads
+
+  # ---------------------------------------------------------------------------
+  # ARR STACK (NOT behind VPN - normal network egress)
+  # ---------------------------------------------------------------------------
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    restart: unless-stopped
+    networks:
+      - proxy
+      - apps
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=${UMASK}
+    volumes:
+      - ${APPDATA_ROOT}/sonarr:/config
+      - ${DATA_ROOT}:/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sonarr.rule=Host(`sonarr.${BASE_DOMAIN}`)"
+      - "traefik.http.routers.sonarr.entrypoints=web"
+      - "traefik.http.routers.sonarr.service=sonarr"
+      - "traefik.http.services.sonarr.loadbalancer.server.port=8989"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8989/ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    restart: unless-stopped
+    networks:
+      - proxy
+      - apps
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=${UMASK}
+    volumes:
+      - ${APPDATA_ROOT}/radarr:/config
+      - ${DATA_ROOT}:/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.radarr.rule=Host(`radarr.${BASE_DOMAIN}`)"
+      - "traefik.http.routers.radarr.entrypoints=web"
+      - "traefik.http.routers.radarr.service=radarr"
+      - "traefik.http.services.radarr.loadbalancer.server.port=7878"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7878/ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    restart: unless-stopped
+    networks:
+      - proxy
+      - apps
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=${UMASK}
+    volumes:
+      - ${APPDATA_ROOT}/prowlarr:/config
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.prowlarr.rule=Host(`prowlarr.${BASE_DOMAIN}`)"
+      - "traefik.http.routers.prowlarr.entrypoints=web"
+      - "traefik.http.routers.prowlarr.service=prowlarr"
+      - "traefik.http.services.prowlarr.loadbalancer.server.port=9696"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9696/ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  unpackerr:
+    image: golift/unpackerr:latest
+    container_name: unpackerr
+    restart: unless-stopped
+    networks:
+      - apps
+    environment:
+      - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
+      # Sonarr config - uses service DNS hostname
+      - UN_SONARR_0_URL=http://sonarr:8989
+      - UN_SONARR_0_API_KEY=${UN_SONARR_0_API_KEY}
+      - UN_SONARR_0_PATHS_0=/data/downloads
+      - UN_SONARR_0_PROTOCOLS=torrent
+      - UN_SONARR_0_TIMEOUT=10s
+      - UN_SONARR_0_DELETE_ORIG=false
+      - UN_SONARR_0_DELETE_DELAY=5m
+      # Radarr config - uses service DNS hostname
+      - UN_RADARR_0_URL=http://radarr:7878
+      - UN_RADARR_0_API_KEY=${UN_RADARR_0_API_KEY}
+      - UN_RADARR_0_PATHS_0=/data/downloads
+      - UN_RADARR_0_PROTOCOLS=torrent
+      - UN_RADARR_0_TIMEOUT=10s
+      - UN_RADARR_0_DELETE_ORIG=false
+      - UN_RADARR_0_DELETE_DELAY=5m
+    volumes:
+      - ${DATA_ROOT}/downloads:/data/downloads
+    depends_on:
+      - sonarr
+      - radarr
+
+  # ---------------------------------------------------------------------------
+  # MEDIA MANAGEMENT
+  # ---------------------------------------------------------------------------
+
+  maintainerr:
+    image: jorenn92/maintainerr:latest
+    container_name: maintainerr
+    restart: unless-stopped
+    networks:
+      - proxy
+      - apps
+    environment:
+      - TZ=${TZ}
+    volumes:
+      - ${APPDATA_ROOT}/maintainerr:/opt/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.maintainerr.rule=Host(`maintainerr.${BASE_DOMAIN}`)"
+      - "traefik.http.routers.maintainerr.entrypoints=web"
+      - "traefik.http.routers.maintainerr.service=maintainerr"
+      - "traefik.http.services.maintainerr.loadbalancer.server.port=6246"
+
+  overseerr:
+    image: lscr.io/linuxserver/overseerr:latest
+    container_name: overseerr
+    restart: unless-stopped
+    networks:
+      - proxy
+      - apps
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${APPDATA_ROOT}/overseerr:/config
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.overseerr.rule=Host(`overseerr.${BASE_DOMAIN}`)"
+      - "traefik.http.routers.overseerr.entrypoints=web"
+      - "traefik.http.routers.overseerr.service=overseerr"
+      - "traefik.http.services.overseerr.loadbalancer.server.port=5055"
+
+  # ---------------------------------------------------------------------------
+  # MEDIA SERVERS
+  # ---------------------------------------------------------------------------
+
+  plex:
+    image: plexinc/pms-docker:latest
+    container_name: plex
+    restart: unless-stopped
+    networks:
+      - proxy
+      - apps
+    ports:
+      - "32400:32400"
+    environment:
+      - TZ=${TZ}
+      - PLEX_UID=${PUID}
+      - PLEX_GID=${PGID}
+      - PLEX_CLAIM=${PLEX_CLAIM:-}
+    volumes:
+      - ${APPDATA_ROOT}/plex:/config
+      - ${DATA_ROOT}/media:/data/media
+      - ${APPDATA_ROOT}/plex/transcode:/transcode
+    # Hardware transcoding - uncomment if needed
+    # devices:
+    #   - /dev/dri:/dev/dri
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.plex.rule=Host(`plex.${BASE_DOMAIN}`)"
+      - "traefik.http.routers.plex.entrypoints=web"
+      - "traefik.http.routers.plex.service=plex"
+      - "traefik.http.services.plex.loadbalancer.server.port=32400"
+
+  tautulli:
+    image: tautulli/tautulli:latest
+    container_name: tautulli
+    restart: unless-stopped
+    networks:
+      - proxy
+      - apps
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${APPDATA_ROOT}/tautulli:/config
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.tautulli.rule=Host(`tautulli.${BASE_DOMAIN}`)"
+      - "traefik.http.routers.tautulli.entrypoints=web"
+      - "traefik.http.routers.tautulli.service=tautulli"
+      - "traefik.http.services.tautulli.loadbalancer.server.port=8181"
+    depends_on:
+      - plex
+
+  stash:
+    image: stashapp/stash:latest
+    container_name: stash
+    restart: unless-stopped
+    networks:
+      - proxy
+      - apps
+    environment:
+      - STASH_STASH=/data/
+      - STASH_GENERATED=/generated/
+      - STASH_METADATA=/metadata/
+      - STASH_CACHE=/cache/
+      - STASH_PORT=9999
+    volumes:
+      - ${APPDATA_ROOT}/stash/config:/root/.stash
+      - ${APPDATA_ROOT}/stash/generated:/generated
+      - ${APPDATA_ROOT}/stash/metadata:/metadata
+      - ${APPDATA_ROOT}/stash/cache:/cache
+      - ${DATA_ROOT}/stash:/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.stash.rule=Host(`stash.${BASE_DOMAIN}`)"
+      - "traefik.http.routers.stash.entrypoints=web"
+      - "traefik.http.routers.stash.service=stash"
+      - "traefik.http.services.stash.loadbalancer.server.port=9999"
+
+  kometa:
+    image: kometateam/kometa:latest
+    container_name: kometa
+    restart: unless-stopped
+    networks:
+      - apps
+    environment:
+      - TZ=${TZ}
+      - KOMETA_CONFIG=/config/config.yml
+      - KOMETA_RUN=true
+    volumes:
+      - ${APPDATA_ROOT}/kometa:/config
+    depends_on:
+      - plex
+
+  notifiarr:
+    image: golift/notifiarr:latest
+    container_name: notifiarr
+    restart: unless-stopped
+    networks:
+      - proxy
+      - apps
+    environment:
+      - TZ=${TZ}
+      - DN_API_KEY=${DN_API_KEY}
+    volumes:
+      - ${APPDATA_ROOT}/notifiarr:/config
+      - /var/run/utmp:/var/run/utmp:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.notifiarr.rule=Host(`notifiarr.${BASE_DOMAIN}`)"
+      - "traefik.http.routers.notifiarr.entrypoints=web"
+      - "traefik.http.routers.notifiarr.service=notifiarr"
+      - "traefik.http.services.notifiarr.loadbalancer.server.port=5454"
+
+  # ---------------------------------------------------------------------------
+  # HOME AUTOMATION
+  # ---------------------------------------------------------------------------
+
+  homeassistant:
+    image: ghcr.io/home-assistant/home-assistant:stable
+    container_name: homeassistant
+    restart: unless-stopped
+    networks:
+      - proxy
+      - apps
+    environment:
+      - TZ=${TZ}
+    volumes:
+      - ${APPDATA_ROOT}/homeassistant:/config
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.homeassistant.rule=Host(`ha.${BASE_DOMAIN}`)"
+      - "traefik.http.routers.homeassistant.entrypoints=web"
+      - "traefik.http.routers.homeassistant.service=homeassistant"
+      - "traefik.http.services.homeassistant.loadbalancer.server.port=8123"
+
+  # govee2mqtt:
+  #   image: ghcr.io/wez/govee2mqtt:latest
+  #   container_name: govee2mqtt
+  #   restart: unless-stopped
+  #   networks:
+  #     - proxy  # Needs external DNS access for Govee API
+  #     - apps
+  #   dns:
+  #     - 8.8.8.8
+  #     - 1.1.1.1
+  #   environment:
+  #     - TZ=${TZ}
+  #     - GOVEE_EMAIL=${GOVEE_EMAIL}
+  #     - GOVEE_PASSWORD=${GOVEE_PASSWORD}
+  #     - GOVEE_API_KEY=${GOVEE_API_KEY}
+  #     - GOVEE_MQTT_HOST=mosquitto
+  #     - GOVEE_MQTT_PORT=1883
+  #   volumes:
+  #     - ${APPDATA_ROOT}/govee2mqtt:/data
+  #   depends_on:
+  #     - mosquitto
+  #     - homeassistant
+
+  # ---------------------------------------------------------------------------
+  # OBSERVABILITY
+  # ---------------------------------------------------------------------------
+
+  influxdb:
+    image: influxdb:1.8
+    container_name: influxdb
+    restart: unless-stopped
+    networks:
+      - apps
+    ports:
+      - "8086:8086"
+    environment:
+      - TZ=${TZ}
+      - INFLUXDB_DB=${INFLUXDB_DB:-homelab}
+      - INFLUXDB_ADMIN_USER=${INFLUXDB_ADMIN_USER:-admin}
+      - INFLUXDB_ADMIN_PASSWORD=${INFLUXDB_ADMIN_PASSWORD}
+    volumes:
+      - ${APPDATA_ROOT}/influxdb:/var/lib/influxdb
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: unless-stopped
+    networks:
+      - proxy
+      - apps
+    environment:
+      - TZ=${TZ}
+      - GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD}
+      - GF_SERVER_ROOT_URL=${GF_SERVER_ROOT_URL:-http://grafana.${BASE_DOMAIN}}
+      - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-piechart-panel
+    volumes:
+      - ${APPDATA_ROOT}/grafana:/var/lib/grafana
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.grafana.rule=Host(`grafana.${BASE_DOMAIN}`)"
+      - "traefik.http.routers.grafana.entrypoints=web"
+      - "traefik.http.routers.grafana.service=grafana"
+      - "traefik.http.services.grafana.loadbalancer.server.port=3000"
+    depends_on:
+      - influxdb
+
+  nut-influxdb-exporter:
+    image: maihai/nut-influxdb-exporter:latest
+    container_name: nut-influxdb-exporter
+    restart: unless-stopped
+    networks:
+      - apps
+    environment:
+      - TZ=${TZ}
+      - NUT_HOST=${NUT_HOST:-localhost}
+      - NUT_PORT=${NUT_PORT:-3493}
+      - INFLUXDB_HOST=influxdb
+      - INFLUXDB_PORT=8086
+      - INFLUXDB_DATABASE=${INFLUXDB_DB:-homelab}
+    depends_on:
+      - influxdb
+
+  librespeed:
+    image: ghcr.io/librespeed/speedtest:latest
+    container_name: librespeed
+    restart: unless-stopped
+    networks:
+      - proxy
+    environment:
+      - MODE=standalone
+      - TELEMETRY=false
+      - TITLE=Home Lab Speed Test
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.librespeed.rule=Host(`speedtest.${BASE_DOMAIN}`)"
+      - "traefik.http.routers.librespeed.entrypoints=web"
+      - "traefik.http.routers.librespeed.service=librespeed"
+      - "traefik.http.services.librespeed.loadbalancer.server.port=80"

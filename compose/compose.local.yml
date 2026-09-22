@@ -1,0 +1,186 @@
+# =============================================================================
+# Home Lab Docker Compose - LOCAL Testing Override
+# =============================================================================
+# This file adds local-specific configurations:
+# - Local DNS container (dnsmasq) for *.local.lan resolution
+# - Basic auth middleware enabled on all routers
+# - Local port bindings as needed
+# =============================================================================
+
+services:
+
+  # ---------------------------------------------------------------------------
+  # LOCAL DNS - Resolves *.local.lan to Docker host
+  # ---------------------------------------------------------------------------
+  # NOTE: Port 53 is often used by systemd-resolved. Options:
+  #   1. Use port 5353 and configure your system to use it
+  #   2. Disable systemd-resolved (see docs/local-dns.md)
+  #   3. Add entries to /etc/hosts instead
+  # ---------------------------------------------------------------------------
+  local-dns:
+    image: jpillora/dnsmasq:latest
+    container_name: local-dns
+    restart: unless-stopped
+    profiles:
+      - dns  # Only start when explicitly requested with --profile dns
+    ports:
+      - "5353:53/udp"
+      - "5353:53/tcp"
+      - "5380:8080"  # Web UI for dnsmasq
+    environment:
+      - HTTP_USER=${LOCAL_BASIC_AUTH_USER:-admin}
+      - HTTP_PASS=${LOCAL_DNS_WEB_PASSWORD:-admin}
+    volumes:
+      - ./dnsmasq/dnsmasq.conf:/etc/dnsmasq.conf:ro
+    cap_add:
+      - NET_ADMIN
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # ---------------------------------------------------------------------------
+  # TRAEFIK - Add basic auth middleware to all routers
+  # ---------------------------------------------------------------------------
+  traefik:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik-dashboard.rule=Host(`traefik.${BASE_DOMAIN}`)"
+      - "traefik.http.routers.traefik-dashboard.service=api@internal"
+      - "traefik.http.routers.traefik-dashboard.entrypoints=web"
+      - "traefik.http.routers.traefik-dashboard.middlewares=local-auth@file"
+
+  # ---------------------------------------------------------------------------
+  # GLUETUN / QBITTORRENT - Add basic auth middleware
+  # ---------------------------------------------------------------------------
+  gluetun:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.qbittorrent.rule=Host(`qb.${BASE_DOMAIN}`)"
+      - "traefik.http.routers.qbittorrent.entrypoints=web"
+      - "traefik.http.routers.qbittorrent.service=qbittorrent"
+      - "traefik.http.routers.qbittorrent.middlewares=local-auth@file"
+      - "traefik.http.services.qbittorrent.loadbalancer.server.port=8080"
+
+  # ---------------------------------------------------------------------------
+  # ARR STACK - Add basic auth middleware
+  # ---------------------------------------------------------------------------
+  sonarr:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sonarr.rule=Host(`sonarr.${BASE_DOMAIN}`)"
+      - "traefik.http.routers.sonarr.entrypoints=web"
+      - "traefik.http.routers.sonarr.service=sonarr"
+      - "traefik.http.routers.sonarr.middlewares=local-auth@file"
+      - "traefik.http.services.sonarr.loadbalancer.server.port=8989"
+
+  radarr:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.radarr.rule=Host(`radarr.${BASE_DOMAIN}`)"
+      - "traefik.http.routers.radarr.entrypoints=web"
+      - "traefik.http.routers.radarr.service=radarr"
+      - "traefik.http.routers.radarr.middlewares=local-auth@file"
+      - "traefik.http.services.radarr.loadbalancer.server.port=7878"
+
+  prowlarr:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.prowlarr.rule=Host(`prowlarr.${BASE_DOMAIN}`)"
+      - "traefik.http.routers.prowlarr.entrypoints=web"
+      - "traefik.http.routers.prowlarr.service=prowlarr"
+      - "traefik.http.routers.prowlarr.middlewares=local-auth@file"
+      - "traefik.http.services.prowlarr.loadbalancer.server.port=9696"
+
+  # ---------------------------------------------------------------------------
+  # MEDIA MANAGEMENT - Add basic auth middleware
+  # ---------------------------------------------------------------------------
+  maintainerr:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.maintainerr.rule=Host(`maintainerr.${BASE_DOMAIN}`)"
+      - "traefik.http.routers.maintainerr.entrypoints=web"
+      - "traefik.http.routers.maintainerr.service=maintainerr"
+      - "traefik.http.routers.maintainerr.middlewares=local-auth@file"
+      - "traefik.http.services.maintainerr.loadbalancer.server.port=6246"
+
+  overseerr:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.overseerr.rule=Host(`overseerr.${BASE_DOMAIN}`)"
+      - "traefik.http.routers.overseerr.entrypoints=web"
+      - "traefik.http.routers.overseerr.service=overseerr"
+      - "traefik.http.routers.overseerr.middlewares=local-auth@file"
+      - "traefik.http.services.overseerr.loadbalancer.server.port=5055"
+
+  # ---------------------------------------------------------------------------
+  # MEDIA SERVERS - Add basic auth middleware
+  # ---------------------------------------------------------------------------
+  plex:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.plex.rule=Host(`plex.${BASE_DOMAIN}`)"
+      - "traefik.http.routers.plex.entrypoints=web"
+      - "traefik.http.routers.plex.service=plex"
+      - "traefik.http.routers.plex.middlewares=local-auth@file"
+      - "traefik.http.services.plex.loadbalancer.server.port=32400"
+
+  tautulli:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.tautulli.rule=Host(`tautulli.${BASE_DOMAIN}`)"
+      - "traefik.http.routers.tautulli.entrypoints=web"
+      - "traefik.http.routers.tautulli.service=tautulli"
+      - "traefik.http.routers.tautulli.middlewares=local-auth@file"
+      - "traefik.http.services.tautulli.loadbalancer.server.port=8181"
+
+  stash:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.stash.rule=Host(`stash.${BASE_DOMAIN}`)"
+      - "traefik.http.routers.stash.entrypoints=web"
+      - "traefik.http.routers.stash.service=stash"
+      - "traefik.http.routers.stash.middlewares=local-auth@file"
+      - "traefik.http.services.stash.loadbalancer.server.port=9999"
+
+  notifiarr:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.notifiarr.rule=Host(`notifiarr.${BASE_DOMAIN}`)"
+      - "traefik.http.routers.notifiarr.entrypoints=web"
+      - "traefik.http.routers.notifiarr.service=notifiarr"
+      - "traefik.http.routers.notifiarr.middlewares=local-auth@file"
+      - "traefik.http.services.notifiarr.loadbalancer.server.port=5454"
+
+  # ---------------------------------------------------------------------------
+  # HOME AUTOMATION - Add basic auth middleware
+  # ---------------------------------------------------------------------------
+  homeassistant:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.homeassistant.rule=Host(`ha.${BASE_DOMAIN}`)"
+      - "traefik.http.routers.homeassistant.entrypoints=web"
+      - "traefik.http.routers.homeassistant.service=homeassistant"
+      - "traefik.http.routers.homeassistant.middlewares=local-auth@file"
+      - "traefik.http.services.homeassistant.loadbalancer.server.port=8123"
+
+  # ---------------------------------------------------------------------------
+  # OBSERVABILITY - Add basic auth middleware
+  # ---------------------------------------------------------------------------
+  grafana:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.grafana.rule=Host(`grafana.${BASE_DOMAIN}`)"
+      - "traefik.http.routers.grafana.entrypoints=web"
+      - "traefik.http.routers.grafana.service=grafana"
+      - "traefik.http.routers.grafana.middlewares=local-auth@file"
+      - "traefik.http.services.grafana.loadbalancer.server.port=3000"
+
+  librespeed:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.librespeed.rule=Host(`speedtest.${BASE_DOMAIN}`)"
+      - "traefik.http.routers.librespeed.entrypoints=web"
+      - "traefik.http.routers.librespeed.service=librespeed"
+      - "traefik.http.routers.librespeed.middlewares=local-auth@file"
+      - "traefik.http.services.librespeed.loadbalancer.server.port=80"
