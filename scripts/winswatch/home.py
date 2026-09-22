@@ -3,7 +3,7 @@
 requested — one `Requested` label per item that an Overseerr request made available in the last 30 days (Kometa draws the
             REQUESTED badge from it; a LEAVING bookmark / status tab suppresses the badge via label.not in the overlay YAML).
 rows / cards / order — Tasks 3/4/5."""
-import argparse, os, sys
+import argparse, os
 from datetime import datetime
 from zoneinfo import ZoneInfo
 from dotenv import load_dotenv
@@ -38,7 +38,9 @@ def plan_requested(items, requests, today, window_days: int = 30, tmdb_id=_tmdb_
     mediaAddedAt; else the item's Plex addedAt. The fallbacks exist because Overseerr only fills ratingKey/mediaAddedAt from its
     own Plex scan, which has not populated them on this server since 2025-11-05 (lastScan in overseerr/settings.json)."""
     by_key, by_tmdb = {}, {}
-    for r in requests:                                  # newest first from the API; keep the newest per media
+    # Several requests can share one media (re-requests, extra seasons): the newest wins. Sorted here rather than trusting
+    # the API's sort=added order.
+    for r in sorted(requests, key=lambda r: r.get("created_at") or "", reverse=True):
         if r.get("plex_rating_key"): by_key.setdefault(str(r["plex_rating_key"]), r)
         if r.get("tmdb_id") is not None: by_tmdb.setdefault((_ITEM_TYPE.get(r.get("type")), str(r["tmdb_id"])), r)
     out = []

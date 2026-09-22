@@ -36,6 +36,22 @@ def test_plan_requested_falls_back_to_tmdb_and_plex_added_at():
             {"type": "movie", "tmdb_id": 999, "plex_rating_key": "504", "available_at": "2026-09-20T00:00:00.000Z", "status": 5}]   # rating key still wins
     assert home.plan_requested([dune, old, show, noguid], reqs, today) == [(dune, True), (old, False), (show, False), (noguid, True)]
 
+def test_plan_requested_newest_request_wins_regardless_of_input_order():
+    """Two requests for the same media (tmdb and rating-key paths): the one with the newest created_at decides, in either input order."""
+    today = date(2026, 9, 21)
+    show = NS(ratingKey=601, title="Show", type="show", guids=[NS(id="tmdb://95396")], addedAt=datetime(2024, 1, 1), labels=[])
+    movie = NS(ratingKey=602, title="Movie", type="movie", guids=[], addedAt=datetime(2024, 1, 1), labels=[])
+    old_tv = {"type": "tv", "tmdb_id": 95396, "plex_rating_key": None, "created_at": "2026-01-01T00:00:00.000Z", "available_at": "2026-01-05T00:00:00.000Z", "status": 5}
+    new_tv = {"type": "tv", "tmdb_id": 95396, "plex_rating_key": None, "created_at": "2026-09-10T00:00:00.000Z", "available_at": "2026-09-15T00:00:00.000Z", "status": 4}
+    old_mv = {"type": "movie", "tmdb_id": 1, "plex_rating_key": "602", "created_at": "2026-02-01T00:00:00.000Z", "available_at": "2026-02-02T00:00:00.000Z", "status": 5}
+    new_mv = {"type": "movie", "tmdb_id": 1, "plex_rating_key": "602", "created_at": "2026-09-01T00:00:00.000Z", "available_at": "2026-09-02T00:00:00.000Z", "status": 5}
+    for reqs in ([new_tv, old_tv, new_mv, old_mv], [old_tv, new_tv, old_mv, new_mv]):
+        assert home.plan_requested([show, movie], reqs, today) == [(show, True), (movie, True)], reqs
+    # and the reverse case: the newest request is the stale one -> label off, whatever the order
+    stale_tv = dict(new_tv, created_at="2026-09-19T00:00:00.000Z", available_at="2026-03-01T00:00:00.000Z")
+    for reqs in ([stale_tv, old_tv], [old_tv, stale_tv]):
+        assert home.plan_requested([show], reqs, today) == [(show, False)], reqs
+
 def test_sections_and_stubs():
     assert home.sections("4, 5") == [4, 5]
     for cmd in ("rows", "cards", "order"):
