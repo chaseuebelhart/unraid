@@ -151,3 +151,26 @@ done: Agregarr's 13 `{name}'s requests` / `My Requests` collections (replaced by
 collections removed by Kometa's own operations pass (`delete_collections` on definitions that no longer exist) once the Home
 rotation replaced the always-on tone rows. Nothing hand-made outside those two sets was deleted; the rule still holds for
 Shortlist's and Maintainerr's collections, which are only renamed and re-flagged.
+
+## 10. Renaming anything in Plex
+
+Collection titles, label names and row titles are **load-bearing strings** that several independent tools match on. Before
+renaming a collection, a label or a row, grep for the literal in all four places:
+
+- (a) `/mnt/nastower/appdata/scripts/maintainerr/pyscripts/` — Chase's Maintainerr helpers (the DaysLeft labeler).
+- (b) Shortlist's DB / settings (its row names and `Shortlist_*` labels live there, not in this repo).
+- (c) `kometa/collections/**` and `kometa/overlays/winswatch/**` — collection definitions, `label.not` suppressions, card slugs.
+- (d) `scripts/winswatch/**` — row prefixes (`ww/plexhome.FIXED_TOP`), card prefixes (`gen_cards.CARDS`), `home.NEW_BASE`.
+
+Two incidents that cost a day each:
+
+- **The hub-title cache** (2026-09-21): Plex's manage list reports a promoted hub's title *as it was when it was promoted*,
+  so renamed collections kept a stale title there and `order` could not match them — fixed by `ww.plexhome.resolve_titles`.
+- **The days-left labeler** (2026-09-21): "Movies/Shows Leaving Soon" → "⏳ Movies/Shows Leaving Wins Watch" broke
+  `days_left_label.py`, which looked its collections up by exact title. It silently wrote no `DaysLeft_*` labels and every
+  LEAVING bookmark disappeared from every poster; nothing noticed for a day. The labeler now finds them by Maintainerr
+  media type, and `home.py check` (§10 net, `ww/health.py`) compares the label count against the Maintainerr member count
+  every night.
+
+Prefer matching by a **stable key** (Maintainerr `type`, a Plex ratingKey, a label prefix) over a title wherever a tool has
+the choice. Where a title is unavoidable, keep the literal in one place and have the other users import it.
