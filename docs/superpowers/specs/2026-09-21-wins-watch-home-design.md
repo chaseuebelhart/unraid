@@ -107,9 +107,17 @@ leave Home without deleting them.
 
 ## 8. Nightly order
 
-03:30 Shortlist · 04:30 `winswatch` user script: `scores.py` → `airdates.py` → `home.py` (Requested labels, per-user New rows, cards,
-hub order) · daily `update_days_left` (Maintainerr) · 05:00 Kometa (collections + overlays). Kometa runs after `home.py` so the
-REQUESTED badge and the theme calendar are current on the same morning.
+All times are the **server clock, which is UTC-7** (the Unraid host and the Kometa container both run 2 h behind
+America/Chicago; `home.py` itself computes "today" in Chicago, and the two dates agree throughout this window).
+
+03:30 Shortlist (then every 30 min) · 04:30 `winswatch` user script: `scores.py` → `airdates.py` → `home.py requested` →
+`home.py rows` → `home.py cards` · ~04:40 `update_days_left` (Maintainerr DaysLeft labels) · 05:00 Kometa (collections →
+overlays → operations; ~17 min) · **05:45 `winswatch-order` user script: `home.py order`**.
+
+Kometa runs after the 04:30 script so the REQUESTED badge and the theme calendar are current on the same morning. Hub
+order runs *after* Kometa (Task 5 finding): Kometa re-promotes every collection whose schedule matches and appends any
+newly promoted hub at the end of the list, so an order pass before it would be undone. `order` demotes whatever Kometa
+promoted outside today's pair (week A/B narrowing) and Plex's own Recently Added.
 
 ## 9. Not doing
 
