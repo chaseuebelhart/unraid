@@ -84,3 +84,14 @@ def test_nudge_reputs_the_fresh_filter_not_the_stale_object():
     acc.users = lambda: [NS(id=1, filterTelevision="x"), fresh]
     shares.nudge(acc, stale)
     assert acc.calls == [("https://plex.tv/api/users/629089349", {"filterTelevision": "label!=new"}, "tok")]
+
+def test_nudge_raises_on_non_2xx():
+    acc = _Account(codes=(404,))
+    acc.users = lambda: [_user()]
+    with pytest.raises(RuntimeError, match="404"):
+        shares.nudge(acc, _user())
+
+def test_unparse_drops_valueless_conditions_which_is_why_cmd_rows_guards():
+    assert shares.unparse(shares.parse("label!=")) == ""
+    assert shares.unparse(shares.parse("label!=a,,b")) == "label!=a,b"
+    assert shares.unparse(shares.parse("contentRating!=R|label!=a")) == "contentRating!=R|label!=a"

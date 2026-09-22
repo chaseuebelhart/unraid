@@ -108,3 +108,14 @@ def test_upsert_matches_by_label_when_suffix_changed_and_deletes_when_empty():
     assert col2 is col and created == ["T​​"]
     assert lib.upsert_collection(sec, "T‌​", [], "winswatch_x") is None and sec.collections() == []
     assert lib.upsert_collection(sec, "T‌​", [], "winswatch_x") is None      # nothing to delete either
+
+def test_plan_filters_skips_a_filter_that_does_not_round_trip():
+    users = [NS(id=1, slug="a", title="A", filterMovies="label!=Shortlist_b", filterTelevision=""),
+             NS(id=2, slug="b", title="B", filterMovies="label!=", filterTelevision="contentRating!=R|label!=x"),   # 'label!=' has no values: unparse would drop it
+             NS(id=3, slug="c", title="C", filterMovies=None, filterTelevision="label!=a,,b")]                         # empty value: not reproducible either
+    wanted, problems = home.plan_filters(users, ["movie", "show"])
+    assert wanted["movie"] == {1: "label!=Shortlist_b,Winswatch_b,Winswatch_c", 3: "label!=Winswatch_a,Winswatch_b"}
+    assert wanted["show"] == {1: "label!=Winswatch_b,Winswatch_c", 2: "contentRating!=R|label!=x,Winswatch_a,Winswatch_c"}
+    assert [p.split(" does not")[0] for p in problems] == ["!! filter for B (filterMovies)", "!! filter for C (filterTelevision)"]
+    assert "skipping: 'label!='" in problems[0]
+    assert home.plan_filters(users, ["movie"])[0]["show"] == {}          # a kind not processed leaves that filter alone

@@ -152,17 +152,39 @@ def _requests_for(section, p: PlexLib, reqs: list) -> dict:
             out.setdefault(int(r["requested_by_plex_id"]), []).append(it)
     return out
 
+def _users(account) -> list:
+    """Shared + home users (the owner is not in the list), each with `.slug`."""
+    users = account.users()
+    for u in users:
+        u.slug = user_slug(u.username or u.title)
+    return users
+
+def plan_filters(users, kinds, merge=None) -> tuple[dict, list]:
+    """({kind: {user.id: desired filter string}}, problems) for the section kinds processed. A filter that does not
+    round-trip through parse/unparse is never rewritten (unparse would drop what it could not read): that user is
+    skipped and reported."""
+    from ww import shares
+    merge = merge or shares.merge_exclusions
+    wanted, problems = {"movie": {}, "show": {}}, []
+    excl = exclusions_for(users)
+    for u in users:
+        for kind in kinds:
+            current = (u.filterMovies if kind == "movie" else u.filterTelevision) or ""
+            if shares.unparse(shares.parse(current)) != current:
+                problems.append(f"!! filter for {u.title} ({'filterMovies' if kind == 'movie' else 'filterTelevision'}) does not round-trip, skipping: {current!r}")
+                continue
+            wanted[kind][u.id] = merge(current, excl[u.id])
+    return wanted, problems
+
 def cmd_rows(a, env):
     from plexapi.myplex import MyPlexAccount
     from ww import shares
     p = plex(env)
     account = MyPlexAccount(token=env["PLEX_TOKEN"])
-    users = account.users()                                   # shared + home users; the owner is not in this list
-    for u in users:
-        u.slug = user_slug(u.username or u.title)
+    users = _users(account)
     reqs = overseerr.Client(env["OVERSEERR_URL"], env["OVERSEERR_API_KEY"]).requests(since_days=REQUEST_DAYS)
     dry = "DRY " if a.dry_run else ""
-    wanted = {"movie": {}, "show": {}}                         # kind -> {user.id: desired filter string}
+    problems, kinds = [], []
     for sec in sections(a.sections):
         section = p.section(sec)
         base = NEW_BASE[section.TYPE]
@@ -183,17 +205,21 @@ def cmd_rows(a, env):
                     hub = hub.updateVisibility(shared=True, recommended=True)
                 print(f"{'':>18} | collection {col.ratingKey}: sort={col.collectionSort} labels={[l.tag for l in col.labels]} "
                       f"hub shared={hub.promotedToSharedHome} own={hub.promotedToOwnHome}")
-        for uid, add in exclusions_for(users).items():
-            u = next(x for x in users if x.id == uid)
-            current = u.filterMovies if section.TYPE == "movie" else u.filterTelevision
-            wanted[section.TYPE][uid] = shares.merge_exclusions(current, add)
+        kinds.append(section.TYPE)
+    # Filters are merged against values re-read NOW: the collection phase above takes a while and Shortlist/Agregarr write
+    # the same strings — merging into a stale copy would drop what they added in between.
+    users = _users(account)
+    wanted, skipped = plan_filters(users, kinds)
+    problems += skipped
+    for line in skipped:
+        print(line)
     written = {}
     for u in users:                                            # one plex.tv write per user, both filters at once
         fm, ft = wanted["movie"].get(u.id), wanted["show"].get(u.id)
         try:
             fields = shares.apply(account, SERVER_NAME, u, fm, ft, a.dry_run)
         except Exception as e:                                 # managed profiles with a parental preset are refused (422)
-            print(f"!! share filter not applied for {u.title}: {type(e).__name__}: {e}")
+            problems.append(f"!! share filter not applied for {u.title}: {type(e).__name__}: {e}"); print(problems[-1])
             continue
         if fields:
             written[u.id] = fields
@@ -201,13 +227,18 @@ def cmd_rows(a, env):
                 print(f"{dry}{'share filter':>18} | {u.title:<16} | {field}: {value}")
     if written and not a.dry_run:
         time.sleep(shares.NUDGE_DELAY_S)                       # the PMS debounces sharing-change pushes (~6 s) and drops the rest:
-        shares.nudge(account, next(iter(users)))               # one more push after a quiet gap makes it re-read every filter
+        try:                                                   # one more push after a quiet gap makes it re-read every filter
+            shares.nudge(account, next(u for u in users if u.id in written))   # a user whose write plex.tv accepted
+        except Exception as e:
+            problems.append(f"!! nudge failed: {type(e).__name__}: {e}"); print(problems[-1])
         after = {u.id: u for u in account.users()}             # read back: plex.tv stored exactly what we sent
         for uid, fields in written.items():
             for field, value in fields.items():
                 got = getattr(after[uid], field)
                 if got != value:
-                    print(f"!! read-back mismatch for {after[uid].title} {field}: {got!r}")
+                    problems.append(f"!! read-back mismatch for {after[uid].title} {field}: {got!r}"); print(problems[-1])
+    if problems:
+        raise SystemExit(f"rows: {len(problems)} problem(s), see !! lines above")
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)

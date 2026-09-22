@@ -40,7 +40,7 @@ def parse(current: str | None) -> list[dict]:
 def unparse(conds: list[dict]) -> str:
     out = ""
     for i, c in enumerate(c for c in conds if c["values"]):
-        out += (c["sep"] or "&" if i else "") + f"{c['key']}={c['vsep'].join(c['values'])}"
+        out += ((c["sep"] or "&") if i else "") + f"{c['key']}={c['vsep'].join(c['values'])}"
     return out
 
 def _same(a: str, b: str) -> bool:
@@ -105,9 +105,11 @@ NUDGE_DELAY_S = 10.0
 
 def nudge(account, user) -> None:
     """Re-PUT one user's filterTelevision unchanged: plex.tv still pushes notifySharingChange, the PMS re-reads every
-    user's filters. Call once after a batch of apply() writes. The value is re-read from plex.tv first — a stale in-memory
-    MyPlexUser would write an old filter back."""
+    user's filters. Call once after a batch of apply() writes, with a user whose write was accepted. The value is re-read
+    from plex.tv first — a stale in-memory MyPlexUser would write an old filter back. Raises on a non-2xx answer."""
     fresh = next(u for u in account.users() if u.id == user.id)
     headers = {"X-Plex-Token": account._token, "X-Plex-Client-Identifier": CLIENT_ID}
-    account._session.put(f"https://plex.tv/api/users/{fresh.id}", params={"filterTelevision": fresh.filterTelevision or ""},
-                         headers=headers, timeout=30)
+    r = account._session.put(f"https://plex.tv/api/users/{fresh.id}", params={"filterTelevision": fresh.filterTelevision or ""},
+                             headers=headers, timeout=30)
+    if r.status_code not in (200, 201):
+        raise RuntimeError(f"plex.tv {r.status_code} on nudge PUT /api/users/{fresh.id}: {(r.text or '')[:200]}")

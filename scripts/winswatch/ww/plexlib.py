@@ -51,8 +51,9 @@ class PlexLib:
         collection by exact title, else by `label` + same title minus the zero-width suffix (suffix scheme changed).
         Empty `items`: Plex collections cannot be empty, so an existing one is deleted; returns None."""
         base = title.rstrip(self.ZW)
-        existing = [c for c in section.collections() if c.title == title] or \
-                   [c for c in section.collections() if c.title.rstrip(self.ZW) == base and label.lower() in {l.tag.lower() for l in c.labels}]
+        cols = section.collections()
+        existing = [c for c in cols if c.title == title] or \
+                   [c for c in cols if c.title.rstrip(self.ZW) == base and label.lower() in {l.tag.lower() for l in c.labels}]
         col = existing[0] if existing else None
         if not items:
             if col: col.delete()
