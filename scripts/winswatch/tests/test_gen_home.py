@@ -10,6 +10,7 @@ def test_calendar_shape_and_rules():
         names = {t for d in days for t in d}; assert names == set(gen_home.THEMES_BY_LIB[lib])
         for d in days: assert d[0] != d[1]
         for i in range(1, 14): assert not set(days[i]) & set(days[i - 1]), f"{lib} day {i} repeats a theme"
+        assert not set(days[13]) & set(days[0]), f"{lib} day 13 repeats a theme into day 0 (fortnight wraps)"
         for t in names: assert sum(t in d for d in days) >= 2
 
 def test_weekly_schedule_unions_both_weeks():

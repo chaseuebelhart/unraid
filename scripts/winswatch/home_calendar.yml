@@ -20,8 +20,9 @@ movies:
   - [Sci-Fi Odyssey, Raunchy Comedy]       # B Sat  (+ Date Night)
   - [Mind Benders, Fresh Picks]            # B Sun  (+ Sunday Slow Burn)
 # Not Just Cartoons was dropped from the rotation (this library only has 6 titles tagged genre Animation —
-# not enough for a shelf; see task-1-report.md "Fix round 1"). 6 themes x 28 slots -> 4 themes appear 5x,
-# 2 appear 4x per fortnight.
+# not enough for a shelf; see task-1-report.md "Fix round 1"). 6 themes x 28 slots -> every theme appears at
+# least 4x per fortnight (Peak TV appears 6x; the table isn't required to be perfectly even, just >=2x each
+# with no theme on consecutive days, including the wrap from day 13 back to day 0).
 shows:
   - [Worlds Beyond, Comfort Binge]         # A Mon
   - [Peak TV, Crime Beat]                  # A Tue
@@ -36,4 +37,4 @@ shows:
   - [Edge of Your Seat, Worlds Beyond]     # B Thu
   - [Peak TV, Comfort Binge]               # B Fri
   - [Crime Beat, Edge of Your Seat]        # B Sat
-  - [Just Dropped, Worlds Beyond]          # B Sun
+  - [Just Dropped, Peak TV]                # B Sun

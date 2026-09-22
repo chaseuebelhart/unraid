@@ -70,7 +70,7 @@ collections:
         - Horror
       limit: 40
       sort_by: random
-  💘 Love & Laughs:
+  😂 Love & Laughs:
     sort_title: '!09_Love_and_Laughs'
     file_poster: config/winswatch/cards/love-and-laughs.png
     visible_home: weekly(monday|tuesday|thursday)
