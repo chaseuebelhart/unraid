@@ -36,10 +36,16 @@ def test_non_personal_has_no_ring():
 
 
 def test_every_gen_home_card_slug_exists():
-    """Parity with Task 1: every theme/extra gen_home.py knows about must have a card."""
-    slugs = {t["card"] for t in gen_home.THEMES.values()} | {t["card"] for t in gen_home.EXTRAS.values()}
+    """Parity with Task 1: every theme/extra gen_home.py knows about must have a card, with the exact
+    same emoji and title — gen_home.THEMES/EXTRAS is the single source of truth for those two fields."""
+    by_name = {**gen_home.THEMES, **gen_home.EXTRAS}
+    slugs = {t["card"] for t in by_name.values()}
     missing = slugs - set(gen_cards.CARDS)
     assert not missing, f"gen_cards.CARDS is missing slugs gen_home references: {missing}"
+    for name, t in by_name.items():
+        _kind, emoji, title = gen_cards.CARDS[t["card"]]
+        assert emoji == t["emoji"], f"{t['card']}: emoji {emoji!r} != gen_home's {t['emoji']!r}"
+        assert title == name, f"{t['card']}: title {title!r} != gen_home's {name!r}"
 
 
 # --- Step 5: upload_cards ---
