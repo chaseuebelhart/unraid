@@ -3,6 +3,9 @@
 Everything that makes Chase's Plex server ("Wins Watch") look and behave like a streaming service: poster overlays, Home
 rows, the nightly data pipeline. Written 2026-09-22, live in production since 2026-09-21.
 
+How Plex itself behaves — the object model, where it stores things, the settings API, the rating and share-filter traps —
+is `docs/plex-internals.md`. Read that when the question is "why does Plex do this", this file when it is "what do we run".
+
 Design decisions live in the two specs — `docs/superpowers/specs/2026-09-18-wins-watch-posters-design.md` (posters) and
 `2026-09-21-wins-watch-home-design.md` (Home rows). **This file is the operations view: what runs when, how to change it,
 how to fix it.** When they disagree, the specs are the intent and this file is the fact — reconcile and fix both.
