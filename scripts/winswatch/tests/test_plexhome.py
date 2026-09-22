@@ -93,12 +93,57 @@ def test_apply_walks_moves_and_demotes(capsys):
     assert a.moves == [None] and b.moves == ["✨ A"] and c.moves == ["🔥 Trending B"]
     assert x.vis == (False, False)
 
+def test_apply_promotes_a_matched_hub_that_is_not_promoted():
+    """Self-healing (the live defect): a hub matched to one of today's slots but left unpromoted — Kometa's 05:00 run
+    failed, or a pre-fix 22:50 pass demoted today's pair while ordering to tomorrow's — is promoted by `order` itself."""
+    a = FakeHub("✨ A", shared=False, home=False)
+    b, c = FakeHub("🔥 Trending B"), FakeHub("🎯 Because you watched C")
+    section = NS(title="Movies", key=1)
+    plexhome.apply(section, [a, b, c], [], dry_run=False)
+    assert a.vis == (None, True)                       # updateVisibility(shared=True): owner Home untouched
+    assert b.vis is None and c.vis is None             # already promoted -> not re-promoted
+    assert a.moves == [None] and b.moves == ["✨ A"]   # and it still takes its place in the order
+
+def test_apply_promotes_an_owner_only_hub_only_to_shared():
+    owner_only = FakeHub("💎 Hidden Gems", shared=False, home=True)
+    plexhome.apply(NS(title="Movies", key=1), [owner_only], [], dry_run=False)
+    assert owner_only.vis is None                       # promotedToOwnHome counts as promoted: left alone
+
+def test_apply_dry_run_promotes_nothing(capsys):
+    a = FakeHub("✨ A", shared=False, home=False)
+    plexhome.apply(NS(title="Movies", key=1), [a], [], dry_run=True)
+    assert a.vis is None and a.moves == []
+    out = capsys.readouterr().out
+    assert "DRY" in out and "promote ✨ A" in out
+
+def test_apply_skips_the_move_walk_when_already_in_order(capsys):
+    a, b, c = FakeHub("✨ A"), FakeHub("🔥 Trending B"), FakeHub("🎯 Because you watched C")
+    other, stock = FakeHub("Some unmatched hub", shared=False, home=False), FakeHub("IMDb Popular")
+    section = NS(title="Movies", key=1)
+    # current manage order = the three matched hubs in the desired relative order (unmatched hubs interleaved)
+    plexhome.apply(section, [a, b, c], [stock], dry_run=False, current=[a, other, b, c, stock])
+    assert a.moves == [] and b.moves == [] and c.moves == []
+    out = capsys.readouterr().out
+    assert "already in order (3 hubs)" in out
+    assert "keep  1 ✨ A" in out and "keep  3 🎯 Because you watched C" in out   # the log still lists the row set
+    assert stock.vis == (False, False)                  # demotions still happen
+    # one hub out of place -> the whole walk runs again
+    plexhome.apply(section, [a, b, c], [], dry_run=False, current=[b, a, c])
+    assert a.moves == [None] and b.moves == ["✨ A"] and c.moves == ["🔥 Trending B"]
+
+def test_apply_does_not_skip_the_walk_when_it_just_promoted_something():
+    """A freshly promoted hub may be appended to the manage list by Plex, so its position must be re-asserted."""
+    a, b = FakeHub("✨ A"), FakeHub("🔥 Trending B", shared=False, home=False)
+    plexhome.apply(NS(title="Movies", key=1), [a, b], [], dry_run=False, current=[a, b])
+    assert a.moves == [None] and b.moves == ["✨ A"]
+
 def test_lib_for_section():
     assert plexhome.lib_for(NS(type="movie")) == "movies" and plexhome.lib_for(NS(type="show")) == "shows"
 
 def test_home_order_command_dispatches_dry_run(monkeypatch, capsys):
     import home
-    hubs = [FakeHub("IMDb Popular"), FakeHub("💎 Hidden Gems"), FakeHub("✨ Movies for you​", home=False)]
+    # 🔥 before ✨ in the manage list: matched but out of order, so the move walk runs (not "already in order")
+    hubs = [FakeHub("IMDb Popular"), FakeHub("💎 Hidden Gems"), FakeHub("🔥 Trending Movies"), FakeHub("✨ Movies for you​", home=False)]
     section = NS(title="Wins Watch Lab", key=4, type="movie", managedHubs=lambda: hubs, collections=lambda: [])
     class FakePlexLib:
         def __init__(self, url, token): pass

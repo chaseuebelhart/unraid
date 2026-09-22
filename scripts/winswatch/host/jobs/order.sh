@@ -1,5 +1,5 @@
 #!/bin/bash
-# HUB ORDER (scheduled by the Unraid user script "winswatch-order" hourly at :50 — after Kometa's 05:00 run and after any Shortlist rebuild has
+# HUB ORDER (scheduled by the Unraid user script "winswatch-order" at :50 of every server hour from 05 to 21 — after Kometa's 05:00 run and after any Shortlist rebuild has
 # promoted today's theme rows): sort each library's Home hubs into the design §1 order and demote everything else
 # (home.py order -> ww/plexhome.py). Also runnable ad hoc: hostexec.py run order. Output is kept in host/order.log.
 set -euo pipefail

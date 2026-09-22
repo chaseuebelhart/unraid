@@ -92,7 +92,7 @@ def cmd_order(a, env):
         hubs = section.managedHubs()
         plexhome.resolve_titles(hubs, {str(c.ratingKey): c.title for c in section.collections()})
         ordered, demote = plexhome.plan(hubs, plexhome.desired_order(plexhome.lib_for(section), day, cal))
-        plexhome.apply(section, ordered, demote, a.dry_run)
+        plexhome.apply(section, ordered, demote, a.dry_run, current=hubs)
 
 # --- rows: per-user "📥 New · Your Requests" collections (Task 3) ---------------------------------------------------------
 # One collection per shared/home user and library, visible to that user only through the Shortlist mechanism: label
@@ -115,7 +115,13 @@ def row_title(base: str, ident) -> str:
     users without an id). Same alphabet as Shortlist's marker, different length — see MARKER_BITS."""
     value = ident if isinstance(ident, int) else int.from_bytes(hashlib.blake2b(ident.encode(), digest_size=8).digest(), "little")
     assert 0 <= value < (1 << MARKER_BITS) or not isinstance(ident, int), f"account id {ident} does not fit the {MARKER_BITS}-bit marker"
-    return base + "".join(ZW1 if (value >> i) & 1 else ZW0 for i in range(MARKER_BITS))
+    title = base + "".join(ZW1 if (value >> i) & 1 else ZW0 for i in range(MARKER_BITS))
+    # Enforced, not incidental: a title whose last 64 characters are all zero-width IS a Shortlist marker, and its
+    # sweep_broken_rows deletes any such collection that carries no Shortlist_ label (it deleted all 16 rows on
+    # 2026-09-21). Raises rather than asserts so a -O run cannot ship a self-deleting row.
+    if all(c in (ZW0 + ZW1) for c in title[-64:]):
+        raise ValueError(f"row title would read as a Shortlist marker (last 64 chars all zero-width): base={base!r}, MARKER_BITS={MARKER_BITS}")
+    return title
 
 def strip_zw(title: str) -> str:
     return title.rstrip(ZW0 + ZW1)
@@ -159,11 +165,26 @@ def _requests_for(section, p: PlexLib, reqs: list) -> dict:
             out.setdefault(int(r["requested_by_plex_id"]), []).append(it)
     return out
 
-def _users(account) -> list:
-    """Shared + home users (the owner is not in the list), each with `.slug`."""
-    users = account.users()
-    for u in users:
+def _users(account, server_name: str = SERVER_NAME) -> list:
+    """Shared + home users (the owner is not in the list) that actually share `server_name`, each with a unique `.slug`.
+
+    A plex.tv friend who shares some *other* server (or no server at all) is dropped here: ww.shares.apply raises
+    LookupError for them, which would make the nightly exit non-zero for good the moment Chase accepts any such friend.
+    Slug collisions (two accounts whose usernames slugify the same, e.g. `Mike Nordby` and `mike_nordby`) would cross-wire
+    the rows — both would carry the same `Winswatch_<slug>` label, so each user's share filter would hide the other's row
+    as well as their own. The colliding accounts get a deterministic `_<plex id>` suffix instead."""
+    users = []
+    for u in account.users():
+        if not any(getattr(s, "name", None) == server_name for s in (getattr(u, "servers", None) or [])):
+            print(f"-- skipping {u.title} ({u.id}): no share of server {server_name!r}")
+            continue
         u.slug = user_slug(u.username or u.title)
+        users.append(u)
+    dupes = {s for s in (u.slug for u in users) if [x.slug for x in users].count(s) > 1}
+    for u in users:
+        if u.slug in dupes:
+            print(f"-- slug collision on {u.slug!r}: {u.title} ({u.id}) uses {u.slug}_{u.id}")
+            u.slug = f"{u.slug}_{u.id}"
     return users
 
 def plan_filters(users, kinds, merge=None) -> tuple[dict, list]:
@@ -196,6 +217,12 @@ def cmd_rows(a, env):
         section = p.section(sec)
         base = NEW_BASE[section.TYPE]
         recent = section.search(sort="addedAt:desc", maxresults=N_RECENT, libtype=section.TYPE)
+        if not recent:
+            # upsert_collection deletes a collection it is handed no items for, so an empty search (a Plex hiccup, a
+            # section still scanning) would delete every per-user row in this section. Touch nothing instead.
+            problems.append(f"!! {section.title}: recent search returned nothing, leaving this section's rows untouched")
+            print(problems[-1])
+            continue
         per_user = _requests_for(section, p, reqs)
         for u in users:
             items = build_new_row(recent, per_user.get(u.id, []))

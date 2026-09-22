@@ -6,7 +6,7 @@
 # 4. home.py rows: per-user "📥 New · Your Requests" collections + plex.tv share filters (merge); exits non-zero on any !! line
 # 5. home.py cards: card posters for the Home rows we own (Shortlist / Maintainerr / per-user rows)
 # Hub ORDER is not here: Kometa (05:00) re-promotes its rows and appends new ones at the end, so home.py order runs from
-# the "winswatch-order" user script at 05:45 (host/jobs/order.sh).
+# the "winswatch-order" user script at :50 of every server hour from 05 to 21 (host/jobs/order.sh).
 # Mounts mirror the repo layout (scripts/winswatch + kometa/overlays/winswatch) because gen_cards/gen_home resolve the
 # card and font files relative to __file__ (parents[2]/kometa/...); the cards dir is the deployed Kometa copy.
 set -euo pipefail

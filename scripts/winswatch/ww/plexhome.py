@@ -78,15 +78,34 @@ def plan(hubs, desired: list[str]):
 def _short(title: str) -> str:
     return title.strip("​‌")[:44]
 
-def apply(section, ordered, to_demote, dry_run: bool = False) -> None:
-    """Walk `ordered` with ManagedHub.move(after=prev) (first hub goes to the top), then drop `to_demote` from both the
-    shared and the owner Home in one visibility update (== demoteShared() + demoteHome(), one PUT instead of two)."""
+def apply(section, ordered, to_demote, dry_run: bool = False, current=None) -> None:
+    """Promote every matched hub that is not promoted yet, walk `ordered` with ManagedHub.move(after=prev) (first hub goes
+    to the top), then drop `to_demote` from both the shared and the owner Home in one visibility update
+    (== demoteShared() + demoteHome(), one PUT instead of two).
+
+    Promoting is what makes `order` self-healing: a row matched to one of today's slots but left unpromoted (Kometa's 05:00
+    run failed, or the hourly pass crossed midnight in Chicago and demoted today's pair before tomorrow's was promoted)
+    goes back on the shared Home by itself instead of waiting for the next Kometa run. Only `shared` is set — the owner's
+    Home stays clean (§3), which is also why the flag is never turned on here for `promotedToOwnHome`.
+
+    `current` = the section's managed hubs in their present order; when the matched hubs already sit in `ordered`'s
+    relative order and nothing had to be promoted, the move walk is skipped entirely (the hourly pass is then a no-op)."""
     tag, name = ("DRY " if dry_run else ""), section.title
-    prev = None
-    for h in ordered:
-        print(f"{tag}{name:>18} | move   {_short(h.title):<44} | after {_short(prev.title) if prev else '(top)'}")
-        if not dry_run: h.move(after=prev)
-        prev = h
+    promote = [h for h in ordered if not _promoted(h)]
+    for h in promote:
+        print(f"{tag}{name:>18} | promote {_short(h.title):<44} | shared=0 -> 1")
+        if not dry_run: h.updateVisibility(shared=True)
+    keys = {id(h) for h in ordered}
+    if not promote and current is not None and [h for h in current if id(h) in keys] == list(ordered):
+        print(f"{tag}{name:>18} | already in order ({len(ordered)} hubs)")
+        for i, h in enumerate(ordered, 1):                 # no writes, but the log still shows the row set it left in place
+            print(f"{tag}{name:>18} | keep {i:>2} {_short(h.title)}")
+    else:
+        prev = None
+        for h in ordered:
+            print(f"{tag}{name:>18} | move   {_short(h.title):<44} | after {_short(prev.title) if prev else '(top)'}")
+            if not dry_run: h.move(after=prev)
+            prev = h
     for h in to_demote:
         print(f"{tag}{name:>18} | demote {_short(h.title):<44} | shared={int(h.promotedToSharedHome)} home={int(h.promotedToOwnHome)}")
         if not dry_run: h.updateVisibility(home=False, shared=False)
