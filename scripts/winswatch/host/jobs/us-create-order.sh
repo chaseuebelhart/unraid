@@ -1,5 +1,5 @@
 #!/bin/bash
-# ONE-OFF (Task 7): create the User Scripts entry "winswatch-order" (Custom schedule 45 5 * * *, server clock) exactly the
+# ONE-OFF (Task 7): create the User Scripts entry "winswatch-order" (Custom schedule 50 * * * *, hourly — Shortlist rebuilds rows and re-promotes hubs at odd times, so order is re-asserted every hour) exactly the
 # way the plugin's exec.php does it (scripts/<name>/{name,script}, schedule.json + /tmp copy, customSchedule.cron, update_cron).
 # Used because the Unraid UI session had expired; re-runnable (idempotent).
 set -euo pipefail
@@ -12,7 +12,7 @@ php -r '
 $D="/boot/config/plugins/user.scripts"; $N="winswatch-order";
 $s=json_decode(file_get_contents("$D/schedule.json"),true);
 $k="$D/scripts/$N/script";
-$s[$k]=["script"=>$k,"frequency"=>"custom","id"=>"schedule".$N,"custom"=>"45 5 * * *"];
+$s[$k]=["script"=>$k,"frequency"=>"custom","id"=>"schedule".$N,"custom"=>"50 * * * *"];
 $json=json_encode($s,JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
 file_put_contents("$D/schedule.json",$json); file_put_contents("/tmp/user.scripts/schedule.json",$json);
 $cron="";

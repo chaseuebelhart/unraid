@@ -112,7 +112,9 @@ America/Chicago; `home.py` itself computes "today" in Chicago, and the two dates
 
 03:30 Shortlist (then every 30 min) · 04:30 `winswatch` user script: `scores.py` → `airdates.py` → `home.py requested` →
 `home.py rows` → `home.py cards` · ~04:40 `update_days_left` (Maintainerr DaysLeft labels) · 05:00 Kometa (collections →
-overlays → operations; ~17 min) · **05:45 `winswatch-order` user script: `home.py order`**.
+overlays → operations; ~17 min) · **`winswatch-order` user script hourly at :50: `home.py order`** (Shortlist rebuilds rows and
+re-promotes hubs at odd times — a rebuild was seen at 22:30 the first night — so the order is re-asserted every hour; a pass is a
+few API calls).
 
 Kometa runs after the 04:30 script so the REQUESTED badge and the theme calendar are current on the same morning. Hub
 order runs *after* Kometa (Task 5 finding): Kometa re-promotes every collection whose schedule matches and appends any
